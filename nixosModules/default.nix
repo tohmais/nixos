@@ -38,7 +38,8 @@ in {
     [
       inputs.home-manager.nixosModules.home-manager
     ]
-    ++ features;
+    ++ features
+    ++ bundles;
 
   config = {
     nix.settings.experimental-features = ["nix-command" "flakes"];

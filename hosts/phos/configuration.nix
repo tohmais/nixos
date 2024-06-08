@@ -136,7 +136,7 @@
     bundles.general.enable = true;
     nix-alien.enable = true;
 
-  }
+  };
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.callum.enableGnomeKeyring = true;
   environment.sessionVariables = {
