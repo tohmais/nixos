@@ -16,25 +16,14 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, ... }@inputs:
+  outputs = {  ... }@inputs:
     let
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
-      pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
-    in {
-      nixosConfigurations.default = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit self system inputs; inherit pkgs-unstable;};
-        modules = [
-          ./configuration.nix
-          inputs.home-manager.nixosModules.default
-          ({ self, system, ... }: {
-            environment.systemPackages = with self.inputs.nix-alien.packages.${system}; [
-              nix-alien
-            ];
-            # Optional, needed for `nix-alien-ld`
-            programs.nix-ld.enable = true;
-          })
-        ];
+      myLib = import ./myLib/default.nix {inherit inputs;};
+    in with myLib; {
+      nixosConfigurations = {
+        phos = mkSystem ./hosts/phos/configuration.nix;
       };
+      
+      nixosModules.default = ./nixosModules;
     };
 }
