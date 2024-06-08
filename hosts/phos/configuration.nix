@@ -7,7 +7,6 @@
 {
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ./cachix.nix
   ];
 
   # Bootloader.
@@ -135,6 +134,7 @@
   myNixOS = {
     bundles.general.enable = true;
     nix-alien.enable = true;
+    cachix.enable = true;
 
   };
   services.gnome.gnome-keyring.enable = true;

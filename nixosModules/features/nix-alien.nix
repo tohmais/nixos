@@ -1,5 +1,5 @@
-{ inputs, ... }: {
-  environment.systemPackages = with inputs.nix-alien.packages."x86_64-linux"; [
+{ inputs, pkgs, ... }: {
+  environment.systemPackages = with inputs.nix-alien.packages.${pkgs.system}; [
     nix-alien 
   ];
 }
