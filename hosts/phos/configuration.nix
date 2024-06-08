@@ -7,6 +7,7 @@
 {
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    ./cachix.nix
   ];
 
   # Bootloader.
@@ -131,11 +132,11 @@
   };
 
 
-  services.displayManager.sddm = {
-    enable = true;
-    wayland.enable = true;
-    theme = "${import ./sddm-theme.nix { inherit pkgs; }}";
-  };
+  myNixOS = {
+    bundles.general.enable = true;
+    nix-alien.enable = true;
+
+  }
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.callum.enableGnomeKeyring = true;
   environment.sessionVariables = {
