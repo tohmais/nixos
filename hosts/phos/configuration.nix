@@ -2,13 +2,15 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{pkgs, config, pkgs-unstable, ... }:
-
-{
+{pkgs, config, inputs, ... }:
+let
+  pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
+in {
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
-
+  
+ 
   # Bootloader.
   boot.loader = {
     efi = {
@@ -162,6 +164,8 @@
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
 
+  nix.settings.auto-optimise-store = true;
+
   services.blueman.enable = true;
   # Enable sound with pipewire.
   sound.enable = true;
@@ -300,12 +304,15 @@
     jdk
     nwg-look
     nh
+    wget
+    libcap
+    kdenlive
   ])
   
   ++
 
   (with pkgs-unstable; [
-
+    ryujinx
       ]);
   fonts.packages = with pkgs;
     [ (nerdfonts.override { fonts = [ "GeistMono" ]; }) ];
@@ -323,7 +330,24 @@
     defaultEditor = true;
 
   };
-
+  
+  nixpkgs.config.packageOverrides = pkgs: {
+    steam = pkgs.steam.override {
+      extraPkgs = pkgs: with pkgs; [
+        xorg.libXcursor
+        xorg.libXi
+        xorg.libXinerama
+        xorg.libXScrnSaver
+        libpng
+        libpulseaudio
+        libvorbis
+        stdenv.cc.cc.lib
+        libkrb5
+        keyutils
+      ];
+    };
+  };
+  
   programs.thunar.plugins = with pkgs.xfce; [
     thunar-archive-plugin
   ];
