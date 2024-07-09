@@ -2,9 +2,10 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{pkgs, config, inputs, ... }:
+{pkgs, config, inputs, lib, ... }:
 let
   pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
+  pkgs-hyprland = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in {
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -62,8 +63,10 @@ in {
   # Enable OpenGL
   hardware.opengl = {
     enable = true;
+    package = pkgs-hyprland.mesa.drivers;
     driSupport = true;
     driSupport32Bit = true;
+    package32 = pkgs-hyprland.pkgsi686Linux.mesa.drivers;
     extraPackages = with pkgs; [ nvidia-vaapi-driver ];
   };
   services.mysql = {
@@ -72,6 +75,7 @@ in {
   };
   programs.steam.enable = true;
   programs.steam.gamescopeSession.enable = true;
+  programs.steam.localNetworkGameTransfers.openFirewall = true;
   programs.gamemode.enable = true;
  
   # Load nvidia driver for Xorg and Wayland
@@ -106,14 +110,22 @@ in {
     nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    # NVIDIA Beta = 555
+    package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
+      version = "555.52.04";
+      sha256_64bit = "sha256-nVOubb7zKulXhux9AruUTVBQwccFFuYGWrU1ZiakRAI=";
+      sha256_aarch64 = lib.fakeSha256;
+      openSha256 = lib.fakeSha256;
+      settingsSha256 = "sha256-PMh5efbSEq7iqEMBr2+VGQYkBG73TGUh6FuDHZhmwHk="; 
+      persistencedSha256 = lib.fakeSha256;
+    };
   };
 
   security.polkit.enable = true;
 
   programs.hyprland = {
     enable = true;
-
+    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     xwayland.enable = true;
   };
 
@@ -167,8 +179,8 @@ in {
   nix.settings.auto-optimise-store = true;
 
   services.blueman.enable = true;
+
   # Enable sound with pipewire.
-  sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -176,7 +188,6 @@ in {
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    wireplumber.enable = true;
     # If you want to use JACK applications, uncomment this
     #jack.enable = true;
 
@@ -222,7 +233,6 @@ in {
     #  wget
     vesktop
     vscodium
-    xdg-desktop-portal-hyprland
     lxqt.lxqt-policykit
     nix-prefetch-scripts
     libsForQt5.qt5.qtquickcontrols2
@@ -307,12 +317,17 @@ in {
     wget
     libcap
     kdenlive
+    pwvucontrol
+    tor-browser
+    tuxpaint
+    librewolf
   ])
   
   ++
 
   (with pkgs-unstable; [
     ryujinx
+    zed-editor
       ]);
   fonts.packages = with pkgs;
     [ (nerdfonts.override { fonts = [ "GeistMono" ]; }) ];

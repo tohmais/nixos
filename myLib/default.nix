@@ -21,6 +21,8 @@ in rec {
       modules = [
         config
         outputs.nixosModules.default
+        
+        inputs.lix-module.nixosModules.default
       ];
     };
 
