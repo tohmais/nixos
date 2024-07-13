@@ -2,16 +2,16 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{pkgs, config, inputs, lib, ... }:
+{ pkgs, config, inputs, lib, ... }:
 let
   pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
-  pkgs-hyprland = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+  pkgs-hyprland =
+    inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in {
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
-  
- 
+
   # Bootloader.
   boot.loader = {
     efi = {
@@ -27,7 +27,7 @@ in {
   };
   networking.hostName = "phos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
+  boot.supportedFilesystems = [ "ntfs" ];
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
@@ -77,7 +77,7 @@ in {
   programs.steam.gamescopeSession.enable = true;
   programs.steam.localNetworkGameTransfers.openFirewall = true;
   programs.gamemode.enable = true;
- 
+
   # Load nvidia driver for Xorg and Wayland
   services.xserver.videoDrivers = [ "nvidia" ];
 
@@ -116,7 +116,7 @@ in {
       sha256_64bit = "sha256-nVOubb7zKulXhux9AruUTVBQwccFFuYGWrU1ZiakRAI=";
       sha256_aarch64 = lib.fakeSha256;
       openSha256 = lib.fakeSha256;
-      settingsSha256 = "sha256-PMh5efbSEq7iqEMBr2+VGQYkBG73TGUh6FuDHZhmwHk="; 
+      settingsSha256 = "sha256-PMh5efbSEq7iqEMBr2+VGQYkBG73TGUh6FuDHZhmwHk=";
       persistencedSha256 = lib.fakeSha256;
     };
   };
@@ -136,14 +136,13 @@ in {
     enable = true;
     xkb.layout = "us";
     xkb.variant = "";
-    
+
     desktopManager = {
       xfce.enable = true;
       xterm.enable = true;
     };
-    
-  };
 
+  };
 
   myNixOS = {
     bundles.general.enable = true;
@@ -217,11 +216,8 @@ in {
   };
   # Install firefox.
   programs.firefox.enable = true;
-  nixpkgs.config.permittedInsecurePackages = [
-                "electron-25.9.0"
-		"electron-19.1.9"
-                "freeimage-unstable-2021-11-01"
-              ];
+  nixpkgs.config.permittedInsecurePackages =
+    [ "electron-25.9.0" "electron-19.1.9" "freeimage-unstable-2021-11-01" ];
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -297,9 +293,8 @@ in {
     sptlrx
     godot_4
     pegasus-frontend
-    (pkgs.callPackage ./emulationstation-de/package.nix {})
+    (pkgs.callPackage ./emulationstation-de/package.nix { })
     appimage-run
-    gnome.file-roller
     (retroarch.override {
       cores = with libretro; [
         snes9x
@@ -321,14 +316,18 @@ in {
     tor-browser
     tuxpaint
     librewolf
+    kdePackages.qtsvg
+    kdePackages.ark
+    kdePackages.dolphin
+    catppuccin-qt5ct
+    libsForQt5.qt5ct
+    kdePackages.qt6ct
+    pipx
   ])
-  
-  ++
 
-  (with pkgs-unstable; [
-    ryujinx
-    zed-editor
-      ]);
+    ++
+
+    (with pkgs-unstable; [ ryujinx zed-editor ]);
   fonts.packages = with pkgs;
     [ (nerdfonts.override { fonts = [ "GeistMono" ]; }) ];
   services.flatpak.enable = true;
@@ -345,36 +344,36 @@ in {
     defaultEditor = true;
 
   };
-  
+
   nixpkgs.config.packageOverrides = pkgs: {
     steam = pkgs.steam.override {
-      extraPkgs = pkgs: with pkgs; [
-        xorg.libXcursor
-        xorg.libXi
-        xorg.libXinerama
-        xorg.libXScrnSaver
-        libpng
-        libpulseaudio
-        libvorbis
-        stdenv.cc.cc.lib
-        libkrb5
-        keyutils
-      ];
+      extraPkgs = pkgs:
+        with pkgs; [
+          xorg.libXcursor
+          xorg.libXi
+          xorg.libXinerama
+          xorg.libXScrnSaver
+          libpng
+          libpulseaudio
+          libvorbis
+          stdenv.cc.cc.lib
+          libkrb5
+          keyutils
+        ];
     };
   };
-  
-  programs.thunar.plugins = with pkgs.xfce; [
-    thunar-archive-plugin
-  ];
-  services.udev.packages = [ pkgs.dolphinEmu ]; 
+
+  programs.thunar.plugins = with pkgs.xfce; [ thunar-archive-plugin ];
+
+  services.udev.packages = [ pkgs.dolphinEmu ];
 
   boot.binfmt.registrations.appimage = {
     wrapInterpreterInShell = false;
     interpreter = "${pkgs.appimage-run}/bin/appimage-run";
     recognitionType = "magic";
     offset = 0;
-    mask = ''\xff\xff\xff\xff\x00\x00\x00\x00\xff\xff\xff'';
-    magicOrExtension = ''\x7fELF....AI\x02'';
+    mask = "\\xff\\xff\\xff\\xff\\x00\\x00\\x00\\x00\\xff\\xff\\xff";
+    magicOrExtension = "\\x7fELF....AI\\x02";
   };
   services.mpd = {
     enable = true;
@@ -387,14 +386,15 @@ in {
     '';
 
     # Optional:
-    startWhenNeeded = true; # systemd feature: only start MPD service upon connection to its socket
+    startWhenNeeded =
+      true; # systemd feature: only start MPD service upon connection to its socket
     user = "callum";
-  }; 
-  
+  };
+
   programs.nix-ld.enable = true;
   systemd.services.mpd.environment = {
     # https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/609
-    XDG_RUNTIME_DIR = "/run/user/${toString config.users.users.callum.uid}"; 
+    XDG_RUNTIME_DIR = "/run/user/${toString config.users.users.callum.uid}";
   };
   services.suwayomi-server = {
     enable = true;
