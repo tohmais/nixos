@@ -26,7 +26,9 @@ in {
   };
 
   config = {
+
     programs.zsh.enable = true;
+    environment.pathsToLink = [ "/share/zsh" ];
 
     home-manager = {
       useGlobalPkgs = true;

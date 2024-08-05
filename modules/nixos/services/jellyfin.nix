@@ -9,5 +9,5 @@
     jellyfin
     jellyfin-web
     jellyfin-ffmpeg
-  ])
+  ]);
 }

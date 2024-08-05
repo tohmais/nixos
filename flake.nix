@@ -9,7 +9,7 @@
        url = "github:nix-community/home-manager";
        inputs.nixpkgs.follows = "nixpkgs";
     };
-    
+
     nix-alien = {
        url = "github:thiagokokada/nix-alien";
        inputs.nixpkgs.follows = "nixpkgs";
@@ -23,6 +23,8 @@
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
 
     gBar.url = "github:scorpion-26/gBar";
+
+    stylix.url = "github:danth/stylix";
   };
 
   outputs = {  ... }@inputs:
@@ -37,7 +39,7 @@
         "callum@phos" = mkHome "x86_64-linux" ./hosts/phos/home.nix;
       };
 
-      homeManagerModules.default = ./modules/home-manager; 
+      homeManagerModules.default = ./modules/home-manager;
       nixosModules.default = ./modules/nixos;
     };
 }

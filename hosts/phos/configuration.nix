@@ -159,7 +159,6 @@ in {
     sptlrx
     godot_4
     pegasus-frontend
-    (pkgs.callPackage ./emulationstation-de/package.nix { })
     appimage-run
     (retroarch.override {
       cores = with libretro; [
