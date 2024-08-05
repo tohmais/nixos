@@ -152,6 +152,7 @@ in {
   myNixOS = {
     bundles.general.enable = true;
     bundles.users.enable = true;
+    nvidia-wayland.enable = true;
     home-users = {
       "callum" = {
         userConfig = ./home.nix;
@@ -209,16 +210,6 @@ in {
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.callum = {
-    isNormalUser = true;
-    description = "Callum";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs;
-      [
-        #  thunderbird
-      ];
-  };
   # disabling jellyfin (227MB memory)
   #services.jellyfin = {
   #  enable = true;
