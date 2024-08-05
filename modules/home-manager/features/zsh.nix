@@ -5,7 +5,7 @@
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     shellAliases = {
-      ls = "${pkgs.eza}/bin/eza --icons -a"
+      ls = "${pkgs.eza}/bin/eza --icons";
     };
     history = {
         share = true;
@@ -16,7 +16,11 @@
     enable = true;
     options = [ "--cmd cd" ];
   };
+  programs.oh-my-posh = {
+    enable = true;
+    useTheme = "catppuccin";
 
+  };
   home.packages = with pkgs; [
     eza
   ];

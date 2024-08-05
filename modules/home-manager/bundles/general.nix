@@ -15,6 +15,7 @@
 
 
   myHomeManager.gbar.enable = lib.mkDefault true;
+  myHomeManager.zsh.enable = lib.mkDefault true;
 
   programs.home-manager.enable = true;
 
@@ -25,7 +26,7 @@
 
 
     nh
-  ]
+  ];
 
   home.sessionVariables = {
     FLAKE = "${config.home.homeDirectory}/nixos";

@@ -92,9 +92,9 @@ in {
   # Install firefox.
   programs.firefox.enable = true;
   nixpkgs.config.permittedInsecurePackages =
-    [ "electron-25.9.0" "electron-19.1.9" "freeimage-unstable-2021-11-01" ];
+    [ "electron-25.9.0" "electron-19.1.9" "freeimage-unstable-2021-11-01"];
 
-  
+
   environment.systemPackages = (with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     #  wget
@@ -111,7 +111,7 @@ in {
     xdg-utils
     grim
     slurp
-    
+
     spotify
     ncspot
     cava
