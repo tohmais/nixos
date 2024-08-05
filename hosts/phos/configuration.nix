@@ -5,30 +5,32 @@
 { pkgs, config, inputs, lib, ... }:
 let
   pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
-  pkgs-hyprland =
-    inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+
 in {
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
 
   # Bootloader.
-  boot.loader = {
-    efi = {
-      canTouchEfiVariables = false;
+  boot = {
+   loader = {
+      efi = {
+        canTouchEfiVariables = false;
 
+      };
+      grub = {
+        enable = true;
+        devices = [ "nodev" ];
+        useOSProber = true;
+        efiSupport = true;
+      };
     };
-    grub = {
-      enable = true;
-      devices = [ "nodev" ];
-      useOSProber = true;
-      efiSupport = true;
-    };
+    supportedFilesystems = [ "ntfs" ];
   };
+
   networking.hostName = "phos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  boot.supportedFilesystems = [ "ntfs" ];
-  # Configure network proxy if necessary
+    # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
   # Enable networking
@@ -43,27 +45,11 @@ in {
   # Enable OpenGL
   hardware.opengl = {
     enable = true;
-    package = pkgs-hyprland.mesa.drivers;
     driSupport = true;
     driSupport32Bit = true;
-    package32 = pkgs-hyprland.pkgsi686Linux.mesa.drivers;
   };
-
-
-  programs.steam.enable = true;
-  programs.steam.gamescopeSession.enable = true;
-  programs.steam.localNetworkGameTransfers.openFirewall = true;
-  programs.gamemode.enable = true;
 
   security.polkit.enable = true;
-
-  programs.hyprland = {
-    enable = true;
-    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
-    portalPackage = inputs.hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland;
-    xwayland.enable = true;
-  };
-
   programs.dconf.enable = true;
 
   # Configure keymap in X11
@@ -76,22 +62,22 @@ in {
       xfce.enable = true;
       xterm.enable = true;
     };
-
   };
 
   myNixOS = {
     bundles.general.enable = true;
     bundles.users.enable = true;
+    bundles.gaming.enable = true;
+
     nvidia-wayland.enable = true;
+
     home-users = {
       "callum" = {
         userConfig = ./home.nix;
-
-      };
-
+       };
     };
-
   };
+
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.callum.enableGnomeKeyring = true;
 
@@ -103,16 +89,12 @@ in {
     nssmdns4 = true;
     openFirewall = true;
   };
+
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
-
-
   services.blueman.enable = true;
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
-   # Install firefox.
+  # Install firefox.
   programs.firefox.enable = true;
   nixpkgs.config.permittedInsecurePackages =
     [ "electron-25.9.0" "electron-19.1.9" "freeimage-unstable-2021-11-01" ];
@@ -127,9 +109,6 @@ in {
     vscodium
     lxqt.lxqt-policykit
     nix-prefetch-scripts
-    libsForQt5.qt5.qtquickcontrols2
-    libsForQt5.qt5.qtgraphicaleffects
-    libsForQt5.qt5.qtsvg
     libsForQt5.qt5.qtwayland
     qt6.qtwayland
     kitty
@@ -241,27 +220,9 @@ in {
 
   };
 
-  nixpkgs.config.packageOverrides = pkgs: {
-    steam = pkgs.steam.override {
-      extraPkgs = pkgs:
-        with pkgs; [
-          xorg.libXcursor
-          xorg.libXi
-          xorg.libXinerama
-          xorg.libXScrnSaver
-          libpng
-          libpulseaudio
-          libvorbis
-          stdenv.cc.cc.lib
-          libkrb5
-          keyutils
-        ];
-    };
-  };
 
   programs.thunar.plugins = with pkgs.xfce; [ thunar-archive-plugin ];
 
-  services.udev.packages = [ pkgs.dolphinEmu ];
 
 
   # disabling suwayomi because it was eating 500MB of memory

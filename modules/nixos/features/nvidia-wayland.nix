@@ -51,11 +51,11 @@
     GBM_BACKEND = "nvidia-drm";
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
     NVD_BACKEND = "direct";
-    
+
     NIXOS_OZONE_WL = "1";
   };
 
-  boot.kernelParams = [ "nvidia.NVreg_PreserveVideoMemoryAllocations=1" ];
+  boot.kernelParams = lib.mkDefault [ "nvidia.NVreg_PreserveVideoMemoryAllocations=1" ];
 
   hardware.opengl.extraPackages = with pkgs; [ nvidia-vaapi-driver ];
 
