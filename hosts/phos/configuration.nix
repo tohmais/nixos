@@ -151,8 +151,14 @@ in {
 
   myNixOS = {
     bundles.general.enable = true;
-    nix-alien.enable = true;
-    cachix.enable = true;
+    bundles.users.enable = true;
+    home-users = {
+      "callum" = {
+        userConfig = ./home.nix;
+
+      }
+
+    };
 
   };
   services.gnome.gnome-keyring.enable = true;
