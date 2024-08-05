@@ -53,7 +53,7 @@ in {
         {
           isNormalUser = true;
           initialPassword = "12345";
-          description = "";
+          description = lib.mkDefault "";
           shell = pkgs.zsh;
           extraGroups = [ "networkmanager" "wheel" ];
         }

@@ -156,7 +156,7 @@ in {
       "callum" = {
         userConfig = ./home.nix;
 
-      }
+      };
 
     };
 
