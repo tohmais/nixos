@@ -69,10 +69,12 @@ in {
     package32 = pkgs-hyprland.pkgsi686Linux.mesa.drivers;
     extraPackages = with pkgs; [ nvidia-vaapi-driver ];
   };
-  services.mysql = {
-    enable = true;
-    package = pkgs.mariadb;
-  };
+
+  #services.mysql = {
+  #  enable = true;
+  #  package = pkgs.mariadb;
+  #};
+
   programs.steam.enable = true;
   programs.steam.gamescopeSession.enable = true;
   programs.steam.localNetworkGameTransfers.openFirewall = true;
@@ -86,9 +88,10 @@ in {
     # Modesetting is required.
     modesetting.enable = true;
 
+
     # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
     # Enable this if you have graphical corruption issues or application crashes after waking
-    # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead 
+    # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead
     # of just the bare essentials.
     powerManagement.enable = true;
 
@@ -98,9 +101,9 @@ in {
 
     # Use the NVidia open source kernel module (not to be confused with the
     # independent third-party "nouveau" open source driver).
-    # Support is limited to the Turing and later architectures. Full list of 
-    # supported GPUs is at: 
-    # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus 
+    # Support is limited to the Turing and later architectures. Full list of
+    # supported GPUs is at:
+    # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus
     # Only available from driver 515.43.04+
     # Currently alpha-quality/buggy, so false is currently the recommended setting.
     open = false;
@@ -118,6 +121,7 @@ in {
       openSha256 = lib.fakeSha256;
       settingsSha256 = "sha256-PMh5efbSEq7iqEMBr2+VGQYkBG73TGUh6FuDHZhmwHk=";
       persistencedSha256 = lib.fakeSha256;
+
     };
   };
 
@@ -126,6 +130,7 @@ in {
   programs.hyprland = {
     enable = true;
     package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    portalPackage = inputs.hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland;
     xwayland.enable = true;
   };
 
@@ -155,12 +160,12 @@ in {
   environment.sessionVariables = {
 
     LIBVA_DRIVER_NAME = "nvidia";
+    MOZ_DISABLE_RDD_SANDBOX = "1";
     XDG_SESSION_TYPE = "wayland";
     GBM_BACKEND = "nvidia-drm";
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-    WLR_NO_HARDWARE_CURSORS = "1";
     NVD_BACKEND = "direct";
-
+    
     NIXOS_OZONE_WL = "1";
   };
 
@@ -208,12 +213,13 @@ in {
         #  thunderbird
       ];
   };
+  # disabling jellyfin (227MB memory)
+  #services.jellyfin = {
+  #  enable = true;
+  #  user = "callum";
+  #  openFirewall = true;
+  #};
 
-  services.jellyfin = {
-    enable = true;
-    user = "callum";
-    openFirewall = true;
-  };
   # Install firefox.
   programs.firefox.enable = true;
   nixpkgs.config.permittedInsecurePackages =
@@ -323,6 +329,7 @@ in {
     libsForQt5.qt5ct
     kdePackages.qt6ct
     pipx
+    clonehero
   ])
 
     ++
@@ -396,21 +403,21 @@ in {
     # https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/609
     XDG_RUNTIME_DIR = "/run/user/${toString config.users.users.callum.uid}";
   };
-  services.suwayomi-server = {
-    enable = true;
-    settings = {
-      server = {
-        extensionRepos = [
-          "https://raw.githubusercontent.com/keiyoushi/extensions/repo/index.min.json"
-        ];
-        webUIEnabled = true;
-        initialOpenInBrowserEnabled = true;
-        webUIInterface = "browser";
-        webUIFlavor = "WebUI";
-      };
+  # disabling suwayomi because it was eating 500MB of memory
+  #services.suwayomi-server = {
+  #  enable = true;
+  #  settings = {
+  #    server = {
+  #      extensionRepos = [
+  #        "https://raw.githubusercontent.com/keiyoushi/extensions/repo/index.min.json"
+  #      ];
+  #      webUIEnabled = true;
+  #      webUIInterface = "browser";
+  #      webUIFlavor = "WebUI";
+  #    };
 
-    };
-  };
+  #  };
+  #};
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

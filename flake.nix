@@ -21,6 +21,8 @@
     };
 
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+
+    gBar.url = "github:scorpion-26/gBar";
   };
 
   outputs = {  ... }@inputs:
@@ -30,7 +32,12 @@
       nixosConfigurations = {
         phos = mkSystem ./hosts/phos/configuration.nix;
       };
-      
-      nixosModules.default = ./nixosModules;
+
+      homeConfigurations = {
+        "callum@phos" = mkHome "x86_64-linux" ./hosts/phos/home.nix;
+      };
+
+      homeManagerModules.default = ./modules/home-manager; 
+      nixosModules.default = ./modules/nixos;
     };
 }
