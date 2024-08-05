@@ -104,7 +104,6 @@ in {
     nix-prefetch-scripts
     libsForQt5.qt5.qtwayland
     qt6.qtwayland
-    kitty
     rofi-wayland
     obs-studio
     wl-clipboard
