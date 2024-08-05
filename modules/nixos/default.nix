@@ -20,7 +20,7 @@
       configExtension = config: (lib.mkIf cfg.${name}.enable config);
     })
     (myLib.filesIn ./features);
-    
+
   # Taking all module bundles in ./bundles and adding bundle.enables to them
   bundles =
     myLib.extendModules
@@ -33,17 +33,31 @@
     })
     (myLib.filesIn ./bundles);
 
+  # Taking all module services in ./services and adding services.enables to them
+  services =
+      myLib.extendModules
+      (name: {
+        extraOptions = {
+          myNixOS.services.${name}.enable = lib.mkEnableOption "enable ${name} service";
+        };
+
+        configExtension = config: (lib.mkIf cfg.services.${name}.enable config);
+      })
+      (myLib.filesIn ./services);
+
 in {
   imports =
     [
       inputs.home-manager.nixosModules.home-manager
     ]
     ++ features
-    ++ bundles;
+    ++ bundles
+    ++ services;
 
   config = {
     nix.settings.experimental-features = ["nix-command" "flakes"];
     programs.nix-ld.enable = true;
     nixpkgs.config.allowUnfree = true;
+    nix.settings.auto-optimise-store = true;
   };
 }
