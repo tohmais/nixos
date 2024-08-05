@@ -10,7 +10,7 @@
 
   myHomeManager = {
     bundles.general.enable = true;
- 
+    es-de.enable = true;
   };
 
   home = {

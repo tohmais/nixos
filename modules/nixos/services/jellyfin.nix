@@ -4,4 +4,10 @@
     user = "callum";
     openFirewall = true;
   };
+
+  environment.systemPackages = (with pkgs; [
+    jellyfin
+    jellyfin-web
+    jellyfin-ffmpeg
+  ])
 }
