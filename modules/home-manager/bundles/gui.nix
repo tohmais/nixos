@@ -3,12 +3,12 @@ let
   pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
 in  {
   myHomeManager = {
-    gbar.enable = lib.mkDefault true;
     kitty.enable = lib.mkDefault true;
     hyprland.enable = lib.mkDefault true;
     firefox.enable = lib.mkDefault true;
     chromium.enable = lib.mkDefault true;
     gtk.enable = lib.mkDefault true;
+    waybar.enable = lib.mkDefault true;
   };
 
   qt.enable = true;
