@@ -5,7 +5,7 @@
       mainBar = {
         layer = "top";
         position = "top";
-        height = 30;
+        height = 36;
         output = [
           "HDMI-A-1"
           "DVI-D-1"

@@ -1,5 +1,5 @@
 { pkgs, config, inputs, ... }: {
-  
+
   wayland.windowManager.hyprland = {
     enable = true;
     package = inputs.hyprland.packages.${pkgs.system}.hyprland;
@@ -56,7 +56,7 @@
         no_hardware_cursors = true;
         allow_dumb_copy = true;
       };
-      
+
       windowrulev2 = [
         "fullscreen,class:(org.libretro.RetroArch)"
         "immediate, class:^(steam_app*)$"
@@ -127,8 +127,7 @@
         "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
         "hyprctl setcursor ${config.stylix.cursor.name} ${toString config.stylix.cursor.size}"
         "swww img ${config.stylix.image}"
-        "gBar bar HDMI-A-1"
-        "gBar bar DVI-D-1"
+        "waybar"
       ];
 
 
