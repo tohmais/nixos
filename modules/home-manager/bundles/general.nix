@@ -2,7 +2,6 @@
   pkgs,
   config,
   lib,
-  inputs,
   ...
 }: {
 
@@ -19,7 +18,7 @@
     nix-alien.enable = lib.mkDefault true;
     nix-index.enable = lib.mkDefault true;
   };
-  
+
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
@@ -27,7 +26,7 @@
     gh
     wget
     neovim
-    
+
     coreutils
     gnumake
     pipx
@@ -42,6 +41,7 @@
 
     nix-prefetch-scripts
     nil
+    nixd
     alejandra
 
     nh

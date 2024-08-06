@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, inputs, ... }:
 let
   pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
 in  {
@@ -9,9 +9,13 @@ in  {
     hyprland.enable = lib.mkDefault true;
     firefox.enable = lib.mkDefault true;
     chromium.enable = lib.mkDefault true;
+    gtk.enable = lib.mkDefault true;
   };
 
-  
+  qt.enable = true;
+  qt.platformTheme.name = "gtk";
+  qt.style.name = "adwaita-dark";
+
   home.packages = (with pkgs; [
     vscodium
 
@@ -20,7 +24,7 @@ in  {
     pinta
     kdenlive
     libreoffice
-    
+
     pwvucontrol
     mpv
     amberol
@@ -28,11 +32,11 @@ in  {
     electron-mail
 
     bottles
-  ])   
-  
+  ])
+
   ++
 
   (with pkgs-unstable; [
-    zed-editor 
+    zed-editor
   ]);
 }

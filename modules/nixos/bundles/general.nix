@@ -44,7 +44,13 @@
     alsa.support32Bit = true;
     pulse.enable = true;
     jack.enable = true;
+    stylix.enable = true;
   };
+  fonts.packages = with pkgs; [
+    (nerdfonts.override { fonts = [ "FiraCode" ]; })
+    corefonts
+    dejavu_fonts
+  ];
 
   environment.systemPackages = with pkgs; [
     appimage-run

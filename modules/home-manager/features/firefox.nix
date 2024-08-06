@@ -1,8 +1,6 @@
 {
   pkgs,
   inputs,
-  config,
-  lib,
   ...
 }: {
   programs.firefox = {
@@ -12,7 +10,6 @@
         bitwarden
         ublock-origin
         sponsorblock
-        firefox-color
         return-youtube-dislikes
       ];
 
@@ -30,5 +27,5 @@
 
   home.packages = with pkgs; [
     tor-browser
-  ];  
+  ];
 }
