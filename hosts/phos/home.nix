@@ -11,8 +11,14 @@
   myHomeManager = {
     bundles.general.enable = true;
     bundles.gui.enable = true;
-    es-de.enable = true;
+    bundles.gaming.enable = true;
+    bundles.leisure.enable = true;
+    bundles.university.enable = true;
   };
+  
+  home.packages = with pkgs; [
+    davinci-resolve
+  ];
 
   home = {
     username = "callum";

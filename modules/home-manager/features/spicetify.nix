@@ -5,14 +5,10 @@ in
 {
   imports = [ inputs.spicetify-nix.homeManagerModule ];
 
-  home.packages = with pkgs; [
-    spotify
-  ];
-
   programs.spicetify = {
     enable = true;
-    theme = spicePkgs.themes.comfy;
-    colorScheme = "catppuccin-mocha"
+    theme = spicePkgs.themes.Comfy;
+    colorScheme = "catppuccin-mocha";
 
     enabledExtensions = with spicePkgs.extensions; [
       shuffle
@@ -21,7 +17,6 @@ in
     ];
 
     enabledCustomApps = with spicePkgs.apps; [
-      lyrics-plus
       marketplace
     ];
   };

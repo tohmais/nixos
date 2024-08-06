@@ -7,6 +7,6 @@
     wl-clipboard
     grim
     slurp
-    
+    swww
   ];
 }

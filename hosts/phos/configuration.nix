@@ -3,10 +3,7 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { pkgs, config, inputs, lib, ... }:
-let
-  pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
-
-in {
+{
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
@@ -89,96 +86,18 @@ in {
   hardware.bluetooth.powerOnBoot = true;
   services.blueman.enable = true;
 
-  # Install firefox.
-  programs.firefox.enable = true;
   nixpkgs.config.permittedInsecurePackages =
     [ "electron-25.9.0" "electron-19.1.9" "freeimage-unstable-2021-11-01"];
 
 
-  environment.systemPackages = (with pkgs; [
-    
-    nix-prefetch-scripts
-    
-    
-    xdg-utils
-    
-    ungoogled-chromium
-    fastfetch
-    btop
+  environment.systemPackages = with pkgs; [
 
-    amberol
-    nicotine-plus
-    electron-mail
-    gh
-    git
     emacs-gtk
     ripgrep
     fd
-    coreutils
-    clang
-    gnumake
-    pandoc
-    cmakeMinimal
-    libtool
-    nixfmt-classic
-    mangohud
-    protonup
-    r2modman
-    davinci-resolve
-    pinta
-    krita
-    mpv
-    hyprpaper
-    lutris
-    protontricks
-    bottles
-    spicetify-cli
-    p7zip
-    libreoffice
-    xivlauncher
-    dua
-    srb2kart
-    mpdevil
-    zoom-us
-    ani-cli
-    dolphin-emu
-    sptlrx
-    godot_4
-    pegasus-frontend
-    appimage-run
-    (retroarch.override {
-      cores = with libretro; [
-        snes9x
-        genesis-plus-gx
-        beetle-saturn
-        parallel-n64
-        melonds
-      ];
-    })
-    appeditor
-    ncmpc
-    jdk
-    nwg-look
 
-    libcap
-    kdenlive
     
-    tor-browser
-    tuxpaint
-    librewolf
-    kdePackages.qtsvg
-    kdePackages.ark
-    kdePackages.dolphin
-    catppuccin-qt5ct
-    libsForQt5.qt5ct
-    kdePackages.qt6ct
-    pipx
-    clonehero
-  ])
-
-    ++
-
-    (with pkgs-unstable; [ ryujinx zed-editor ]);
+  ];
 
   fonts.packages = with pkgs;
     [ (nerdfonts.override { fonts = [ "GeistMono" ]; }) ];

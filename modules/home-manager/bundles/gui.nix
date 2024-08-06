@@ -1,18 +1,38 @@
-{ pkgs, lib, ... }: {
+{ pkgs, lib, ... }:
+let
+  pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
+in  {
   myHomeManager = {
     gbar.enable = lib.mkDefault true;
     vesktop.enable = lib.mkDefault true;
     kitty.enable = lib.mkDefault true;
     hyprland.enable = lib.mkDefault true;
-    spicetify.enable = lib.mkDefault true;
+    firefox.enable = lib.mkDefault true;
+    chromium.enable = lib.mkDefault true;
   };
 
   
-  home.packages = with pkgs; [
+  home.packages = (with pkgs; [
     vscodium
+
     obs-studio
-    ncspot
-    cava
+    krita
+    pinta
+    kdenlive
+    libreoffice
+    
     pwvucontrol
-  ]
+    mpv
+    amberol
+
+    electron-mail
+
+    bottles
+  ])   
+  
+  ++
+
+  (with pkgs-unstable; [
+    zed-editor 
+  ]);
 }

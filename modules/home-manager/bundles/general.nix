@@ -17,17 +17,32 @@
   myHomeManager = {
     zsh.enable = lib.mkDefault true;
     nix-alien.enable = lib.mkDefault true;
+    nix-index.enable = lib.mkDefault true;
   };
   
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
     git
+    gh
     wget
     neovim
-    fastfetch
     
+    coreutils
+    gnumake
+    pipx
+
+    p7zip
+
+    fastfetch
     playerctl
+    xdg-utils
+    btop
+    dua
+
+    nix-prefetch-scripts
+    nil
+    alejandra
 
     nh
   ];
