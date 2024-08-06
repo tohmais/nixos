@@ -4,6 +4,7 @@
     cachix.enable = lib.mkDefault true;
     hyprland.enable = lib.mkDefault true;
     lix.enable = lib.mkDefault true;
+    stylix.enable = lib.mkDefault true;
   };
 
 
@@ -44,7 +45,6 @@
     alsa.support32Bit = true;
     pulse.enable = true;
     jack.enable = true;
-    stylix.enable = true;
   };
   fonts.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "FiraCode" ]; })

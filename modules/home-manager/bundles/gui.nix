@@ -4,7 +4,6 @@ let
 in  {
   myHomeManager = {
     gbar.enable = lib.mkDefault true;
-    vesktop.enable = lib.mkDefault true;
     kitty.enable = lib.mkDefault true;
     hyprland.enable = lib.mkDefault true;
     firefox.enable = lib.mkDefault true;
@@ -30,6 +29,7 @@ in  {
     amberol
 
     electron-mail
+    vesktop
 
     bottles
   ])

@@ -29,12 +29,14 @@
 
     coreutils
     gnumake
+    clang
     pipx
 
     p7zip
 
     fastfetch
     playerctl
+    pamixer
     xdg-utils
     btop
     dua

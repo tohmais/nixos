@@ -1,4 +1,5 @@
-{ pkgs, inputs, ... }: {
+{ pkgs, inputs, ... }:
+{
   imports = [inputs.stylix.nixosModules.stylix];
   stylix = {
     enable = true;
@@ -22,7 +23,7 @@
     cursor = {
       package = pkgs.capitaine-cursors;
       name = "capitaine-cursors";
-      size = 24;
+      size = 32;
     };
   };
 }
