@@ -96,25 +96,12 @@ in {
 
 
   environment.systemPackages = (with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    #  wget
-    vesktop
-    vscodium
-    lxqt.lxqt-policykit
+    
     nix-prefetch-scripts
-    libsForQt5.qt5.qtwayland
-    qt6.qtwayland
-    rofi-wayland
-    obs-studio
-    wl-clipboard
+    
+    
     xdg-utils
-    grim
-    slurp
-
-    spotify
-    ncspot
-    cava
-    playerctl
+    
     ungoogled-chromium
     fastfetch
     btop
@@ -172,11 +159,10 @@ in {
     ncmpc
     jdk
     nwg-look
-    nh
-    wget
+
     libcap
     kdenlive
-    pwvucontrol
+    
     tor-browser
     tuxpaint
     librewolf

@@ -25,6 +25,8 @@
     gBar.url = "github:scorpion-26/gBar";
 
     stylix.url = "github:danth/stylix";
+
+    spicetify-nix.url = "github:the-argus/spicetify-nix";
   };
 
   outputs = {  ... }@inputs:

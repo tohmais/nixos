@@ -14,17 +14,20 @@
   };
 
 
-  myHomeManager.gbar.enable = lib.mkDefault true;
-  myHomeManager.zsh.enable = lib.mkDefault true;
-  myHomeManager.kitty.enable = lib.mkDefault true;
-  myHomeManager.nix-alien.enable = lib.mkDefault true;
+  myHomeManager = {
+    zsh.enable = lib.mkDefault true;
+    nix-alien.enable = lib.mkDefault true;
+  };
+  
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
     git
+    wget
     neovim
     fastfetch
-
+    
+    playerctl
 
     nh
   ];
