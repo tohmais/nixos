@@ -15,12 +15,7 @@
         canTouchEfiVariables = false;
 
       };
-      grub = {
-        enable = true;
-        devices = [ "nodev" ];
-        useOSProber = true;
-        efiSupport = true;
-      };
+      systemd-boot.enable = true;
     };
     supportedFilesystems = [ "ntfs" ];
   };
@@ -113,6 +108,6 @@
 
   programs.thunar.plugins = with pkgs.xfce; [ thunar-archive-plugin ];
 
-  system.stateVersion = "23.11"; # Did you read the comment?
+  system.stateVersion = "24.05"; # Did you read the comment?
 
 }
