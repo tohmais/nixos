@@ -18,6 +18,7 @@
   
   home.packages = with pkgs; [
     davinci-resolve
+    xarchiver
   ];
 
   home = {

@@ -28,7 +28,7 @@ in  {
     mpv
     amberol
 
-    electron-mail
+
     vesktop
 
     bottles
@@ -38,5 +38,6 @@ in  {
 
   (with pkgs-unstable; [
     zed-editor
+    electron-mail
   ]);
 }

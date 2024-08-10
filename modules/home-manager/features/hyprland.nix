@@ -2,7 +2,7 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
-    # package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     settings = {
       monitor = [
         "HDMI-A-1, preferred, 0x0, auto, bitdepth, 10"
