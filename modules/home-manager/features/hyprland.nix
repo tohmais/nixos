@@ -55,7 +55,10 @@
       cursor = {
         no_hardware_cursors = true;
       };
-
+      render = {
+        explicit_sync = 0;
+        explicit_sync_kms = 0;
+      };
       windowrulev2 = [
         "fullscreen,class:(org.libretro.RetroArch)"
         "immediate, class:^(steam_app*)$"

@@ -18,7 +18,7 @@
   
   home.packages = with pkgs; [
     davinci-resolve
-    xarchiver
+    gnome.file-roller
   ];
 
   home = {
