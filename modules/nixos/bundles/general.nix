@@ -52,8 +52,14 @@
     dejavu_fonts
   ];
 
+  virtualisation.podman = {
+    enable = true;
+    dockerCompat = true;
+  };
+
   environment.systemPackages = with pkgs; [
     appimage-run
+    distrobox
   ];
 
 }

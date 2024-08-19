@@ -11,7 +11,10 @@ in {
     mangohud
     
     protonup
+    protonup-qt
+    winetricks
     protontricks
+    steamtinkerlaunch
 
     r2modman
     lutris

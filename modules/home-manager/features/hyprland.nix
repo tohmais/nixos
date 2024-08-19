@@ -78,7 +78,7 @@
         "$mod SHIFT, E, exec, wlogout"
         "$mod, Space, togglefloating"
         "$mod, F, fullscreen"
-        "$mod, D, exec, pkill rofi || rofi -show drun -show-icons Search"
+        "$mod, D, exec, pkill rofi || rofi"
         "$mod, O, exec, firefox"
 
         ", Print, exec, grimblast --notify save screen"
@@ -140,7 +140,6 @@
     lxqt.lxqt-policykit
     libsForQt5.qt5.qtwayland
     qt6.qtwayland
-    rofi-wayland
     wl-clipboard
     grim
     slurp

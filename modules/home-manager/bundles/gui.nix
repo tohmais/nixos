@@ -5,6 +5,7 @@ in  {
   myHomeManager = {
     kitty.enable = lib.mkDefault true;
     hyprland.enable = lib.mkDefault true;
+    rofi.enable = lib.mkDefault true;
     firefox.enable = lib.mkDefault true;
     chromium.enable = lib.mkDefault true;
     gtk.enable = lib.mkDefault true;
@@ -26,7 +27,6 @@ in  {
 
     pwvucontrol
     mpv
-    amberol
 
 
     vesktop
@@ -39,5 +39,6 @@ in  {
   (with pkgs-unstable; [
     zed-editor
     electron-mail
+    fooyin
   ]);
 }

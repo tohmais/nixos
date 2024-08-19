@@ -9,6 +9,7 @@
     sptlrx
 
     nicotine-plus
+    picard
     ani-cli
   ];
 }
