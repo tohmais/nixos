@@ -1,11 +1,11 @@
-{ pkgs, ...}: {
+{ pkgs, config, ...}: {
   programs.rofi = {
     enable = true;
     package = pkgs.rofi-wayland;
     extraConfig = {
-      show = "drun";
       show-icons = true;
-      display-drun = "Search";
+      display-drun = "> ";
+      font = "${config.stylix.fonts.monospace.name} ${toString config.stylix.fonts.sizes.terminal}";
     };
   };
 }

@@ -1,4 +1,4 @@
-{ pkgs, lib, inputs, ... }: 
+{ pkgs, lib, inputs, ... }:
 let
   pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
 in {
@@ -9,7 +9,7 @@ in {
 
   home.packages = (with pkgs; [
     mangohud
-    
+
     protonup
     protonup-qt
     winetricks
@@ -24,20 +24,11 @@ in {
     clonehero
 
     dolphin-emu
-    (retroarch.override {
-      cores = with libretro; [
-        snes9x
-        genesis-plus-gx
-        beetle-saturn
-        parallel-n64
-        melonds
-      ];
-    })
   ])
-  
+
   ++
 
   (with pkgs-unstable; [
-    ryujinx 
+    ryujinx
   ]);
 }
