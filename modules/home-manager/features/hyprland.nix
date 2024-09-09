@@ -5,8 +5,8 @@
     package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     settings = {
       monitor = [
-        "HDMI-A-1, preferred, 0x0, auto, bitdepth, 10"
-        "DVI-D-1, preferred, 1920x0, auto, bitdepth, 10"
+        "HDMI-A-1, preferred, 0x0, auto"
+        "DVI-D-1, preferred, 1920x0, auto"
         "Unknown-1, disable"
       ];
       workspace = [
