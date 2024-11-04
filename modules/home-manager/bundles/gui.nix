@@ -39,6 +39,5 @@ in  {
   (with pkgs-unstable; [
     zed-editor
     electron-mail
-    fooyin
   ]);
 }

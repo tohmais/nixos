@@ -19,6 +19,7 @@ in {
     r2modman
     lutris
 
+    prismlauncher
     xivlauncher
     srb2kart
     clonehero

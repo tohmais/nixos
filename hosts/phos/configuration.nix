@@ -56,8 +56,8 @@
     bundles.general.enable = true;
     bundles.users.enable = true;
     bundles.gaming.enable = true;
-
-    nvidia-wayland.enable = true;
+    
+    amd.enable = true;
 
     home-users = {
       "callum" = {
@@ -93,7 +93,7 @@
 
     
   ];
-
+  nixpkgs.config.allowUnfree = true;
   programs.kdeconnect.enable = true;
 
   fonts.packages = with pkgs;
