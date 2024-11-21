@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, inputs, config, ... }:
 {
   imports = [inputs.stylix.nixosModules.stylix];
   stylix = {
@@ -27,4 +27,5 @@
       size = 32;
     };
   };
+  environment.systemPackages = [config.stylix.cursor.package];
 }

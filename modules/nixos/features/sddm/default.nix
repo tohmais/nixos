@@ -1,10 +1,15 @@
-{pkgs, lib, ...}: let
+{pkgs, lib, config, ...}: let
   sddmTheme = import ./sddm-theme.nix {inherit pkgs;};
 in {
   services.displayManager.sddm = {
     enable = true;
     wayland.enable = true;
     theme = "${sddmTheme}";
+    settings = {
+      Theme = {
+        CursorTheme = config.stylix.cursor.name;
+      };
+    };
   };
 
   environment.systemPackages = with pkgs; [

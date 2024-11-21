@@ -2,16 +2,8 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
-    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    # package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     settings = {
-      monitor = [
-        "HDMI-A-1, preferred, 0x0, auto"
-        "DVI-D-1, preferred, 1920x0, auto"
-        "Unknown-1, disable"
-      ];
-      workspace = [
-        "1, monitor:HDMI-A-1, default:true"
-      ];
       input = {
         kb_layout = "us";
         follow_mouse = 1;

@@ -30,13 +30,6 @@
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
-  # Enable OpenGL
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
-  };
-
   security.polkit.enable = true;
   programs.dconf.enable = true;
 
@@ -76,6 +69,11 @@
     nssmdns4 = true;
     openFirewall = true;
   };
+
+  boot.kernelParams = [
+    "video=DP-2:1920x1080@75"
+    "video=HDMI-A-1:1920x1080@60"
+  ];
 
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
