@@ -16,7 +16,7 @@
             else "disable"
             }"
         )
-        (config.myNixOS.monitors);
+        (config.myHomeManager.monitors);
 
 
       input = {

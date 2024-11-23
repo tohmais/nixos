@@ -17,6 +17,7 @@
     zsh.enable = lib.mkDefault true;
     nix-alien.enable = lib.mkDefault true;
     nix-index.enable = lib.mkDefault true;
+    bundles.monitors.enable = lib.mkDefault true;
   };
 
   programs.home-manager.enable = true;

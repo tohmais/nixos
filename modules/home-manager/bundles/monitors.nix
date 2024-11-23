@@ -1,5 +1,6 @@
 {
   lib,
+  config,
   ...
 }: let
   inherit (lib) mkOption types;
@@ -7,7 +8,7 @@ in {
 
   # Stolen from vimjoyer's nixconf (https://github.com/vimjoyer/nixconf) #
 
-  options.myNixOS.monitors = mkOption {
+  options.myHomeManager.monitors = mkOption {
     type = types.attrsOf (types.submodule {
       options = {
         primary = mkOption {

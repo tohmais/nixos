@@ -17,7 +17,7 @@
           (
               name: m: name
           )
-          (lib.filterAttrs (name: m: m.enabled) config.myNixOS.monitors);
+          (lib.filterAttrs (name: m: m.enabled) config.myHomeManager.monitors);
 
         modules-left = [ "hyprland/workspaces" ];
         modules-center = [ "hyprland/window" ];
