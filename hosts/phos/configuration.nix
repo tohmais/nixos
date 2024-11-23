@@ -49,13 +49,31 @@
     bundles.general.enable = true;
     bundles.users.enable = true;
     bundles.gaming.enable = true;
-    
+    bundles.monitors.enable = true;
+
     amd.enable = true;
 
     home-users = {
       "callum" = {
         userConfig = ./home.nix;
        };
+    };
+
+    monitors = {
+      "DP-2" = {
+        width = 1920;
+        height = 1080;
+        refreshRate = 75;
+        x = 0;
+        y = 0;
+      };
+      "HDMI-A-1" = {
+        width = 1920;
+        height = 1080;
+        refreshRate = 60;
+        x = 1920;
+        y = 0;
+      };
     };
   };
 
@@ -69,11 +87,6 @@
     nssmdns4 = true;
     openFirewall = true;
   };
-
-  boot.kernelParams = [
-    "video=DP-2:1920x1080@75"
-    "video=HDMI-A-1:1920x1080@60"
-  ];
 
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
@@ -89,7 +102,7 @@
     ripgrep
     fd
 
-    
+
   ];
   nixpkgs.config.allowUnfree = true;
   programs.kdeconnect.enable = true;

@@ -1,9 +1,24 @@
-{ pkgs, config, inputs, ... }: {
+{ pkgs, config, inputs, lib, ... }: {
 
   wayland.windowManager.hyprland = {
     enable = true;
     # package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     settings = {
+      monitor =
+        lib.mapAttrsToList
+        (
+            name: m: let
+            resolution = "${toString m.width}x${toString m.height}@${toString m.refreshRate}";
+            position = "${toString m.x}x${toString m.y}";
+            in "${name},${
+            if m.enabled
+            then "${resolution},${position},1"
+            else "disable"
+            }"
+        )
+        (config.myNixOS.monitors);
+
+
       input = {
         kb_layout = "us";
         follow_mouse = 1;
@@ -115,6 +130,7 @@
 
       env = [
         "WLR_DRM_NO_ATOMIC,1"
+	"NIXOS_OZONE_WL,1"
       ];
 
       exec-once = [

@@ -6,7 +6,6 @@ in {
     es-de.enable = lib.mkDefault true;
   };
 
-
   home.packages = (with pkgs; [
     mangohud
 
@@ -14,7 +13,6 @@ in {
     protonup-qt
     winetricks
     protontricks
-    steamtinkerlaunch
 
     r2modman
     lutris

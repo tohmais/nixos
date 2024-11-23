@@ -12,10 +12,13 @@
         layer = "top";
         position = "top";
         height = 36;
-        output = [
-	  "DP-2"
-          "HDMI-A-1"
-        ];
+        output =
+          lib.mapAttrsToList
+          (
+              name: m: name
+          )
+          (lib.filterAttrs (name: m: m.enabled) config.myNixOS.monitors);
+
         modules-left = [ "hyprland/workspaces" ];
         modules-center = [ "hyprland/window" ];
         modules-right = [ "pulseaudio" "network" "battery" "clock" "tray"];

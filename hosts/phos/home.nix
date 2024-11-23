@@ -14,8 +14,10 @@
     bundles.gaming.enable = true;
     bundles.leisure.enable = true;
     bundles.university.enable = true;
+
+
   };
-  
+
   home.packages = with pkgs; [
     davinci-resolve
     gnome.file-roller

@@ -10,13 +10,14 @@
         bitwarden
         ublock-origin
         sponsorblock
-        return-youtube-dislikes
+        violentmonkey
       ];
 
       settings = {
         "media.ffmpeg.vaapi.enabled" = true;
-        "widget.dmabuf.force-enabled" = true;
-        "media.av1.enabled" = false;
+        "media.av1.enabled" = true;
+        "media.hardware-video-decoding.force-enabled" = true;
+
 
         "dom.security.https_only_mode" = true;
         "identity.fxaccounts.enabled" = false;
