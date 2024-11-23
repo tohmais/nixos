@@ -98,27 +98,11 @@
     [ "electron-25.9.0" "electron-19.1.9" "freeimage-unstable-2021-11-01"];
 
 
-  environment.systemPackages = with pkgs; [
-
-    emacs-gtk
-    ripgrep
-    fd
-
-
-  ];
   nixpkgs.config.allowUnfree = true;
   programs.kdeconnect.enable = true;
 
   fonts.packages = with pkgs;
     [ (nerdfonts.override { fonts = [ "GeistMono" ]; }) ];
-
-  services.emacs = {
-    enable = true;
-    package = with pkgs;
-      ((emacsPackagesFor emacs-gtk).emacsWithPackages
-        (epkgs: with epkgs; ([ vterm ])));
-    defaultEditor = true;
-  };
 
 
   programs.thunar.plugins = with pkgs.xfce; [ thunar-archive-plugin ];

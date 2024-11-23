@@ -84,6 +84,13 @@
       color: @base09;
     }
 
+    window#waybar.empty #window,
+    window#waybar.empty .modules-center {
+      padding: 0px;
+      margin: 0px;
+      border: 0px;
+      background-color: transparent;
+    }
     '';
     settings = {
       mainBar = {
@@ -125,6 +132,8 @@
           tooltip-format-ethernet = "{ifname} " ;
           tooltip-format-disconnected = "Disconnected ⚠";
           max-length = 50;
+          on-click = "kitty -e nmtui";
+          on-click-right = "nm-connection-editor";
         };
 
         "hyprland/window" = {

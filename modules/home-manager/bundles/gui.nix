@@ -10,6 +10,7 @@ in  {
     chromium.enable = lib.mkDefault true;
     gtk.enable = lib.mkDefault true;
     waybar.enable = lib.mkDefault true;
+    emacs.enable = lib.mkDefault true;
   };
 
   qt.enable = true;
