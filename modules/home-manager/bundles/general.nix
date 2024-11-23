@@ -43,7 +43,6 @@
     dua
 
     nix-prefetch-scripts
-    nil
     nixd
     alejandra
 

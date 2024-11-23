@@ -1,10 +1,11 @@
-{ pkgs, lib, ... }: {
+{ pkgs, lib, inputs, ... }: {
   myNixOS = {
     sddm.enable = lib.mkDefault true;
     cachix.enable = lib.mkDefault true;
     hyprland.enable = lib.mkDefault true;
     lix.enable = lib.mkDefault true;
     stylix.enable = lib.mkDefault true;
+    emacs.enable = lib.mkDefault true;
   };
 
 
@@ -47,7 +48,7 @@
     jack.enable = true;
   };
   fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "FiraCode" ]; })
+    (nerdfonts.override { fonts = [ "FiraCode" "NerdFontsSymbolsOnly" ]; })
     corefonts
     dejavu_fonts
   ];
@@ -61,5 +62,8 @@
     appimage-run
     distrobox
   ];
+
+  # For nix LSP support
+  nix.nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
 
 }
