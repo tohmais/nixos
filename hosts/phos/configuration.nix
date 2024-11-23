@@ -61,6 +61,24 @@
 
   };
 
+
+
+  # boot.kernelParams =
+  # lib.mapAttrsToList
+  # (
+  #     name: m: let
+  #     resolution = "${toString m.width}x${toString m.height}@${toString m.refreshRate}";
+  #     in "video=${name}:${resolution}"
+  # )
+  # (config.myHomeManager.monitors);
+
+  # might or might not need this for amd, idk.
+  boot.kernelParams = [
+    "video=DP-2:1920x1080@75"
+    "video=HDMI-A-1:1920x1080@60"
+  ];
+
+
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.callum.enableGnomeKeyring = true;
 

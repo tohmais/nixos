@@ -3,6 +3,7 @@
   outputs,
   pkgs,
   lib,
+  config,
   ...
 }: {
 
@@ -20,19 +21,18 @@
       "DP-2" = {
         width = 1920;
         height = 1080;
-        refreshRate = 75;
+        refreshRate = 75.;
         x = 0;
         y = 0;
       };
       "HDMI-A-1" = {
         width = 1920;
         height = 1080;
-        refreshRate = 60;
+        refreshRate = 60.;
         x = 1920;
         y = 0;
       };
     };
-
   };
 
   home.packages = with pkgs; [

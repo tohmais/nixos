@@ -27,13 +27,4 @@
   ];
   environment.systemPackages = with pkgs; [ rocmPackages.rocm-smi ];
   nixpkgs.config.rocmSupport = true;
-
-  boot.kernelParams =
-  lib.mapAttrsToList
-  (
-      name: m: let
-      resolution = "${toString m.width}x${toString m.height}@${toString m.refreshRate}";
-      in "video=${name}:${resolution}"
-  )
-  (config.myHomeManager.monitors);
 }

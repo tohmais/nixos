@@ -27,8 +27,9 @@
       };
       general = {
         gaps_in = 5;
-        gaps_out = 20;
+        gaps_out = 5;
         border_size = 2;
+        "col.active_border" = lib.mkForce "rgb(${config.lib.stylix.colors.base0E})";
 
         layout = "dwindle";
         allow_tearing = true;
