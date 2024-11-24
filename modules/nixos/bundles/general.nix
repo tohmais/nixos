@@ -5,7 +5,6 @@
     hyprland.enable = lib.mkDefault true;
     lix.enable = lib.mkDefault true;
     stylix.enable = lib.mkDefault true;
-    emacs.enable = lib.mkDefault true;
   };
 
 

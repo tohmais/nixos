@@ -15,7 +15,7 @@
   #   package = pkgs.emacs29-pgtk;
   # };
 
-  environment.sessionVariables.PATH = [
+  home.sessionPath = [
     "$HOME/.config/emacs/bin"
   ];
 
