@@ -3,6 +3,7 @@ let
   pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
 in {
   myHomeManager = {
+    # use es-de appimage in conjunction
     es-de.enable = lib.mkDefault true;
   };
 

@@ -11,5 +11,7 @@
     nicotine-plus
     picard
     ani-cli
+
+    aria2
   ];
 }

@@ -91,10 +91,6 @@
       border: 0px;
       background-color: transparent;
     }
-
-    #tray > * {
-      padding: 0 5px;
-    }
     '';
     settings = {
       mainBar = {
@@ -142,6 +138,10 @@
 
         "hyprland/window" = {
           separate-outputs = true;
+        };
+
+        tray = {
+          spacing = 5;
         };
       };
     };

@@ -1,8 +1,5 @@
-{ pkgs, ...}: {
-   home.packages = with pkgs; [
-     (pkgs.callPackage ./package.nix { })
-   ];
-   nixpkgs.config.permittedInsecurePackages = [
-    "freeimage-unstable-2021-11-01"
-  ];
+{...}: {
+   home.file = {
+     "ES-DE/custom_systems/es_find_rules.xml".source = ./es_find_rules.xml;
+   };
 }

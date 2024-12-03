@@ -20,7 +20,7 @@
   ];
 
 
-  environment.systemPackages = with pkgs; [
+  home.packages = with pkgs; [
     ((emacsPackagesFor emacs29-pgtk).emacsWithPackages (
       epkgs: with epkgs; [
         vterm
