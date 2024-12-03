@@ -7,7 +7,7 @@ in {
     es-de.enable = lib.mkDefault true;
   };
 
-  home.packages = (with pkgs; [
+  home.packages = with pkgs; [
     mangohud
 
     protonup
@@ -24,11 +24,6 @@ in {
     clonehero
 
     dolphin-emu
-  ])
-
-  ++
-
-  (with pkgs-unstable; [
     ryujinx
-  ]);
+  ];
 }

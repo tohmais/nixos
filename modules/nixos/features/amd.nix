@@ -1,9 +1,8 @@
 { pkgs, config, lib, ... }: {
   boot.initrd.kernelModules = [ "amdgpu" ];
-  hardware.opengl = {
+  hardware.graphics = {
    enable = true;
-   driSupport = true;
-   driSupport32Bit = true;
+   enable32Bit = true;
   };
   services.xserver.enable = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
@@ -21,7 +20,7 @@
     in [
       "L+    /opt/rocm   -    -    -     -    ${rocmEnv}"
     ];
-  hardware.opengl.extraPackages = with pkgs; [
+  hardware.graphics.extraPackages = with pkgs; [
     rocmPackages.clr.icd
     libvdpau-va-gl
   ];

@@ -6,7 +6,7 @@
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
     home-manager = {
-       url = "github:nix-community/home-manager/release-24.11";
+       url = "github:nix-community/home-manager";
        inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -16,7 +16,7 @@
     };
 
     lix-module = {
-      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.1-1.tar.gz";
+      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.1-2.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

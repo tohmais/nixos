@@ -16,7 +16,7 @@ in  {
   qt.platformTheme.name = "gtk";
   qt.style.name = "adwaita-dark";
 
-  home.packages = (with pkgs; [
+  home.packages = with pkgs; [
     vscodium
 
     obs-studio
@@ -32,12 +32,7 @@ in  {
     vesktop
 
     bottles
-  ])
-
-  ++
-
-  (with pkgs-unstable; [
     zed-editor
     electron-mail
-  ]);
+  ];
 }

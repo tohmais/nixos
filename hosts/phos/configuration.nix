@@ -95,7 +95,7 @@
   services.blueman.enable = true;
 
   nixpkgs.config.permittedInsecurePackages =
-    [ "electron-25.9.0" "electron-19.1.9" "freeimage-unstable-2021-11-01"];
+    [ "electron-25.9.0" "electron-19.1.9"];
 
 
   nixpkgs.config.allowUnfree = true;

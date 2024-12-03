@@ -1,5 +1,5 @@
 { pkgs, config, ... }: {
-  services.udev.packages = [ pkgs.dolphinEmu ];
+  services.udev.packages = [ pkgs.dolphin-emu ];
 
   boot.extraModulePackages = [
     config.boot.kernelPackages.gcadapter-oc-kmod

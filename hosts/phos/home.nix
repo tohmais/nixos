@@ -37,7 +37,7 @@
 
   home.packages = with pkgs; [
     davinci-resolve
-    gnome.file-roller
+    file-roller
   ];
 
   home = {

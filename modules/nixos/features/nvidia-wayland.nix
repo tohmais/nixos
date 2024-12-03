@@ -52,6 +52,6 @@ in {
 
   boot.kernelParams = lib.mkDefault [ "nvidia.NVreg_PreserveVideoMemoryAllocations=1" ];
 
-  hardware.opengl.extraPackages = with pkgs; [ nvidia-vaapi-driver ];
+  hardware.graphics.extraPackages = with pkgs; [ nvidia-vaapi-driver ];
 
 }

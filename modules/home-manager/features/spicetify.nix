@@ -7,8 +7,8 @@ in
 
   programs.spicetify = {
     enable = true;
-    theme = spicePkgs.themes.comfy;
-    colorScheme = "catppuccin-mocha";
+    # theme = spicePkgs.themes.comfy;
+    # colorScheme = "catppuccin-mocha";
 
     enabledExtensions = with spicePkgs.extensions; [
       shuffle
