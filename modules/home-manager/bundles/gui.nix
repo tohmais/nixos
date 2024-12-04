@@ -11,6 +11,7 @@ in  {
     gtk.enable = lib.mkDefault true;
     waybar.enable = lib.mkDefault true;
     emacs.enable = lib.mkDefault true;
+    stylix.enable = lib.mkDefault true;
   };
 
   qt.enable = true;
