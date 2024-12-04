@@ -140,6 +140,9 @@
           separate-outputs = true;
         };
 
+        clock = {
+          tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+        };
         tray = {
           spacing = 5;
         };

@@ -1,8 +1,10 @@
 # Copyright (c) 2023 Yurii M
 # Modified by Callum Wishart
 
-{ pkgs, inputs, config, ... }:
-{
+{ pkgs, inputs, config, lib, ... }:
+let
+  iconTheme = import ./icon-theme.nix {inherit lib pkgs;};
+in {
   imports = [inputs.stylix.nixosModules.stylix];
   stylix = {
     enable = true;
@@ -28,6 +30,12 @@
       package = pkgs.capitaine-cursors;
       name = "capitaine-cursors";
       size = 32;
+    };
+
+    iconTheme = {
+      enable = true;
+      package = iconTheme;
+      dark = "catppuccin-se";
     };
   };
   environment.systemPackages = [config.stylix.cursor.package];
