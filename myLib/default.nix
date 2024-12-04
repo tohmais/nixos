@@ -1,8 +1,10 @@
+# Copyright (c) 2023 Yurii M
+
 {inputs}: let
   myLib = (import ./default.nix) {inherit inputs;};
   outputs = inputs.self.outputs;
 in rec {
-  # Stolen from vimjoyer's nixconf (https://github.com/vimjoyer/nixconf) #
+
   # ================================================================ #
   # =                            My Lib                            = #
   # ================================================================ #

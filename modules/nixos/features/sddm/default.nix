@@ -1,3 +1,6 @@
+# Copyright (c) 2023 Yurii M
+# Modified by Callum Wishart
+
 {pkgs, lib, config, ...}: let
   sddmTheme = import ./sddm-theme.nix {inherit pkgs;};
 in {
@@ -8,6 +11,7 @@ in {
     settings = {
       Theme = {
         CursorTheme = config.stylix.cursor.name;
+        CursorSize = config.stylix.cursor.size;
       };
     };
   };

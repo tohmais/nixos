@@ -1,3 +1,4 @@
+# Copyright (c) 2023 Yurii M
 let
   lock = (builtins.fromJSON (builtins.readFile ./flake.lock)).nodes.nixpkgs.locked;
 in

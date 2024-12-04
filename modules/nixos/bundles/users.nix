@@ -1,3 +1,6 @@
+# Copyright (c) 2023 Yurii M
+# Modified by Callum Wishart
+
 {
   lib,
   config,
@@ -13,7 +16,7 @@ in {
     type = lib.types.attrsOf (lib.types.submodule {
       options = {
         userConfig = lib.mkOption {
-          default = ./../../home-manager/work.nix;
+          default = ./../../../hosts/phos/home.nix;
           example = "DP-1";
         };
         userSettings = lib.mkOption {
