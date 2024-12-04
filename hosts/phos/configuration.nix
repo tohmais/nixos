@@ -1,37 +1,34 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ pkgs, config, inputs, lib, ... }:
 {
-  imports = [ # Include the results of the hardware scan.
+  pkgs,
+  config,
+  inputs,
+  lib,
+  ...
+}: {
+  imports = [
+    # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
 
   # Bootloader.
   boot = {
-   loader = {
+    loader = {
       efi = {
         canTouchEfiVariables = false;
-
       };
       systemd-boot.enable = true;
     };
-    supportedFilesystems = [ "ntfs" ];
+    supportedFilesystems = ["ntfs"];
   };
 
   networking.hostName = "phos"; # Define your hostname.
 
-  # Enable networking
-  networking.networkmanager.enable = true;
   time.hardwareClockInLocalTime = true;
 
-  services.dbus.enable = true;
-  xdg.portal.enable = true;
-  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-
-  security.polkit.enable = true;
-  programs.dconf.enable = true;
+  security.pam.services.callum.enableGnomeKeyring = true;
 
   # Configure keymap in X11
   services.xserver = {
@@ -55,13 +52,9 @@
     home-users = {
       "callum" = {
         userConfig = ./home.nix;
-       };
+      };
     };
-
-
   };
-
-
 
   # boot.kernelParams =
   # lib.mapAttrsToList
@@ -78,35 +71,13 @@
     "video=HDMI-A-1:1920x1080@60"
   ];
 
+  nixpkgs.config.permittedInsecurePackages = ["electron-25.9.0" "electron-19.1.9"];
 
-  services.gnome.gnome-keyring.enable = true;
-  security.pam.services.callum.enableGnomeKeyring = true;
-
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-    openFirewall = true;
-  };
-
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = true;
-  services.blueman.enable = true;
-
-  nixpkgs.config.permittedInsecurePackages =
-    [ "electron-25.9.0" "electron-19.1.9"];
-
-
-  nixpkgs.config.allowUnfree = true;
   programs.kdeconnect.enable = true;
 
-  fonts.packages = with pkgs;
-    [ (nerdfonts.override { fonts = [ "GeistMono" ]; }) ];
+  fonts.packages = with pkgs; [(nerdfonts.override {fonts = ["GeistMono"];})];
 
-
-  programs.thunar.plugins = with pkgs.xfce; [ thunar-archive-plugin ];
+  programs.thunar.plugins = with pkgs.xfce; [thunar-archive-plugin];
 
   system.stateVersion = "24.05"; # Did you read the comment?
-
 }

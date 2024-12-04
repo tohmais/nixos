@@ -12,4 +12,14 @@ in
   };
 
   services.displayManager.defaultSession = "hyprland";
+
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.callum.enableGnomeKeyring = true;
+
+  services.dbus.enable = true;
+  xdg.portal.enable = true;
+  xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-gtk];
+
+  security.polkit.enable = true;
+  programs.dconf.enable = true;
 }

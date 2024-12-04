@@ -4,7 +4,9 @@
     enable = true;
     # package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     settings = {
+      
       monitor =
+        # Copyright (c) 2023 Yurii M
         lib.mapAttrsToList
         (
             name: m: let

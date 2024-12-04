@@ -35,6 +35,7 @@
     gnumake
     clang
     pipx
+    rustup
 
     p7zip
 

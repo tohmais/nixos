@@ -1,4 +1,9 @@
-{ pkgs, lib, inputs, ... }: {
+{
+  pkgs,
+  lib,
+  inputs,
+  ...
+}: {
   myNixOS = {
     sddm.enable = lib.mkDefault true;
     cachix.enable = lib.mkDefault true;
@@ -7,14 +12,13 @@
     stylix.enable = lib.mkDefault true;
   };
 
-
   boot.binfmt.registrations.appimage = {
-      wrapInterpreterInShell = false;
-      interpreter = "${pkgs.appimage-run}/bin/appimage-run";
-      recognitionType = "magic";
-      offset = 0;
-      mask = "\\xff\\xff\\xff\\xff\\x00\\x00\\x00\\x00\\xff\\xff\\xff";
-      magicOrExtension = "\\x7fELF....AI\\x02";
+    wrapInterpreterInShell = false;
+    interpreter = "${pkgs.appimage-run}/bin/appimage-run";
+    recognitionType = "magic";
+    offset = 0;
+    mask = "\\xff\\xff\\xff\\xff\\x00\\x00\\x00\\x00\\xff\\xff\\xff";
+    magicOrExtension = "\\x7fELF....AI\\x02";
   };
 
   services.flatpak.enable = true;
@@ -47,7 +51,7 @@
     jack.enable = true;
   };
   fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "FiraCode" "NerdFontsSymbolsOnly" ]; })
+    (nerdfonts.override {fonts = ["FiraCode" "NerdFontsSymbolsOnly"];})
     corefonts
     dejavu_fonts
   ];
@@ -57,12 +61,33 @@
     dockerCompat = true;
   };
 
+  # Enable CUPS to print documents.
+  services.printing.enable = true;
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
+
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+    settings = {
+      General = {
+        Experimental = true;
+      };
+    };
+  };
+  services.blueman.enable = true;
+  services.pipewire.wireplumber.extraConfig."11-bluetooth-policy" = {"wireplumber.settings" = {"bluetooth.autoswitch-to-headset-profile" = false;};};
+
+  networking.networkmanager.enable = true;
+  
   environment.systemPackages = with pkgs; [
     appimage-run
     distrobox
   ];
 
   # For nix LSP support
-  nix.nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
-
+  nix.nixPath = ["nixpkgs=${inputs.nixpkgs}"];
 }
