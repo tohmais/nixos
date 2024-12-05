@@ -1,7 +1,7 @@
 
 
 
-{pkgs, lib}: let
+{pkgs}: let
   link = "https://github.com/ljmill/catppuccin-icons/releases/download/v0.2.0/Catppuccin-SE.tar.bz2";
 in
   pkgs.stdenv.mkDerivation {
@@ -9,14 +9,16 @@ in
 
     src = pkgs.fetchurl {
       url = link;
-      sha256 = "sha256-1kzfg311assiiql564hp5pkpzlky0p8l832plrwn8swwwixv7kxw=";
+      sha256 = "sha256-vM+ze+Sca2R5plcMRNEFftJ/5y0XElMojlFrFcJ47s8=";
     };
 
     dontUnpack = true;
+      # Specify the build inputs
+      buildInputs = [ pkgs.gnutar ];
 
-    installPhase = ''
-      mkdir -p $out
-      ${pkgs.p7zip}/bin/7z x $src
-      ${pkgs.p7zip}/bin/7z x ${lib.strings.removeSuffix ".tar" "$src"} -o$out
-    '';
+      # The installation phase
+      installPhase = ''
+        mkdir -p $out
+        tar xjf $src -C $out
+      '';
   }
