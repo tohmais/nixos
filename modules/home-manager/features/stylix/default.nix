@@ -6,10 +6,10 @@ in {
     iconTheme = {
       enable = true;
       package = icon-theme;
-      dark = "catppuccin-se";
+      dark = "Catppuccin-SE";
     };
     targets = {
-      emacs.enable = true;
+      emacs.enable = false;
     };
   };
 }
