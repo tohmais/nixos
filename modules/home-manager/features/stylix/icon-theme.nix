@@ -1,6 +1,3 @@
-
-
-
 {pkgs}: let
   link = "https://github.com/ljmill/catppuccin-icons/releases/download/v0.2.0/Catppuccin-SE.tar.bz2";
 in
@@ -20,5 +17,8 @@ in
       installPhase = ''
         mkdir -p $out
         tar xjf $src -C $out
+        cd $out
+        mv Catppuccin-SE/* .
+        rm -rf Catppuccin-SE
       '';
   }
