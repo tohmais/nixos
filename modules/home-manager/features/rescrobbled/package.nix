@@ -1,14 +1,13 @@
-{ lib
-, bash
-, fetchFromGitHub
-, rustPlatform
-, pkg-config
-, openssl
-, dbus
+{
+  lib,
+  bash,
+  fetchFromGitHub,
+  rustPlatform,
+  pkg-config,
+  openssl,
+  dbus,
 }:
-
 rustPlatform.buildRustPackage rec {
-
   pname = "rescrobbled";
   version = "0.7.1";
 
@@ -21,9 +20,9 @@ rustPlatform.buildRustPackage rec {
 
   cargoHash = "sha256-ZJbyYFvGTuXt1aqhGOATcDRrkTk7SorWXkN81sUoDdo=";
 
-  nativeBuildInputs = [ pkg-config ];
+  nativeBuildInputs = [pkg-config];
 
-  buildInputs = [ openssl dbus ];
+  buildInputs = [openssl dbus];
 
   postPatch = ''
     # Required for tests
@@ -41,6 +40,6 @@ rustPlatform.buildRustPackage rec {
     license = licenses.gpl3Plus;
     mainProgram = "rescrobbled";
     platforms = platforms.unix;
-    maintainers = with maintainers; [ negatethis ];
+    maintainers = with maintainers; [negatethis];
   };
 }

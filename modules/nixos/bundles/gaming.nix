@@ -1,4 +1,8 @@
-{ lib, pkgs, ...}: {
+{
+  lib,
+  pkgs,
+  ...
+}: {
   myNixOS = {
     steam.enable = lib.mkDefault true;
     gc-controller.enable = lib.mkDefault true;
@@ -7,7 +11,6 @@
   # we have to install retroarch for all users so other
   # programs can source retroarch cores correctly.
   environment.systemPackages = with pkgs; [
-
     steamtinkerlaunch
 
     (retroarch.override {
@@ -21,5 +24,4 @@
       ];
     })
   ];
-
 }

@@ -1,7 +1,11 @@
-{ pkgs, lib, inputs, ... }:
-let
+{
+  pkgs,
+  lib,
+  inputs,
+  ...
+}: let
   pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
-in  {
+in {
   myHomeManager = {
     kitty.enable = lib.mkDefault true;
     hyprland.enable = lib.mkDefault true;
@@ -29,7 +33,6 @@ in  {
 
     pwvucontrol
     mpv
-
 
     vesktop
 

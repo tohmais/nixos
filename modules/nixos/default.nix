@@ -1,6 +1,5 @@
 # Copyright (c) 2023 Yurii M
 # Modified by Callum Wishart
-
 {
   pkgs,
   config,
@@ -38,16 +37,15 @@
 
   # Taking all module services in ./services and adding services.enables to them
   services =
-      myLib.extendModules
-      (name: {
-        extraOptions = {
-          myNixOS.services.${name}.enable = lib.mkEnableOption "enable ${name} service";
-        };
+    myLib.extendModules
+    (name: {
+      extraOptions = {
+        myNixOS.services.${name}.enable = lib.mkEnableOption "enable ${name} service";
+      };
 
-        configExtension = config: (lib.mkIf cfg.services.${name}.enable config);
-      })
-      (myLib.filesIn ./services);
-
+      configExtension = config: (lib.mkIf cfg.services.${name}.enable config);
+    })
+    (myLib.filesIn ./services);
 in {
   imports =
     [

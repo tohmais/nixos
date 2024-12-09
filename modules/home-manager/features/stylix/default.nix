@@ -1,5 +1,4 @@
-{ pkgs, ... }: 
-let
+{pkgs, ...}: let
   icon-theme = import ./icon-theme.nix {inherit pkgs;};
 in {
   stylix = {
@@ -13,4 +12,3 @@ in {
     };
   };
 }
-

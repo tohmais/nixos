@@ -1,9 +1,12 @@
-{inputs, pkgs, config, ...}:
-let
+{
+  inputs,
+  pkgs,
+  config,
+  ...
+}: let
   pkgs-hyprland =
     inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
-in
-{
+in {
   programs.hyprland = {
     enable = true;
     # package = inputs.hyprland.packages.${pkgs.system}.hyprland;
@@ -14,7 +17,6 @@ in
   services.displayManager.defaultSession = "hyprland";
 
   services.gnome.gnome-keyring.enable = true;
-  security.pam.services.callum.enableGnomeKeyring = true;
 
   services.dbus.enable = true;
   xdg.portal.enable = true;

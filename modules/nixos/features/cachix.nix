@@ -1,7 +1,10 @@
 # Copyright (c) 2023 Yurii M
 # Modified by Callum Wishart
-
-{ pkgs, lib, ... }: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   nix = {
     settings = {
       substituters = [
@@ -16,4 +19,3 @@
     };
   };
 }
-

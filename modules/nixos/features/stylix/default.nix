@@ -21,7 +21,7 @@
       };
       emoji = {
         package = pkgs.twitter-color-emoji;
-        name = "Twemoji";
+        name = "Twitter Color Emoji";
       };
     };
 

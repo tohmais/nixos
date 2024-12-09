@@ -1,6 +1,5 @@
 # Copyright (c) 2023 Yurii M
 # Modified by Callum Wishart
-
 {
   lib,
   config,
@@ -29,9 +28,8 @@ in {
   };
 
   config = {
-
     programs.zsh.enable = true;
-    environment.pathsToLink = [ "/share/zsh" ];
+    environment.pathsToLink = ["/share/zsh"];
 
     home-manager = {
       useGlobalPkgs = true;
@@ -60,7 +58,7 @@ in {
           initialPassword = "12345";
           description = lib.mkDefault "";
           shell = pkgs.zsh;
-          extraGroups = [ "networkmanager" "wheel" ];
+          extraGroups = ["networkmanager" "wheel"];
         }
         // user.userSettings
     ) (config.myNixOS.home-users);

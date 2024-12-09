@@ -1,5 +1,9 @@
-{ pkgs, lib, inputs, ... }:
-let
+{
+  pkgs,
+  lib,
+  inputs,
+  ...
+}: let
   pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
 in {
   myHomeManager = {

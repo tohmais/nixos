@@ -10,15 +10,15 @@ in
     };
 
     dontUnpack = true;
-      # Specify the build inputs
-      buildInputs = [ pkgs.gnutar ];
+    # Specify the build inputs
+    buildInputs = [pkgs.gnutar];
 
-      # The installation phase
-      installPhase = ''
-        mkdir -p $out
-        tar xjf $src -C $out
-        cd $out
-        mv Catppuccin-SE/* .
-        rm -rf Catppuccin-SE
-      '';
+    # The installation phase
+    installPhase = ''
+      mkdir -p $out
+      tar xjf $src -C $out
+      cd $out
+      mv Catppuccin-SE/* .
+      rm -rf Catppuccin-SE
+    '';
   }

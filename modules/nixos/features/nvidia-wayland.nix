@@ -1,14 +1,17 @@
-{pkgs, lib, config, inputs, ...}:
-let
+{
+  pkgs,
+  lib,
+  config,
+  inputs,
+  ...
+}: let
   pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
 in {
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = ["nvidia"];
 
   hardware.nvidia = {
-
     # Modesetting is required.
     modesetting.enable = true;
-
 
     # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
     # Enable this if you have graphical corruption issues or application crashes after waking
@@ -39,7 +42,6 @@ in {
   };
 
   environment.sessionVariables = {
-
     LIBVA_DRIVER_NAME = "nvidia";
     MOZ_DISABLE_RDD_SANDBOX = "1";
     XDG_SESSION_TYPE = "wayland";
@@ -50,8 +52,7 @@ in {
     NIXOS_OZONE_WL = "1";
   };
 
-  boot.kernelParams = lib.mkDefault [ "nvidia.NVreg_PreserveVideoMemoryAllocations=1" ];
+  boot.kernelParams = lib.mkDefault ["nvidia.NVreg_PreserveVideoMemoryAllocations=1"];
 
-  hardware.graphics.extraPackages = with pkgs; [ nvidia-vaapi-driver ];
-
+  hardware.graphics.extraPackages = with pkgs; [nvidia-vaapi-driver];
 }

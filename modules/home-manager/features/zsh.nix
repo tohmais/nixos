@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -9,18 +9,17 @@
       vim = "${pkgs.neovim}/bin/nvim";
     };
     history = {
-        share = true;
+      share = true;
     };
   };
 
   programs.zoxide = {
     enable = true;
-    options = [ "--cmd cd" ];
+    options = ["--cmd cd"];
   };
   programs.oh-my-posh = {
     enable = true;
     useTheme = "catppuccin";
-
   };
   home.packages = with pkgs; [
     eza

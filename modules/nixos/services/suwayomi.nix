@@ -1,16 +1,19 @@
-{ config, pkgs, ...}: {
-
+{
+  config,
+  pkgs,
+  ...
+}: {
   services.suwayomi-server = {
     enable = true;
     settings = {
-        server = {
+      server = {
         extensionRepos = [
-            "https://raw.githubusercontent.com/keiyoushi/extensions/repo/index.min.json"
+          "https://raw.githubusercontent.com/keiyoushi/extensions/repo/index.min.json"
         ];
         webUIEnabled = true;
         webUIInterface = "browser";
         webUIFlavor = "WebUI";
-        };
+      };
     };
   };
 }

@@ -1,6 +1,5 @@
 # Copyright (c) 2023 Yurii M
 # Modified by Callum Wishart
-
 {
   description = "tohmais' NixOS configuration";
 
@@ -9,13 +8,13 @@
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
     home-manager = {
-       url = "github:nix-community/home-manager/release-24.11";
-       inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/home-manager/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nix-alien = {
-       url = "github:thiagokokada/nix-alien";
-       inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:thiagokokada/nix-alien";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     lix-module = {
@@ -49,13 +48,12 @@
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
   };
 
-  outputs = {  ... }@inputs:
-    let
-      myLib = import ./myLib/default.nix {inherit inputs;};
-    in with myLib; {
+  outputs = {...} @ inputs: let
+    myLib = import ./myLib/default.nix {inherit inputs;};
+  in
+    with myLib; {
       nixosConfigurations = {
         phos = mkSystem ./hosts/phos/configuration.nix;
       };

@@ -1,10 +1,8 @@
 # Copyright (c) 2023 Yurii M
-
 {inputs}: let
   myLib = (import ./default.nix) {inherit inputs;};
   outputs = inputs.self.outputs;
 in rec {
-
   # ================================================================ #
   # =                            My Lib                            = #
   # ================================================================ #

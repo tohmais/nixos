@@ -82,7 +82,7 @@
   services.pipewire.wireplumber.extraConfig."11-bluetooth-policy" = {"wireplumber.settings" = {"bluetooth.autoswitch-to-headset-profile" = false;};};
 
   networking.networkmanager.enable = true;
-  
+
   environment.systemPackages = with pkgs; [
     appimage-run
     distrobox

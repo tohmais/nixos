@@ -1,31 +1,35 @@
-{ pkgs, config, inputs, lib, ... }: {
-
+{
+  pkgs,
+  config,
+  inputs,
+  lib,
+  ...
+}: {
   wayland.windowManager.hyprland = {
     enable = true;
     # package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     settings = {
-      
       monitor =
         # Copyright (c) 2023 Yurii M
         lib.mapAttrsToList
         (
-            name: m: let
+          name: m: let
             resolution = "${toString m.width}x${toString m.height}@${toString m.refreshRate}";
             position = "${toString m.x}x${toString m.y}";
-            in "${name},${
+          in "${name},${
             if m.enabled
             then "${resolution},${position},1"
             else "disable"
-            }"
+          }"
         )
         (config.myHomeManager.monitors);
-
 
       input = {
         kb_layout = "us";
         follow_mouse = 1;
         touchpad.natural_scroll = "no";
         sensitivity = 0;
+        accel_profile = "flat";
       };
       general = {
         gaps_in = 5;
@@ -42,7 +46,7 @@
 
         shadow = {
           enabled = false;
-	};
+        };
       };
       animations = {
         enabled = "yes";
@@ -68,8 +72,8 @@
       #   no_hardware_cursors = true;
       # };
       # render = {
-        # explicit_sync = 0;
-        # explicit_sync_kms = 0;
+      # explicit_sync = 0;
+      # explicit_sync_kms = 0;
       # };
       windowrulev2 = [
         "fullscreen,class:(org.libretro.RetroArch)"
@@ -84,49 +88,47 @@
 
       "$mod" = "SUPER";
       bind =
-      [
-        "$mod, RETURN, exec, kitty"
-        "$mod SHIFT, Q, killactive"
-        "$mod SHIFT, E, exec, wlogout"
-        "$mod, Space, togglefloating"
-        "$mod, F, fullscreen"
-        "$mod, D, exec, pkill rofi || rofi -show drun"
-        "$mod, O, exec, firefox"
+        [
+          "$mod, RETURN, exec, kitty"
+          "$mod SHIFT, Q, killactive"
+          "$mod SHIFT, E, exec, wlogout"
+          "$mod, Space, togglefloating"
+          "$mod, F, fullscreen"
+          "$mod, D, exec, pkill rofi || rofi -show drun"
+          "$mod, O, exec, firefox"
 
-        ", Print, exec, grimblast --notify save screen"
-        "CTRL, Print, exec, grimblast --notify save area"
+          ", Print, exec, grimblast --notify save screen"
+          "CTRL, Print, exec, grimblast --notify save area"
 
-        "$mod,left,movefocus,l"
-        "$mod,right,movefocus,r"
-        "$mod,up,movefocus,u"
-        "$mod,down,movefocus,d"
+          "$mod,left,movefocus,l"
+          "$mod,right,movefocus,r"
+          "$mod,up,movefocus,u"
+          "$mod,down,movefocus,d"
 
-        "$mod SHIFT,left,movewindow,l"
-        "$mod SHIFT,right,movewindow,r"
-        "$mod SHIFT,up,movewindow,u"
-        "$mod SHIFT,down,movewindow,d"
+          "$mod SHIFT,left,movewindow,l"
+          "$mod SHIFT,right,movewindow,r"
+          "$mod SHIFT,up,movewindow,u"
+          "$mod SHIFT,down,movewindow,d"
 
-        "$mod, mouse_down, workspace, e+1"
-        "$mod, mouse_up, workspace, e-1"
-
-
-      ]
-      ++ (
-        # workspaces
-        # binds $mod + [shift +] {1..10} to [move to] workspace {1..10}
-        builtins.concatLists (builtins.genList (
-            x: let
-              ws = let
-                c = (x + 1) / 10;
-              in
-                builtins.toString (x + 1 - (c * 10));
-            in [
-              "$mod, ${ws}, workspace, ${toString (x + 1)}"
-              "$mod SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}"
-            ]
-          )
-          10)
-      );
+          "$mod, mouse_down, workspace, e+1"
+          "$mod, mouse_up, workspace, e-1"
+        ]
+        ++ (
+          # workspaces
+          # binds $mod + [shift +] {1..10} to [move to] workspace {1..10}
+          builtins.concatLists (builtins.genList (
+              x: let
+                ws = let
+                  c = (x + 1) / 10;
+                in
+                  builtins.toString (x + 1 - (c * 10));
+              in [
+                "$mod, ${ws}, workspace, ${toString (x + 1)}"
+                "$mod SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}"
+              ]
+            )
+            10)
+        );
 
       bindm = [
         "$mod, mouse:272, movewindow"
@@ -135,7 +137,7 @@
 
       env = [
         "WLR_DRM_NO_ATOMIC,1"
-	"NIXOS_OZONE_WL,1"
+        "NIXOS_OZONE_WL,1"
       ];
 
       exec-once = [
@@ -144,8 +146,6 @@
         "swww img ${config.stylix.image}"
         "waybar"
       ];
-
-
     };
   };
 

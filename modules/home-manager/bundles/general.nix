@@ -1,20 +1,17 @@
 # Copyright (c) 2023 Yurii M
 # Modified by Callum Wishart
-
 {
   pkgs,
   config,
   lib,
   ...
 }: {
-
   nixpkgs = {
     config = {
       # allowUnfree = true;
       experimental-features = "nix-command flakes";
     };
   };
-
 
   myHomeManager = {
     zsh.enable = lib.mkDefault true;
@@ -56,5 +53,4 @@
   home.sessionVariables = {
     FLAKE = "${config.home.homeDirectory}/nixos";
   };
-
 }
