@@ -16,7 +16,7 @@
           name: m: let
             resolution = "${toString m.width}x${toString m.height}@${toString m.refreshRate}";
             position = "${toString m.x}x${toString m.y}";
-            scale = "${toString m.scale}"
+            scale = "${toString m.scale}";
           in "${name},${
             if m.enabled
             then "${resolution},${position},${scale}"
@@ -39,7 +39,7 @@
         "col.active_border" = lib.mkForce "rgb(${config.lib.stylix.colors.base0E})";
 
         layout = "dwindle";
-        allow_tearing = true;
+        allow_tearing = false;
       };
       decoration = {
         rounding = 10;

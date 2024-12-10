@@ -25,6 +25,7 @@ in {
   home.packages = with pkgs; [
     vscodium
 
+    qownnotes
     obs-studio
     krita
     pinta

@@ -1,4 +1,4 @@
-{pkgs, ...}: let
+{pkgs, config, ...}: let
   icon-theme = import ./icon-theme.nix {inherit pkgs;};
 in {
   stylix = {
@@ -10,5 +10,9 @@ in {
     targets = {
       emacs.enable = false;
     };
+  };
+
+  home.file = {
+    ".local/share/icons/${config.stylix.iconTheme.dark}".source = "${icon-theme}";
   };
 }
