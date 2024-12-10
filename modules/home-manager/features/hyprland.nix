@@ -16,9 +16,10 @@
           name: m: let
             resolution = "${toString m.width}x${toString m.height}@${toString m.refreshRate}";
             position = "${toString m.x}x${toString m.y}";
+            scale = "${toString m.scale}"
           in "${name},${
             if m.enabled
-            then "${resolution},${position},1"
+            then "${resolution},${position},${scale}"
             else "disable"
           }"
         )

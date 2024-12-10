@@ -4,7 +4,7 @@ Notes for non-reproducible parts of system:
 * Install Gear Lever to manage AppImages  
 * Install ES-DE AppImage. NixOS core settings should already be placed in the correct spot.  
 * Install Fightcade AppImage, use Flatseal to configure permissions to find specific training mode luas  
-
+* Set up rescrobbled + stylix cookies/api keys
 
 ### Credits
 
