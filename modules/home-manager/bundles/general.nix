@@ -45,11 +45,5 @@
     nix-prefetch-scripts
     nixd
     alejandra
-
-    nh
   ];
-
-  home.sessionVariables = {
-    FLAKE = "${config.home.homeDirectory}/nixos";
-  };
 }

@@ -10,6 +10,7 @@
     hyprland.enable = lib.mkDefault true;
     lix.enable = lib.mkDefault true;
     stylix.enable = lib.mkDefault true;
+    nh.enable = lib.mkDefault true;
   };
 
   boot.binfmt.registrations.appimage = {
