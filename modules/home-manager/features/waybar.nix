@@ -57,6 +57,10 @@
         color: @base0D;
       }
 
+      #battery {
+        color: @base0C;
+      }
+
       .modules-right > *,
       #workspaces > * {
         border-right: 2px solid @base0E;

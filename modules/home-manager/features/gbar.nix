@@ -1,5 +1,9 @@
-{inputs, ...}: {
-  imports = [inputs.gBar.homeManagerModules.x86_64-linux.default];
+{
+  inputs,
+  pkgs,
+  ...
+}: {
+  imports = [inputs.gBar.homeManagerModules.${pkgs.system}.default];
 
   programs.gBar = {
     enable = true;
