@@ -18,10 +18,10 @@
     nix-alien.enable = lib.mkDefault true;
     nix-index.enable = lib.mkDefault true;
     bundles.monitors.enable = lib.mkDefault true;
+    flatpak.enable = lib.mkDefault true;
   };
 
   programs.home-manager.enable = true;
-
   home.packages = with pkgs; [
     git
     gh
@@ -36,7 +36,6 @@
 
     p7zip
 
-    fastfetch
     playerctl
     pamixer
     xdg-utils

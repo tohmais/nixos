@@ -9,6 +9,8 @@ in {
     };
     targets = {
       emacs.enable = false;
+      hyprpaper.enable = false;
+      hyprland.hyprpaper.enable = false;
     };
   };
 

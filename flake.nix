@@ -48,6 +48,10 @@
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.5.1";
+
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
   outputs = {...} @ inputs: let
@@ -56,10 +60,12 @@
     with myLib; {
       nixosConfigurations = {
         phos = mkSystem ./hosts/phos/configuration.nix;
+        homesick = mkSystem ./hosts/homesick/configuration.nix;
       };
 
       homeConfigurations = {
         "callum@phos" = mkHome "x86_64-linux" ./hosts/phos/home.nix;
+        "callum@homesick" = mkHome "x86_64-linux" ./hosts/homesick/home.nix;
       };
 
       homeManagerModules.default = ./modules/home-manager;

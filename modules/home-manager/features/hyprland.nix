@@ -9,21 +9,29 @@
     enable = true;
     # package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     settings = {
-      monitor =
-        # Copyright (c) 2023 Yurii M
-        lib.mapAttrsToList
-        (
-          name: m: let
-            resolution = "${toString m.width}x${toString m.height}@${toString m.refreshRate}";
-            position = "${toString m.x}x${toString m.y}";
-            scale = "${toString m.scale}";
-          in "${name},${
-            if m.enabled
-            then "${resolution},${position},${scale}"
-            else "disable"
-          }"
-        )
-        (config.myHomeManager.monitors);
+      # monitor =
+      #   # Copyright (c) 2023 Yurii M
+      #   lib.mapAttrsToList
+      #   (
+      #     name: m: let
+      #       resolution = "${toString m.width}x${toString m.height}@${toString m.refreshRate}";
+      #       position = "${toString m.x}x${toString m.y}";
+      #       scale = "${toString m.scale}";
+      #     in "${name},${
+      #       if m.enabled
+      #       then "${resolution},${position},${scale}"
+      #       else "disable"
+      #     }"
+      #   )
+      #   (config.myHomeManager.monitors);
+
+
+      # Abandon declaratively managing monitors because I need to replug shit
+      # Use nwg-displays instead
+      source = [
+        "~/.config/hypr/monitors.conf"
+        "~/.config/hypr/workspaces.conf"
+      ];
 
       input = {
         kb_layout = "us";
@@ -146,6 +154,7 @@
         "hyprctl setcursor ${config.stylix.cursor.name} ${toString config.stylix.cursor.size}"
         "swww img ${config.stylix.image}"
         "waybar"
+        "blueman-applet"
       ];
     };
   };
@@ -160,5 +169,6 @@
     swww
     wlogout
     grimblast
+    nwg-displays
   ];
 }

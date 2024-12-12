@@ -28,7 +28,7 @@
 
   time.hardwareClockInLocalTime = true;
 
-  security.pam.services.callum.enableGnomeKeyring = true;
+  
 
   # Configure keymap in X11
   services.xserver = {
