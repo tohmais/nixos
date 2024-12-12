@@ -25,7 +25,6 @@
       #   )
       #   (config.myHomeManager.monitors);
 
-
       # Abandon declaratively managing monitors because I need to replug shit
       # Use nwg-displays instead
       source = [

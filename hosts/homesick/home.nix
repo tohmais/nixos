@@ -9,7 +9,6 @@
   imports = [outputs.homeManagerModules.default];
 
   myHomeManager = {
-    
     bundles.leisure.enable = true;
     bundles.university.enable = true;
 

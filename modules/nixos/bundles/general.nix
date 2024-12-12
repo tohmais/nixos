@@ -88,12 +88,12 @@
     distrobox
   ];
 
-  # I want to get shit done 
+  # I want to get shit done
   # (shoutout to this goated reddit comment https://www.reddit.com/r/NixOS/comments/1g4g1mp/comment/ls3kmzj)
-  
+
   programs.nix-ld = {
     libraries = pkgs.steam-run.fhsenv.args.multiPkgs pkgs;
-  }; 
+  };
 
   environment.sessionVariables = {
     XDG_CACHE_HOME = "$HOME/.cache";

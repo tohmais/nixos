@@ -15,26 +15,24 @@ in {
     rescrobbled.enable = lib.mkDefault true;
   };
 
-  home.packages = (with pkgs; [
-    cbonsai
-    fastfetch
-    pipes-rs
-    neo
+  home.packages =
+    (with pkgs; [
+      cbonsai
+      fastfetch
+      pipes-rs
+      neo
 
-    pinta
+      pinta
 
-    vesktop
+      vesktop
 
-    nicotine-plus
-    picard
-    ani-cli
+      nicotine-plus
+      picard
+      ani-cli
 
-    aria2
-  ])
-
-  ++
-
-  (with pkgs-unstable; [
-    sptlrx
-  ]);
+      aria2
+    ])
+    ++ (with pkgs-unstable; [
+      sptlrx
+    ]);
 }

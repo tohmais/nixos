@@ -18,7 +18,7 @@ in {
     emacs.enable = lib.mkDefault true;
     stylix.enable = lib.mkDefault true;
   };
-  
+
   gtk.enable = true;
 
   qt.enable = true;

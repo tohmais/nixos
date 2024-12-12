@@ -23,7 +23,7 @@
     enable = true;
     enable32Bit = true;
   };
-  
+
   # Configure keymap in X11
   services.xserver = {
     enable = true;

@@ -28,8 +28,6 @@
 
   time.hardwareClockInLocalTime = true;
 
-  
-
   # Configure keymap in X11
   services.xserver = {
     enable = true;
