@@ -27,6 +27,8 @@
   networking.hostName = "phos"; # Define your hostname.
 
   time.hardwareClockInLocalTime = true;
+  # Set up Zen kernel
+  boot.kernelPackages = pkgs.linuxPackages_zen;
 
   # Configure keymap in X11
   services.xserver = {

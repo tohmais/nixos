@@ -84,9 +84,6 @@
 
   networking.networkmanager.enable = true;
 
-  # Set up Zen Kernel
-  boot.kernelPackages = pkgs.linuxPackages_zen;
-
   environment.systemPackages = with pkgs; [
     appimage-run
     distrobox
