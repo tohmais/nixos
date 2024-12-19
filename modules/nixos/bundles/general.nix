@@ -11,6 +11,7 @@
     lix.enable = lib.mkDefault true;
     stylix.enable = lib.mkDefault true;
     nh.enable = lib.mkDefault true;
+    thunar.enable = lib.mkDefault true;
   };
 
   programs.appimage = {

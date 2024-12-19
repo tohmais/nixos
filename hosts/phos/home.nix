@@ -32,10 +32,6 @@
     };
   };
 
-  home.packages = with pkgs; [
-    file-roller
-  ];
-
   home = {
     username = "callum";
     homeDirectory = lib.mkDefault "/home/callum";

@@ -77,7 +77,5 @@
 
   fonts.packages = with pkgs; [(nerdfonts.override {fonts = ["GeistMono"];})];
 
-  programs.thunar.plugins = with pkgs.xfce; [thunar-archive-plugin];
-
   system.stateVersion = "24.05"; # Did you read the comment?
 }

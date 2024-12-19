@@ -178,6 +178,7 @@
             "critical" = 15;
           };
           format = "{capacity}% {icon} ";
+	        format-charging = "{capacity}% "; 
           format-plugged = "{capacity}%  ";
           "format-icons"= ["" "" "" "" ""];
         };
