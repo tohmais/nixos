@@ -177,9 +177,9 @@
           states = {
             "critical" = 15;
           };
-          format = "{capacity}% {icon}";
-          format-plugged = "{capacity}% ";
-          "format-icons"= [" " " " " " " " " "];
+          format = "{capacity}% {icon} ";
+          format-plugged = "{capacity}%  ";
+          "format-icons"= ["" "" "" "" ""];
         };
       };
     };

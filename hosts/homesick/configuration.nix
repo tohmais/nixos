@@ -28,8 +28,13 @@
   };
 
   boot.kernelParams = [ "nvidia.NVreg_PreserveVideoMemoryAllocations=1" ];
-  hardware.nvidia.powerManagement.enable = true;
-  
+  hardware.nvidia = {
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
+    powerManagement.enable = true;
+  };
+
+  boot.kernelPackages = pkgs.linuxPackages_zen;
+
   # Configure keymap in X11
   services.xserver = {
     enable = true;
