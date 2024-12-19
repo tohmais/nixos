@@ -7,7 +7,7 @@
   pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
 in {
   myHomeManager = {
-    bundle.gui.enable = lib.mkDefault true;
+    bundles.gui.enable = lib.mkDefault true;
 
     spicetify.enable = lib.mkDefault true;
     cava.enable = lib.mkDefault true;

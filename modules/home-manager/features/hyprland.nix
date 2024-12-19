@@ -4,7 +4,10 @@
   inputs,
   lib,
   ...
-}: {
+}:
+let
+  mn = "hyprctl activeworkspace -j | jq '.monitor'";
+in {
   wayland.windowManager.hyprland = {
     enable = true;
     # package = inputs.hyprland.packages.${pkgs.system}.hyprland;
@@ -120,6 +123,14 @@
 
           "$mod, mouse_down, workspace, e+1"
           "$mod, mouse_up, workspace, e-1"
+
+          ",XF86AudioMute,exec,swayosd-client --output-volume mute-toggle"
+          ",XF86AudioMicMute,exec,swayosd-client --input-volume mute-toggle"
+
+          ",XF86AudioMedia,exec,playerctl play-pause"
+          ",XF86AudioPlay,exec,playerctl play-pause"
+          ",XF86AudioPrev,exec,playerctl previous"
+          ",XF86AudioNext,exec,playerctl next"
         ]
         ++ (
           # workspaces
@@ -142,7 +153,10 @@
         "$mod, mouse:272, movewindow"
         "$mod, mouse:273, resizewindow"
       ];
-
+      binde = [
+        ",XF86AudioRaiseVolume,exec,swayosd-client --output-volume raise"
+        ",XF86AudioLowerVolume,exec,swayosd-client --output-volume lower"
+      ];
       env = [
         "WLR_DRM_NO_ATOMIC,1"
         "NIXOS_OZONE_WL,1"
@@ -151,12 +165,13 @@
       exec-once = [
         "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
         "hyprctl setcursor ${config.stylix.cursor.name} ${toString config.stylix.cursor.size}"
-        "swww img ${config.stylix.image}"
         "waybar"
         "blueman-applet"
       ];
     };
   };
+
+  services.swayosd.enable = true;
 
   home.packages = with pkgs; [
     lxqt.lxqt-policykit
@@ -169,5 +184,6 @@
     wlogout
     grimblast
     nwg-displays
+    jq
   ];
 }

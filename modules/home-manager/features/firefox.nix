@@ -12,7 +12,7 @@
         bitwarden
         ublock-origin
         sponsorblock
-        violentmonkey
+        firemonkey
       ];
 
       settings = {

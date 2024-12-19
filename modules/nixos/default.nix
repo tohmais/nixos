@@ -60,5 +60,6 @@ in {
     programs.nix-ld.enable = true;
     nixpkgs.config.allowUnfree = true;
     nix.settings.auto-optimise-store = true;
+    nix.optimise.automatic = true;
   };
 }

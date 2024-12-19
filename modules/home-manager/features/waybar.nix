@@ -126,9 +126,10 @@
             default = ["" "" ""];
           };
           on-click = "pwvucontrol";
-          on-click-middle = "pamixer --default-source -t";
-          on-click-right = "pamixer -t";
-          scroll-step = 10;
+          on-click-middle = "swayosd-client --input-volume mute-toggle";
+          on-click-right = "swayosd-client --output-volume mute-toggle";
+          on-scroll-up = "swayosd-client --output-volume +10";
+          on-scroll-down = "swayosd-client --output-volume -10";
         };
         network = {
           format = "{ifname}";
