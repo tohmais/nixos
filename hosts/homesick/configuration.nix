@@ -22,8 +22,14 @@
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
+    extraPackages = with pkgs; [
+      nvidia-vaapi-driver
+    ];
   };
 
+  boot.kernelParams = [ "nvidia.NVreg_PreserveVideoMemoryAllocations=1" ];
+  hardware.nvidia.powerManagement.enable = true;
+  
   # Configure keymap in X11
   services.xserver = {
     enable = true;

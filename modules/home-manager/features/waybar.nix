@@ -50,7 +50,7 @@
       }
 
       #network {
-        color: @base0C;
+        color: @base0B;
       }
 
       #clock {
@@ -59,6 +59,23 @@
 
       #battery {
         color: @base0C;
+      }
+
+      @keyframes blink {
+          to {
+              background-color: @base00;
+              color: @base08;
+          }
+      }
+  
+      #battery.critical:not(.charging) {
+          background-color: @base08;
+          color: @base00;
+          animation-name: blink;
+          animation-duration: 0.5s;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+          animation-direction: alternate;
       }
 
       .modules-right > *,
@@ -155,6 +172,14 @@
         };
         tray = {
           spacing = 5;
+        };
+        battery = {
+          states = {
+            "critical" = 15;
+          };
+          format = "{capacity}% {icon}";
+          format-plugged = "{capacity}% ";
+          "format-icons"= [" " " " " " " " " "];
         };
       };
     };
