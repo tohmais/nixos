@@ -50,7 +50,7 @@
       }
 
       #network {
-        color: @base0B;
+        color: @base0C;
       }
 
       #clock {
@@ -58,7 +58,7 @@
       }
 
       #battery {
-        color: @base0C;
+        color: @base0B;
       }
 
       @keyframes blink {
