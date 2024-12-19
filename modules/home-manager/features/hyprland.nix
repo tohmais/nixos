@@ -4,8 +4,7 @@
   inputs,
   lib,
   ...
-}:
-let
+}: let
   mn = "hyprctl activeworkspace -j | jq '.monitor'";
 in {
   wayland.windowManager.hyprland = {
