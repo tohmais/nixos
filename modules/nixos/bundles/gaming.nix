@@ -6,6 +6,7 @@
   myNixOS = {
     steam.enable = lib.mkDefault true;
     gc-controller.enable = lib.mkDefault true;
+    gh-controller.enable = lib.mkDefault true;
   };
 
   # we have to install retroarch for all users so other
