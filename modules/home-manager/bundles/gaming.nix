@@ -31,7 +31,9 @@ in {
     prismlauncher
     xivlauncher
     srb2kart
+
     clonehero
+    yarg
 
     dolphin-emu
     ryujinx
