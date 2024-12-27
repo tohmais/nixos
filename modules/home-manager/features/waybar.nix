@@ -78,6 +78,10 @@
           animation-direction: alternate;
       }
 
+      .modules-left #workspaces button {
+        color: @base05;
+      }
+      
       .modules-right > *,
       #workspaces > * {
         border-right: 2px solid @base0E;
@@ -97,6 +101,8 @@
         border-bottom: none;
         border-radius: 0px;
       }
+
+
       #workspaces button:hover,
       #workspaces button.visible {
         background: rgba(0,0,0,0);

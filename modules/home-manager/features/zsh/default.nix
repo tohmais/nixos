@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{pkgs, config, ...}: {
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -19,7 +19,12 @@
   };
   programs.oh-my-posh = {
     enable = true;
-    useTheme = "catppuccin";
+    settings = {
+      source = config.lib.stylix.colors {
+        template = builtins.readFile ./stylix-theme.json.mustache;
+        extension = ".json";
+      };
+    };
   };
   home.packages = with pkgs; [
     eza

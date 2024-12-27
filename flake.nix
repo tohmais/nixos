@@ -52,6 +52,8 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.5.1";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
+    ghostty.url = "github:ghostty-org/ghostty";
   };
 
   outputs = {...} @ inputs: let
