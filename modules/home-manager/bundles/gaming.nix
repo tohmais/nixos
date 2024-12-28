@@ -15,6 +15,7 @@ in {
 
   services.flatpak.packages = [
     "com.fightcade.Fightcade"
+    "io.github.Foldex.AdwSteamGtk"
   ];
 
   home.packages = with pkgs; [

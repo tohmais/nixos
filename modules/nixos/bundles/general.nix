@@ -89,6 +89,7 @@
   environment.localBinInPath = true;
   # I want to get shit done
   # (shoutout to this goated reddit comment https://www.reddit.com/r/NixOS/comments/1g4g1mp/comment/ls3kmzj)
+  services.envfs.enable = true;
 
   programs.nix-ld = {
     libraries = with pkgs; [

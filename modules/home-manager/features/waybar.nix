@@ -81,7 +81,7 @@
       .modules-left #workspaces button {
         color: @base05;
       }
-      
+
       .modules-right > *,
       #workspaces > * {
         border-right: 2px solid @base0E;
@@ -109,7 +109,7 @@
         color: @base0D;
       }
       #workspaces button.active {
-        color: @base0B;
+        color: @base0E;
       }
       #workspaces button.urgent {
         color: @base09;
