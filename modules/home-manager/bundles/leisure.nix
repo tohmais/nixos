@@ -26,6 +26,7 @@ in {
 
       vesktop
 
+      protonvpn-gui
       nicotine-plus
       picard
       ani-cli

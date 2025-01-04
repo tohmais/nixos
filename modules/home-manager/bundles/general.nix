@@ -29,6 +29,12 @@
     wget
     neovim
 
+    python3
+    SDL2
+    glew
+    cmake
+    jsoncpp
+
     coreutils
     gnumake
     clang

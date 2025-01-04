@@ -18,6 +18,10 @@ in {
     "io.github.Foldex.AdwSteamGtk"
   ];
 
+  home.sessionVariables = {
+    SDL_HINT_GAMECONTROLLER_USE_BUTTON_LABELS = 0;
+  };
+
   home.packages = with pkgs; [
     mangohud
 
@@ -31,6 +35,8 @@ in {
 
     prismlauncher
     xivlauncher
+
+    srb2
     srb2kart
 
     clonehero
