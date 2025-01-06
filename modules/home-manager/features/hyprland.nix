@@ -155,6 +155,8 @@ in {
       binde = [
         ",XF86AudioRaiseVolume,exec,swayosd-client --output-volume raise"
         ",XF86AudioLowerVolume,exec,swayosd-client --output-volume lower"
+        ",XF86MonBrightnessUp,exec,swayosd-client --brightness raise"
+        ",XF86MonBrightnessDown,exec,swayosd-client --brightness lower"
       ];
       env = [
         "WLR_DRM_NO_ATOMIC,1"

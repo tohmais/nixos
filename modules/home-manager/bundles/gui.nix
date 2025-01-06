@@ -45,6 +45,6 @@ in {
     zed-editor
     electron-mail
 
-    inputs.ghostty.packages.${pkgs.system}.default
+    ghostty
   ];
 }

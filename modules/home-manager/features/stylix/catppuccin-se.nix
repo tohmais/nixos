@@ -2,7 +2,7 @@
   link = "https://github.com/ljmill/catppuccin-icons/releases/download/v0.2.0/Catppuccin-SE.tar.bz2";
 in
   pkgs.stdenv.mkDerivation {
-    name = "catppuccin-se";
+    name = "Catppuccin-SE";
 
     src = pkgs.fetchurl {
       url = link;
@@ -15,10 +15,7 @@ in
 
     # The installation phase
     installPhase = ''
-      mkdir -p $out
-      tar xjf $src -C $out
-      cd $out
-      mv Catppuccin-SE/* .
-      rm -rf Catppuccin-SE
+      mkdir -p $out/share/icons/
+      tar xjf $src -C $out/share/icons/
     '';
   }

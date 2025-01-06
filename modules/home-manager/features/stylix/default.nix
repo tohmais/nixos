@@ -3,7 +3,7 @@
   config,
   ...
 }: let
-  icon-theme = import ./icon-theme.nix {inherit pkgs;};
+  icon-theme = import ./catppuccin-se.nix {inherit pkgs;};
 in {
   stylix = {
     iconTheme = {
@@ -16,7 +16,7 @@ in {
     };
   };
 
-  home.file = {
-    ".local/share/icons/${config.stylix.iconTheme.dark}".source = "${icon-theme}";
-  };
+  #home.file = {
+  #  ".local/share/icons/${config.stylix.iconTheme.dark}".source = "${icon-theme}";
+  #};
 }

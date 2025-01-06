@@ -52,5 +52,6 @@
     nix-prefetch-scripts
     nixd
     alejandra
+    nix-search-cli
   ];
 }
