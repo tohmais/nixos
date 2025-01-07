@@ -15,6 +15,9 @@ in {
       shuffle = true;
       repeat = "off";
 
+      audio_cache = true;
+      audio_cache_size = 500;
+
       keybindings = {
         "Shift+p" = "move playing";
         "p" = "playpause";

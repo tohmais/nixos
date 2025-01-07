@@ -1,0 +1,3 @@
+theme = Kanagawa Wave
+gtk-single-instance = true
+window-decoration = false

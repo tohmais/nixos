@@ -23,6 +23,9 @@
         package = pkgs.twitter-color-emoji;
         name = "Twitter Color Emoji";
       };
+      sizes = {
+        popups = 12;
+      };
     };
 
     targets.grub.useImage = false;

@@ -15,8 +15,4 @@ in {
       emacs.enable = false;
     };
   };
-
-  #home.file = {
-  #  ".local/share/icons/${config.stylix.iconTheme.dark}".source = "${icon-theme}";
-  #};
 }
