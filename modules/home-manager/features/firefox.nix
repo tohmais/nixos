@@ -13,6 +13,8 @@
         ublock-origin
         sponsorblock
         firemonkey
+        auto-tab-discard
+        chatgptbox
       ];
 
       settings = {
@@ -23,11 +25,15 @@
         "dom.security.https_only_mode" = true;
         "identity.fxaccounts.enabled" = false;
         "privacy.trackingprotection.enabled" = true;
+        "extensions.pocket.enabled" = false;
+        "sidebar.revamp" = true;
+        "sidebar.verticalTabs" = true;
       };
     };
   };
 
   home.packages = with pkgs; [
     tor-browser
+    inputs.zen-browser.packages.${pkgs.system}.default
   ];
 }

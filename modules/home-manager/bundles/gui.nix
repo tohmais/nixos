@@ -17,6 +17,7 @@ in {
     waybar.enable = lib.mkDefault true;
     emacs.enable = lib.mkDefault true;
     stylix.enable = lib.mkDefault true;
+    ghostty.enable = lib.mkDefault true;
   };
 
   gtk.enable = true;
@@ -44,7 +45,5 @@ in {
     bottles
     zed-editor
     electron-mail
-
-    ghostty
   ];
 }

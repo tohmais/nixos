@@ -13,6 +13,7 @@ in {
     };
     targets = {
       emacs.enable = false;
+      spicetify.enable = true;
     };
   };
 }

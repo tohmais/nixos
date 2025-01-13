@@ -9,17 +9,12 @@ in {
 
   programs.spicetify = {
     enable = true;
-    # theme = spicePkgs.themes.comfy;
-    # colorScheme = "catppuccin-mocha";
+    # theme = spicePkgs.themes.text;
+    # colorScheme = "Kanagawa";
 
     enabledExtensions = with spicePkgs.extensions; [
       shuffle
       hidePodcasts
-      lastfm
-    ];
-
-    enabledCustomApps = with spicePkgs.apps; [
-      marketplace
     ];
   };
 }
