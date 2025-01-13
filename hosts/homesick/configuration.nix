@@ -43,7 +43,7 @@
   };
 
   myNixOS = {
-    bundles.general.enable = true;
+    bundles.gui.enable = true;
     bundles.users.enable = true;
 
     home-users = {

@@ -43,7 +43,6 @@
   };
 
   myNixOS = {
-    bundles.general.enable = true;
     bundles.users.enable = true;
     bundles.gaming.enable = true;
 

@@ -5,22 +5,11 @@
   ...
 }: {
   myNixOS = {
-    sddm.enable = lib.mkDefault true;
     cachix.enable = lib.mkDefault true;
-    hyprland.enable = lib.mkDefault true;
     lix.enable = lib.mkDefault true;
-    stylix.enable = lib.mkDefault true;
     nh.enable = lib.mkDefault true;
-    thunar.enable = lib.mkDefault true;
-    ai.enable = lib.mkDefault true;
   };
 
-  programs.appimage = {
-    enable = true;
-    binfmt = true;
-  };
-
-  services.flatpak.enable = true;
   # Set your time zone.
   time.timeZone = "Australia/Brisbane";
 
@@ -49,11 +38,6 @@
     pulse.enable = true;
     jack.enable = true;
   };
-  fonts.packages = with pkgs; [
-    (nerdfonts.override {fonts = ["FiraCode" "NerdFontsSymbolsOnly"];})
-    corefonts
-    dejavu_fonts
-  ];
 
   virtualisation.podman = {
     enable = true;
@@ -125,6 +109,4 @@
     XDG_DATA_HOME = "$HOME/.local/share";
     XDG_STATE_HOME = "$HOME/.local/state";
   };
-  # For nix LSP support
-  nix.nixPath = ["nixpkgs=${inputs.nixpkgs}"];
 }
