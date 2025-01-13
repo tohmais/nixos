@@ -14,6 +14,7 @@ in {
       flip_status_indicators = true;
       shuffle = true;
       repeat = "off";
+      backend = "pulseaudio";
 
       audio_cache = true;
       audio_cache_size = 500;

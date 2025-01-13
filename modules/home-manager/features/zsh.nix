@@ -21,6 +21,7 @@
     enable = true;
     options = ["--cmd cd"];
   };
+
   programs.oh-my-posh = {
     enable = true;
     settings = builtins.fromJSON (builtins.unsafeDiscardStringContext (with config.lib.stylix.colors.withHashtag; ''
@@ -96,5 +97,6 @@
   };
   home.packages = with pkgs; [
     eza
+    fzf
   ];
 }
