@@ -46,6 +46,8 @@
     bundles.users.enable = true;
     bundles.gaming.enable = true;
 
+    services.ollama.enable = true;
+
     amd.enable = true;
 
     home-users = {

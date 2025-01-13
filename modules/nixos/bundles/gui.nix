@@ -5,7 +5,7 @@
   ...
 }: {
   myNixOS = {
-    bundles.gui.enable = lib.mkDefault true;
+    bundles.general.enable = lib.mkDefault true;
 
     sddm.enable = lib.mkDefault true;
     hyprland.enable = lib.mkDefault true;
