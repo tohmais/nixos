@@ -18,6 +18,7 @@ in {
     emacs.enable = lib.mkDefault true;
     stylix.enable = lib.mkDefault true;
     ghostty.enable = lib.mkDefault true;
+    vscodium.enable = lib.mkDefault true;
   };
 
   gtk.enable = true;
@@ -34,8 +35,6 @@ in {
   services.mpris-proxy.enable = true;
 
   home.packages = with pkgs; [
-    vscodium
-
     qownnotes
     libreoffice
 
