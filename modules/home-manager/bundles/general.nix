@@ -19,6 +19,7 @@
     nix-index.enable = lib.mkDefault true;
     bundles.monitors.enable = lib.mkDefault true;
     flatpak.enable = lib.mkDefault true;
+    nvf.enable = lib.mkDefault true;
   };
 
   programs.home-manager.enable = true;
@@ -27,7 +28,6 @@
     git
     gh
     wget
-    neovim
 
     python3
     SDL2

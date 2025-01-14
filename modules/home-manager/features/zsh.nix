@@ -10,7 +10,6 @@
     syntaxHighlighting.enable = true;
     shellAliases = {
       ls = "${pkgs.eza}/bin/eza --icons";
-      vim = "${pkgs.neovim}/bin/nvim";
     };
     history = {
       share = true;
