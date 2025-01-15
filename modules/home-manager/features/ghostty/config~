@@ -1,4 +1,0 @@
-theme = Kanagawa Wave
-quit-after-last-window-closed = false
-gtk-single-instance = true
-window-decoration = false
