@@ -2,7 +2,6 @@
   programs = {
     foot = {
       enable = true;
-      enableZshIntegration = true;
       server.enable = false;
       settings = {
         main = {
@@ -22,7 +21,7 @@
         };
       };
     };
-    zsh.interactiveShellInit = ". ${./zshrc} # enable shell integration for foot terminal";
+    zsh.initExtra = ". ${./zshrc} # enable shell integration for foot terminal";
   };
 
   home.packages = with pkgs; [libsixel];

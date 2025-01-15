@@ -25,6 +25,8 @@
     enable = true;
     settings = builtins.fromJSON (builtins.unsafeDiscardStringContext (with config.lib.stylix.colors.withHashtag; ''
       {
+        "disable_notice": true,
+        "auto_upgrade": false,
         "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
         "palette": {
           "os": "${base05}",
