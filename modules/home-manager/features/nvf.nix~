@@ -13,7 +13,6 @@ in {
       vim = {
         viAlias = true;
         vimAlias = true;
-        useSystemClipboard = true;
         telescope.enable = true;
         lsp = {
           enable = true;
