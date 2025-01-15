@@ -99,7 +99,7 @@ in {
       "$mod" = "SUPER";
       bind =
         [
-          "$mod, RETURN, exec, kitty"
+          "$mod, RETURN, exec, foot"
           "$mod SHIFT, Q, killactive"
           "$mod SHIFT, E, exec, wlogout"
           "$mod, Space, togglefloating"

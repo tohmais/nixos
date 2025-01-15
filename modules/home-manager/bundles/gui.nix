@@ -9,6 +9,7 @@ in {
   myHomeManager = {
     bundles.general.enable = lib.mkDefault true;
 
+
     kitty.enable = lib.mkDefault true;
     hyprland.enable = lib.mkDefault true;
     rofi.enable = lib.mkDefault true;
@@ -19,6 +20,7 @@ in {
     stylix.enable = lib.mkDefault true;
     ghostty.enable = lib.mkDefault true;
     vscodium.enable = lib.mkDefault true;
+    foot.enable = lib.mkDefault true;
   };
 
   gtk.enable = true;

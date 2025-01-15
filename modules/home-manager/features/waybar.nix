@@ -164,7 +164,7 @@
           tooltip-format-ethernet = "{ifname} ";
           tooltip-format-disconnected = "Disconnected ⚠";
           max-length = 50;
-          on-click = "kitty -e nmtui";
+          on-click = "foot -e nmtui";
           on-click-right = "nm-connection-editor";
         };
 

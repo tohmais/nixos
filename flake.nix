@@ -56,12 +56,9 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
-    obsidian-nvim.url = "github:epwalsh/obsidian.nvim";
-
     nvf = {
       url = "github:notashelf/nvf";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.obsidian-nvim.follows = "obsidian-nvim";
     };
   };
 
