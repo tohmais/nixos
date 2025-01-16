@@ -12,7 +12,6 @@ in {
     spicetify.enable = lib.mkDefault true;
     cava.enable = lib.mkDefault true;
     ncspot.enable = lib.mkDefault true;
-    rescrobbled.enable = lib.mkDefault true;
   };
 
   home.packages =
@@ -34,6 +33,7 @@ in {
       aria2
     ])
     ++ (with pkgs-unstable; [
+      rescrobbled
       sptlrx
     ]);
 }
