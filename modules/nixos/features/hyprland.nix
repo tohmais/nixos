@@ -23,8 +23,11 @@ in {
   xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-gtk];
 
   security.polkit.enable = true;
-  security.pam.services = builtins.mapAttrs (name: n: {
-    enableGnomeKeyring = true;
-  }) (config.myNixOS.home-users);
+  # security.pam.services = builtins.mapAttrs (name: n: {
+  #   enableGnomeKeyring = true;
+  # }) (config.myNixOS.home-users);
+
+  security.pam.services.sddm.enableGnomeKeyring = true;
+
   programs.dconf.enable = true;
 }
