@@ -94,6 +94,8 @@ in {
         "noinitialfocus,class:^(xwaylandvideobridge)$"
         "maxsize 1 1,class:^(xwaylandvideobridge)$"
         "noblur,class:^(xwaylandvideobridge)$"
+
+        "pin,class:polkit-gnome-authentication-agent-1"
       ];
 
       "$mod" = "SUPER";
@@ -169,6 +171,7 @@ in {
         "waybar"
         "blueman-applet"
         "swaync"
+        "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
       ];
     };
   };
@@ -194,7 +197,6 @@ in {
   };
 
   home.packages = with pkgs; [
-    lxqt.lxqt-policykit
     libsForQt5.qt5.qtwayland
     qt6.qtwayland
     wl-clipboard
@@ -205,5 +207,6 @@ in {
     grimblast
     nwg-displays
     jq
+    polkit_gnome
   ];
 }
