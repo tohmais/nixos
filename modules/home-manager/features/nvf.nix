@@ -1,4 +1,5 @@
 {
+  pkgs,
   config,
   inputs,
   ...
@@ -15,10 +16,21 @@ in {
         vimAlias = true;
         useSystemClipboard = true;
         telescope.enable = true;
+        autocomplete.nvim-cmp.enable = true;
         lsp = {
           enable = true;
           formatOnSave = true;
+          lightbulb.enable = true;
         };
+        languages = {
+          enableFormat = true;
+          enableExtraDiagnostics = true;
+          enableLSP = true;
+          enableTreesitter = true;
+
+          nix.enable = true;
+        };
+
         binds = {
           cheatsheet.enable = true;
           whichKey.enable = true;
@@ -37,4 +49,9 @@ in {
       };
     };
   };
+
+  home.packages = with pkgs; [
+    nodejs
+    tree-sitter
+  ];
 }

@@ -50,5 +50,7 @@ in {
     ripgrep
     fd
     ranger
+    nodejs
+    nixfmt-rfc-style
   ];
 }

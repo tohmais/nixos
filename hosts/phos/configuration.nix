@@ -46,7 +46,8 @@
     bundles.users.enable = true;
     bundles.gaming.enable = true;
 
-    services.ollama.enable = true;
+    # i WOULD enable this, if my internet at home wasn't a packet-dropping piece of shit
+    # services.ollama.enable = true;
 
     amd.enable = true;
 
