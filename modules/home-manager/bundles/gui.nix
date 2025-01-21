@@ -25,8 +25,7 @@ in {
   gtk.enable = true;
 
   qt.enable = true;
-  qt.platformTheme.name = "gtk";
-  qt.style.name = "adwaita-dark";
+  qt.platformTheme.name = "qtct";
 
   services.flatpak.packages = [
     "it.mijorus.gearlever"

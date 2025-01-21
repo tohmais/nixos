@@ -3,11 +3,12 @@
 {
   pkgs,
   inputs,
+  config,
   ...
 }: {
   programs.firefox = {
     enable = true;
-    profiles.callum = {
+    profiles."${config.home.username}" = {
       extensions = with inputs.firefox-addons.packages.${pkgs.system}; [
         bitwarden
         ublock-origin
