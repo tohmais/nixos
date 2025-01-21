@@ -2,6 +2,7 @@
   pkgs,
   lib,
   inputs,
+  config,
   ...
 }: let
   pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
@@ -25,12 +26,20 @@ in {
   gtk.enable = true;
 
   qt.enable = true;
-  qt.platformTheme.name = "qtct";
 
   services.flatpak.packages = [
     "it.mijorus.gearlever"
     "com.github.tchx84.Flatseal"
   ];
+
+  home.sessionVariables = {
+    TERM = "${config.myHomeManager.terminal.name}";
+  };
+
+  xdg.configFile."xfce4/helpers.rc".text = ''
+    TerminalEmulator=${config.myHomeManager.terminal.name}
+    TerminalEmulatorDismissed=true
+  '';
 
   services.mpris-proxy.enable = true;
 

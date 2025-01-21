@@ -101,7 +101,7 @@ in {
       "$mod" = "SUPER";
       bind =
         [
-          "$mod, RETURN, exec, foot"
+          "$mod, RETURN, exec, ${config.myHomeManager.terminal.name}"
           "$mod SHIFT, Q, killactive"
           "$mod SHIFT, E, exec, wlogout"
           "$mod, Space, togglefloating"

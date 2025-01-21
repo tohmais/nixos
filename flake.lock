@@ -3206,15 +3206,15 @@
         "tinted-tmux": "tinted-tmux"
       },
       "locked": {
-        "lastModified": 1736381946,
-        "narHash": "sha256-k66y4eMHZiJO3N43wuZOdoRmGmNwIj3EZq6NGK+AEM8=",
-        "owner": "danth",
+        "lastModified": 1737417592,
+        "narHash": "sha256-g6gmm5Qh3pRR2pgk4tLWVqYP1EbZF4gXdhvzAVPibRU=",
+        "owner": "tohmais",
         "repo": "stylix",
-        "rev": "c62df1918d178ade64dc8a2df99e78a5d5f20514",
+        "rev": "10b9ed0a6289713d61f647684144159f95ca117d",
         "type": "github"
       },
       "original": {
-        "owner": "danth",
+        "owner": "tohmais",
         "ref": "release-24.11",
         "repo": "stylix",
         "type": "github"
