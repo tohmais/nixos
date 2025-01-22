@@ -1,11 +1,17 @@
 {
   pkgs,
   config,
+  inputs,
   ...
 }: {
+  imports = [
+    inputs.nix-gaming.nixosModules.platformOptimizations
+  ];
+
   programs.steam.enable = true;
   programs.steam.gamescopeSession.enable = true;
   programs.steam.localNetworkGameTransfers.openFirewall = true;
+  programs.steam.platformOptimizations.enable = true;
   programs.gamemode.enable = true;
 
   nixpkgs.config.packageOverrides = pkgs: {

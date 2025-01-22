@@ -1,4 +1,11 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
+  f = config.stylix.fonts;
+in {
   programs = {
     foot = {
       enable = true;
@@ -7,6 +14,7 @@
         main = {
           app-id = "foot";
           title = "foot";
+          font = lib.mkForce "${f.monospace.name}:size=${toString f.sizes.terminal}, ${f.emoji.name}:size=${toString (f.sizes.terminal - 1.1)}";
 
           locked-title = "no";
         };

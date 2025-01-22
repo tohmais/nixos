@@ -15,6 +15,8 @@ in {
       emacs.enable = false;
       spicetify.enable = true;
       qt.enable = true;
+      hyprland.enable = false;
+      hyprpaper.enable = false;
     };
   };
 }

@@ -22,12 +22,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+    # hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
 
     gBar = {
       url = "github:scorpion-26/gBar";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-gaming.url = "github:fufexan/nix-gaming";
 
     stylix = {
       url = "github:tohmais/stylix/release-24.11";

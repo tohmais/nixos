@@ -45,7 +45,8 @@ in {
         gaps_in = 5;
         gaps_out = 5;
         border_size = 2;
-        "col.active_border" = lib.mkForce "rgb(${config.lib.stylix.colors.base0E})";
+        "col.active_border" = "rgb(${config.lib.stylix.colors.base0E})";
+        "col.inactive_border" = "rgb(${config.lib.stylix.colors.base03})";
 
         layout = "dwindle";
         allow_tearing = false;
@@ -171,6 +172,7 @@ in {
         "waybar"
         "blueman-applet"
         "swaync"
+        "wbg ${config.stylix.image}"
         "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
       ];
     };
@@ -202,7 +204,7 @@ in {
     wl-clipboard
     grim
     slurp
-    swww
+    wbg
     wlogout
     grimblast
     nwg-displays
