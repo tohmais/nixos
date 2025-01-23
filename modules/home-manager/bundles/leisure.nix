@@ -22,6 +22,7 @@ in {
       neo
 
       pinta
+      gimp
 
       vesktop
 

@@ -12,7 +12,7 @@
     base16Scheme = "${pkgs.base16-schemes}/share/themes/kanagawa.yaml";
 
     polarity = "dark";
-    image = ./wallpaper.jpg;
+    image = ./background.png;
 
     fonts = {
       monospace = {
