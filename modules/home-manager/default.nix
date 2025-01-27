@@ -34,15 +34,13 @@
       configExtension = config: (lib.mkIf cfg.bundles.${name}.enable config);
     })
     (myLib.filesIn ./bundles);
+
+    opts = myLib.filesIn ./options;
 in {
   imports =
     []
     ++ features
-    ++ bundles;
+    ++ bundles
+    ++ opts;
 
-  options.myHomeManager.terminal.name = lib.mkOption {
-    default = "foot";
-    description = "Sets default terminal emulator to the name specified.";
-    type = lib.types.str;
-  };
 }
