@@ -45,6 +45,7 @@
   myNixOS = {
     bundles.gui.enable = true;
     bundles.users.enable = true;
+    isProfessional = true;
 
     home-users = {
       "callum" = {

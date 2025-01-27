@@ -46,6 +46,8 @@
       configExtension = config: (lib.mkIf cfg.services.${name}.enable config);
     })
     (myLib.filesIn ./services);
+
+    opts = myLib.filesIn ./options;
 in {
   imports =
     [
@@ -53,7 +55,8 @@ in {
     ]
     ++ features
     ++ bundles
-    ++ services;
+    ++ services
+    ++ opts;
 
   config = {
     nix.settings.experimental-features = ["nix-command" "flakes"];
