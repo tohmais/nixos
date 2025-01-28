@@ -107,7 +107,7 @@ in {
           "$mod SHIFT, E, exec, wlogout"
           "$mod, Space, togglefloating"
           "$mod, F, fullscreen"
-          "$mod, D, exec, pkill rofi || rofi -show drun"
+          "$mod, D, exec, pkill fuzzel || fuzzel"
           "$mod, O, exec, firefox"
 
           ", Print, exec, grimblast --notify save screen"

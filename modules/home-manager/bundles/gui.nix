@@ -21,6 +21,7 @@ in {
     ghostty.enable = lib.mkDefault true;
     vscodium.enable = lib.mkDefault true;
     foot.enable = lib.mkDefault true;
+    fuzzel.enable = lib.mkDefault true;
   };
 
   gtk.enable = true;
