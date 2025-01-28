@@ -47,7 +47,7 @@
     })
     (myLib.filesIn ./services);
 
-    opts = myLib.filesIn ./options;
+  opts = myLib.filesIn ./options;
 in {
   imports =
     [

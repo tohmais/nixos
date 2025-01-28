@@ -170,6 +170,7 @@ in {
         "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
         "hyprctl setcursor ${config.stylix.cursor.name} ${toString config.stylix.cursor.size}"
         "waybar"
+        "nm-applet"
         "blueman-applet"
         "swaync"
         "wbg ${config.stylix.image}"
@@ -210,5 +211,6 @@ in {
     nwg-displays
     jq
     polkit_gnome
+    networkmanagerapplet
   ];
 }

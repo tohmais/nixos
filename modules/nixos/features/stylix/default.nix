@@ -12,7 +12,10 @@
     base16Scheme = "${pkgs.base16-schemes}/share/themes/kanagawa.yaml";
 
     polarity = "dark";
-    image = if config.myNixOS.isProfessional then ./wallhaven-vq81j3.jpg else ./wallhaven-y8e1vl.jpg;
+    image =
+      if config.myNixOS.isProfessional
+      then ./wallhaven-vq81j3.jpg
+      else ./wallhaven-y8e1vl.jpg;
 
     fonts = {
       monospace = {

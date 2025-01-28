@@ -35,12 +35,11 @@
     })
     (myLib.filesIn ./bundles);
 
-    opts = myLib.filesIn ./options;
+  opts = myLib.filesIn ./options;
 in {
   imports =
     []
     ++ features
     ++ bundles
     ++ opts;
-
 }
