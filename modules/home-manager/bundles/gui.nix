@@ -35,6 +35,7 @@ in {
 
   home.sessionVariables = {
     TERM = "${config.myHomeManager.terminal.name}";
+    TERMINAL = "${config.myHomeManager.terminal.name}";
   };
 
   xdg.configFile."xfce4/helpers.rc".text = ''

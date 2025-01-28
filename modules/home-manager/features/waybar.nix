@@ -139,7 +139,7 @@
         modules-center = ["hyprland/window"];
         modules-right = ["pulseaudio" "battery" "clock" "tray"];
         # feel free to add network back between audio and battery
-        
+
         pulseaudio = {
           format = "{volume}% {icon} {format_source} ";
           format-muted = "󰝟 {format_source} ";

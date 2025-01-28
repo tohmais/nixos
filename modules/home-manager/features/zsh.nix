@@ -14,6 +14,41 @@
     history = {
       share = true;
     };
+    /*
+       antidote = {
+      enable = true;
+      plugins = [
+        "Aloxaf/fzf-tab"
+        "chisui/zsh-nix-shell"
+        "zsh-users/zsh-autosuggestions"
+        "zdharma-continuum/fast-syntax-highlighting"
+      ];
+    };
+    */
+    /*
+       plugins = [
+      {
+        name = "fzf-tab";
+        file = "fzf-tab.plugin.zsh";
+        src = "${pkgs.zsh-fzf-tab}/share/fzf-tab";
+      }
+      {
+        name = "nix-shell";
+        file = "nix-shell.plugin.zsh";
+        src = "${pkgs.zsh-nix-shell}/share/zsh-nix-shell";
+      }
+      {
+        name = "fast-syntax-highlighting";
+        file = "fast-syntax-highlighting.plugin.zsh";
+        src = "${pkgs.zsh-fast-syntax-highlighting}/share/zsh/site-functions";
+      }
+      {
+        name = "zsh-autosuggestions";
+        file = "zsh-autosuggestions.zsh";
+        src = "${pkgs.zsh-autosuggestions}/share/zsh-autosuggestions";
+      }
+    ];
+    */
   };
 
   programs.zoxide = {
@@ -95,6 +130,11 @@
 
 
     ''));
+  };
+
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
   };
   home.packages = with pkgs; [
     eza
