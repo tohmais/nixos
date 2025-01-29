@@ -11,17 +11,17 @@ in {
     bundles.general.enable = lib.mkDefault true;
 
     kitty.enable = lib.mkDefault true;
-    hyprland.enable = lib.mkDefault true;
+    hyprland.enable = lib.mkDefault config.myHomeManager.isWayland;
     rofi.enable = lib.mkDefault true;
     firefox.enable = lib.mkDefault true;
     chromium.enable = lib.mkDefault false;
-    waybar.enable = lib.mkDefault true;
+    waybar.enable = lib.mkDefault config.myHomeManager.isWayland;
     emacs.enable = lib.mkDefault true;
     stylix.enable = lib.mkDefault true;
     ghostty.enable = lib.mkDefault true;
     vscodium.enable = lib.mkDefault true;
-    foot.enable = lib.mkDefault true;
-    fuzzel.enable = lib.mkDefault true;
+    foot.enable = lib.mkDefault config.myHomeManager.isWayland;
+    fuzzel.enable = lib.mkDefault config.myHomeManager.isWayland;
   };
 
   gtk.enable = true;

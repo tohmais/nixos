@@ -2,13 +2,14 @@
   pkgs,
   lib,
   inputs,
+  config,
   ...
 }: {
   myNixOS = {
     bundles.general.enable = lib.mkDefault true;
 
     sddm.enable = lib.mkDefault true;
-    hyprland.enable = lib.mkDefault true;
+    hyprland.enable = lib.mkDefault config.myNixOS.isWayland;
     stylix.enable = lib.mkDefault true;
     thunar.enable = lib.mkDefault true;
   };

@@ -1,7 +1,7 @@
 {...}: {
   services.ollama = {
     enable = true;
-    loadModels = ["phi4"];
+    loadModels = ["deepseek-r1:14b"];
     environmentVariables = {
       OLLAMA_ORIGINS = "moz-extension://*";
     };

@@ -10,8 +10,9 @@ in {
 
     settings = {
       main = {
-        font = lib.mkForce "${f.monospace.name}:size=8";
+        font = lib.mkForce "${f.monospace.name}:size=${toString f.sizes.popups}";
         width = 50;
+        dpi-aware = false;
       };
     };
   };
