@@ -30,6 +30,19 @@ in {
 
           nix.enable = true;
         };
+        
+        filetree.nvimTree = {
+          enable = true;
+
+          # Damn you, DOOM emacs!
+          mappings.toggle = "<leader>op";
+
+          setupOpts = {
+            git.enable = true;
+            diagnostics.enable = true;
+            hijack_cursor = true;
+          };
+        };
 
         binds = {
           cheatsheet.enable = true;
@@ -53,5 +66,6 @@ in {
   home.packages = with pkgs; [
     nodejs
     tree-sitter
+    neovide
   ];
 }
