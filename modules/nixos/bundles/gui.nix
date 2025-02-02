@@ -12,6 +12,7 @@
     hyprland.enable = lib.mkDefault config.myNixOS.isWayland;
     stylix.enable = lib.mkDefault true;
     thunar.enable = lib.mkDefault true;
+    vpn.enable = lib.mkDefault true;
   };
 
   programs.appimage = {

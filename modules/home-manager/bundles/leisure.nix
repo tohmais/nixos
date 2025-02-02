@@ -26,7 +26,8 @@ in {
 
       vesktop
 
-      protonvpn-gui
+      qbittorrent
+
       nicotine-plus
       picard
       ani-cli

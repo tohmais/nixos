@@ -12,7 +12,7 @@ in {
       main = {
         font = lib.mkForce "${f.monospace.name}:size=${toString f.sizes.popups}";
         width = 50;
-        dpi-aware = false;
+        dpi-aware = "no";
       };
     };
   };
