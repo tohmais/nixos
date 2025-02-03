@@ -47,20 +47,22 @@ in {
       # Enable sound with pipewire.
       hardware.pulseaudio.enable = false;
       security.rtkit.enable = true;
-      services.pipewire = {
-        enable = true;
-        alsa.enable = true;
-        alsa.support32Bit = true;
-        pulse.enable = true;
-        jack.enable = true;
-      };
+      services = {
+        pipewire = {
+          enable = true;
+          alsa.enable = true;
+          alsa.support32Bit = true;
+          pulse.enable = true;
+          jack.enable = true;
+        };
 
-      # Enable CUPS to print documents.
-      services.printing.enable = true;
-      services.avahi = {
-        enable = true;
-        nssmdns4 = true;
-        openFirewall = true;
+        # Enable CUPS to print documents.
+        printing.enable = true;
+        avahi = {
+          enable = true;
+          nssmdns4 = true;
+          openFirewall = true;
+        };
       };
 
       hardware.bluetooth = {
@@ -73,7 +75,9 @@ in {
         };
       };
       services.blueman.enable = true;
-      services.pipewire.wireplumber.extraConfig."11-bluetooth-policy" = {"wireplumber.settings" = {"bluetooth.autoswitch-to-headset-profile" = false;};};
+      services.pipewire.wireplumber.extraConfig."11-bluetooth-policy" = {
+        "wireplumber.settings" = {"bluetooth.autoswitch-to-headset-profile" = false;};
+      };
       networking.networkmanager.enable = true;
       environment.systemPackages = with pkgs; [
         distrobox

@@ -40,6 +40,7 @@
     clang
     pipx
     rustup
+    cargo-binstall
 
     p7zip
 

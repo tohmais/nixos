@@ -30,7 +30,7 @@ in {
 
           nix.enable = true;
         };
-        
+
         filetree.nvimTree = {
           enable = true;
 

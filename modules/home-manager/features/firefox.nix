@@ -14,7 +14,6 @@
         ublock-origin
         sponsorblock
         firemonkey
-        chatgptbox
       ];
 
       settings = {
