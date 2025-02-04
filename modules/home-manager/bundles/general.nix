@@ -5,7 +5,9 @@
   config,
   lib,
   ...
-}: {
+}: let
+  notServer = !config.sharedOptions.isServer;
+in {
   nixpkgs = {
     config = {
       # allowUnfree = true;
@@ -17,15 +19,20 @@
     zsh.enable = lib.mkDefault true;
     nix-alien.enable = lib.mkDefault true;
     nix-index.enable = lib.mkDefault true;
-    bundles.monitors.enable = lib.mkDefault (!config.sharedOptions.isServer);
+    bundles.monitors.enable = lib.mkDefault notServer;
     flatpak.enable = lib.mkDefault true;
     nvf.enable = lib.mkDefault true;
   };
 
   programs.home-manager.enable = true;
 
-  xdg.enable = true;
-
+  xdg = {
+    enable = lib.mkDefault notServer;
+    userDirs = {
+      enable = lib.mkDefault notServer;
+      createDirectories = lib.mkDefault notServer;
+    };
+  };
   home.packages = with pkgs; [
     git
     gh
