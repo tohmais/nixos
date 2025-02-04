@@ -1,27 +1,24 @@
 {
   pkgs,
   lib,
-  inputs,
   config,
   ...
-}: let
-  pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
-in {
+}: {
   myHomeManager = {
     bundles.general.enable = lib.mkDefault true;
 
     kitty.enable = lib.mkDefault true;
-    hyprland.enable = lib.mkDefault config.myHomeManager.isWayland;
+    hyprland.enable = lib.mkDefault config.sharedOptions.isWayland;
     rofi.enable = lib.mkDefault true;
     firefox.enable = lib.mkDefault true;
     chromium.enable = lib.mkDefault false;
-    waybar.enable = lib.mkDefault config.myHomeManager.isWayland;
+    waybar.enable = lib.mkDefault config.sharedOptions.isWayland;
     emacs.enable = lib.mkDefault true;
     stylix.enable = lib.mkDefault true;
     ghostty.enable = lib.mkDefault true;
     vscodium.enable = lib.mkDefault true;
-    foot.enable = lib.mkDefault config.myHomeManager.isWayland;
-    fuzzel.enable = lib.mkDefault config.myHomeManager.isWayland;
+    foot.enable = lib.mkDefault config.sharedOptions.isWayland;
+    fuzzel.enable = lib.mkDefault config.sharedOptions.isWayland;
   };
 
   gtk.enable = true;

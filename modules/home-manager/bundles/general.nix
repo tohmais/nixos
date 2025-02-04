@@ -17,12 +17,14 @@
     zsh.enable = lib.mkDefault true;
     nix-alien.enable = lib.mkDefault true;
     nix-index.enable = lib.mkDefault true;
-    bundles.monitors.enable = lib.mkDefault (!config.myHomeManager.isServer);
+    bundles.monitors.enable = lib.mkDefault (!config.sharedOptions.isServer);
     flatpak.enable = lib.mkDefault true;
     nvf.enable = lib.mkDefault true;
   };
 
   programs.home-manager.enable = true;
+
+  xdg.enable = true;
 
   home.packages = with pkgs; [
     git

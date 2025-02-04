@@ -10,7 +10,7 @@
 in {
   services.displayManager.sddm = {
     enable = true;
-    wayland.enable = config.myNixOS.isWayland;
+    wayland.enable = config.sharedOptions.isWayland;
     theme = "${sddmTheme}";
     settings = {
       Theme = {

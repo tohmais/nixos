@@ -5,7 +5,7 @@
   config,
   ...
 }: let
-  isServer = config.myNixOS.isServer;
+  isServer = config.sharedOptions.isServer;
 in {
   config = lib.mkMerge [
     {
@@ -35,12 +35,6 @@ in {
       virtualisation.podman = {
         enable = true;
         dockerCompat = true;
-      };
-      environment.sessionVariables = {
-        XDG_CACHE_HOME = "$HOME/.cache";
-        XDG_CONFIG_HOME = "$HOME/.config";
-        XDG_DATA_HOME = "$HOME/.local/share";
-        XDG_STATE_HOME = "$HOME/.local/state";
       };
     }
     (lib.mkIf (!isServer) {

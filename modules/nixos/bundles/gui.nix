@@ -9,7 +9,7 @@
     bundles.general.enable = lib.mkDefault true;
 
     sddm.enable = lib.mkDefault true;
-    hyprland.enable = lib.mkDefault config.myNixOS.isWayland;
+    hyprland.enable = lib.mkDefault config.sharedOptions.isWayland;
     stylix.enable = lib.mkDefault true;
     thunar.enable = lib.mkDefault true;
     vpn.enable = lib.mkDefault true;
@@ -19,6 +19,8 @@
     enable = true;
     binfmt = true;
   };
+
+  xdg.portal.enable = true;
 
   services.flatpak.enable = true;
 

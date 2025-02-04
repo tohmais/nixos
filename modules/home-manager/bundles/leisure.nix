@@ -3,9 +3,7 @@
   lib,
   inputs,
   ...
-}: let
-  pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
-in {
+}: {
   myHomeManager = {
     bundles.gui.enable = lib.mkDefault true;
 
@@ -14,28 +12,26 @@ in {
     ncspot.enable = lib.mkDefault true;
   };
 
-  home.packages =
-    (with pkgs; [
-      cbonsai
-      fastfetch
-      pipes-rs
-      neo
+  home.packages = with pkgs; [
+    cbonsai
+    fastfetch
+    pipes-rs
+    neo
 
-      pinta
-      gimp
+    pinta
+    gimp
 
-      vesktop
+    vesktop
 
-      qbittorrent
+    qbittorrent
 
-      nicotine-plus
-      picard
-      ani-cli
+    nicotine-plus
+    picard
+    ani-cli
 
-      aria2
-    ])
-    ++ (with pkgs-unstable; [
-      rescrobbled
-      sptlrx
-    ]);
+    aria2
+
+    unstable.rescrobbled
+    unstable.sptlrx
+  ];
 }

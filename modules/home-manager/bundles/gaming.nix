@@ -3,9 +3,7 @@
   lib,
   inputs,
   ...
-}: let
-  pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
-in {
+}: {
   myHomeManager = {
     bundles.gui.enable = lib.mkDefault true;
 

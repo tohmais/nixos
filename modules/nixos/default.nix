@@ -52,6 +52,7 @@ in {
   imports =
     [
       inputs.home-manager.nixosModules.home-manager
+      ../shared
     ]
     ++ features
     ++ bundles
@@ -61,7 +62,21 @@ in {
   config = {
     nix.settings.experimental-features = ["nix-command" "flakes"];
     programs.nix-ld.enable = true;
-    nixpkgs.config.allowUnfree = true;
+
+    nixpkgs = {
+      overlays = [
+        (final: _prev: {
+          # unstable overlay
+          unstable = import inputs.nixpkgs-unstable {
+            system = final.system;
+            config.allowUnfree = true;
+          };
+        })
+      ];
+
+      config.allowUnfree = true;
+    };
+
     nix.settings.auto-optimise-store = true;
     nix.optimise.automatic = true;
   };

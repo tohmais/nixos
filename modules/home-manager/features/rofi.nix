@@ -6,7 +6,7 @@
   programs.rofi = {
     enable = true;
     package =
-      if config.myHomeManager.isWayland
+      if config.sharedOptions.isWayland
       then pkgs.rofi-wayland
       else pkgs.rofi;
     extraConfig = {

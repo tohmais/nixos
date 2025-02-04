@@ -4,6 +4,7 @@
   pkgs,
   system,
   inputs,
+  outputs,
   config,
   lib,
   myLib,
@@ -38,7 +39,7 @@
   opts = myLib.filesIn ./options;
 in {
   imports =
-    []
+    [../shared]
     ++ features
     ++ bundles
     ++ opts;
