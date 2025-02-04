@@ -20,6 +20,7 @@ in rec {
       };
       modules = [
         config
+        outputs.sharedModules.default
         outputs.nixosModules.default
       ];
     };
@@ -32,6 +33,7 @@ in rec {
       };
       modules = [
         config
+        outputs.sharedModules.default
         outputs.homeManagerModules.default
       ];
     };
