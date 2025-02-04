@@ -179,38 +179,9 @@ in {
     };
   };
 
-  services.swayosd.enable = true;
-  services.swaync = {
-    enable = true;
-    settings = {
-      notification-window-width = 400;
-    };
-
-    style = ''
-      .notification-background {
-        padding-right:5px;
-      }
-
-      .image {
-        padding-right:5px;
-        border-radius:5px;
-      }
-
-    '';
-  };
-
   home.packages = with pkgs; [
-    libsForQt5.qt5.qtwayland
-    qt6.qtwayland
-    wl-clipboard
-    grim
-    slurp
-    wbg
-    wlogout
     grimblast
     nwg-displays
     jq
-    polkit_gnome
-    networkmanagerapplet
   ];
 }
