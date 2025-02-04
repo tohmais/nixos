@@ -5,7 +5,7 @@
 }: {
   options.sharedOptions = {
     isWayland = lib.mkOption {
-      default = true;
+      default = lib.elem config.sharedOptions.desktopEnvironment ["hyprland" "river"];
       description = "Sets whether the machine that is used is primarily using a Wayland desktop environment.";
       type = lib.types.bool;
     };
@@ -20,7 +20,7 @@
         then "none"
         else "hyprland";
       description = "Sets the default desktop environment of the system.";
-      types = lib.types.enum ["none" "hyprland" "river"];
+      type = lib.types.enum ["none" "hyprland" "river"];
     };
   };
 }

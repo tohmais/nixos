@@ -134,7 +134,7 @@
             name: m: name
           )
           (lib.filterAttrs (name: m: m.enabled) config.myHomeManager.monitors);
-
+        # waybar will just disable the module if it can't find the proper protocols, so this is safe.
         modules-left = ["hyprland/workspaces"];
         modules-center = ["hyprland/window"];
         modules-right = ["pulseaudio" "battery" "clock" "tray"];

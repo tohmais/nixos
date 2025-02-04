@@ -8,7 +8,7 @@
     bundles.general.enable = lib.mkDefault true;
 
     kitty.enable = lib.mkDefault true;
-    hyprland.enable = lib.mkDefault config.sharedOptions.isWayland;
+    hyprland.enable = lib.mkDefault (config.sharedOptions.desktopEnvironment == "hyprland");
     rofi.enable = lib.mkDefault true;
     firefox.enable = lib.mkDefault true;
     chromium.enable = lib.mkDefault false;

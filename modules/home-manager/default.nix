@@ -43,4 +43,11 @@ in {
     ++ features
     ++ bundles
     ++ opts;
+
+  config = {
+    myHomeManager = {
+      bundles.general.enable = lib.mkDefault true;
+      bundles.gui.enable = lib.mkDefault (!config.sharedOptions.isServer);
+    };
+  };
 }

@@ -7,8 +7,10 @@
 }: {
   config = {
     assertions = [
-      (lib.mkAssert (config.sharedOptions.desktopEnvironment != "none")
-        "You must enable a desktop environment to enable bundles.gui.enable")
+      {
+        assertion = config.sharedOptions.desktopEnvironment != "none";
+        message = "You must enable a desktop environment to enable bundles.gui.enable";
+      }
     ];
 
     myNixOS = {

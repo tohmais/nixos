@@ -79,5 +79,13 @@ in {
 
     nix.settings.auto-optimise-store = true;
     nix.optimise.automatic = true;
+
+    myNixOS = {
+      bundles = {
+        general.enable = lib.mkDefault true;
+        users.enable = lib.mkDefault true;
+        gui.enable = lib.mkDefault (!config.sharedOptions.isServer);
+      };
+    };
   };
 }
