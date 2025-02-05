@@ -8,9 +8,12 @@
     nicotine-plus
     picard
     ani-cli
+    miru
 
     aria2
 
-
+    # i wish jdownloader would stop lying about being FOSS
+    # so use this and megabasterd
+    motrix
   ];
 }
