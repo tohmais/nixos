@@ -10,7 +10,7 @@
 
   myHomeManager = {
     bundles.gaming.enable = true;
-    bundles.leisure.enable = true;
+    bundles.downloader.enable = true;
     bundles.university.enable = true;
     bundles.editing.enable = true;
 

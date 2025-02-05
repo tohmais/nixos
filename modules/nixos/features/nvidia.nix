@@ -40,7 +40,8 @@
       config.boot.kernelPackages.nvidiaPackages.beta;
   };
 
-  environment.sessionVariables = lib.mkIf (config.sharedOptions.isWayland) {
+  # Note that I haven't set up the prime offload in this file because I use the settings from nixos-hardware instead.
+  environment.sessionVariables = lib.mkIf (config.sharedOptions.isWayland && !config.myNixOS.isPrime) {
     LIBVA_DRIVER_NAME = "nvidia";
     MOZ_DISABLE_RDD_SANDBOX = "1";
     XDG_SESSION_TYPE = "wayland";

@@ -23,14 +23,6 @@
 
     vesktop
 
-    qbittorrent
-
-    nicotine-plus
-    picard
-    ani-cli
-
-    aria2
-
     unstable.rescrobbled
     unstable.sptlrx
   ];
