@@ -19,20 +19,6 @@
     };
   };
 
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-    extraPackages = with pkgs; [
-      nvidia-vaapi-driver
-    ];
-  };
-
-  boot.kernelParams = ["nvidia.NVreg_PreserveVideoMemoryAllocations=1"];
-  hardware.nvidia = {
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
-    powerManagement.enable = true;
-  };
-
   boot.kernelPackages = pkgs.linuxPackages_zen;
 
   # Configure keymap in X11
@@ -44,6 +30,7 @@
 
   myNixOS = {
     isProfessional = true;
+    nvidia.enable = true;
 
     home-users = {
       "callum" = {

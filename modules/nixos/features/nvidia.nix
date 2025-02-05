@@ -36,21 +36,26 @@
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
     # NVIDIA Beta = 560
-    package = (pkgs.unstable.linuxPackagesFor config.boot.kernelPackages.kernel).nvidiaPackages.beta;
+    package = #(pkgs.unstable.linuxPackagesFor config.boot.kernelPackages.kernel).nvidiaPackages.beta;
+      config.boot.kernelPackages.nvidiaPackages.beta;
   };
 
-  environment.sessionVariables = {
+  environment.sessionVariables = lib.mkIf (config.sharedOptions.isWayland) {
     LIBVA_DRIVER_NAME = "nvidia";
     MOZ_DISABLE_RDD_SANDBOX = "1";
     XDG_SESSION_TYPE = "wayland";
     GBM_BACKEND = "nvidia-drm";
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
     NVD_BACKEND = "direct";
-
-    NIXOS_OZONE_WL = "1";
   };
 
   boot.kernelParams = lib.mkDefault ["nvidia.NVreg_PreserveVideoMemoryAllocations=1"];
 
-  hardware.graphics.extraPackages = with pkgs; [nvidia-vaapi-driver];
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+    extraPackages = with pkgs; [
+      nvidia-vaapi-driver
+    ];
+  };
 }
