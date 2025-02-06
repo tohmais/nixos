@@ -42,8 +42,8 @@ in {
   };
 
   home.sessionVariables = {
-    DOOMDIR = "$XDG_CONFIG_HOME/doom";
-    EMACSDIR = "$XDG_CONFIG_HOME/emacs";
+    DOOMDIR = "~/.config/doom";
+    EMACSDIR = "~/.config/emacs";
   };
 
   home.packages = with pkgs; [

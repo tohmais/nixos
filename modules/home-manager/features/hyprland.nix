@@ -79,6 +79,9 @@ in {
         force_default_wallpaper = 0;
         vfr = true;
       };
+      gestures = {
+        workspace_swipe = true;
+      };
       # cursor = {
       #   no_hardware_cursors = true;
       # };
