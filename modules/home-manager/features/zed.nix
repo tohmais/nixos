@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   programs.zed-editor = {
     enable = true;
     package = pkgs.unstable.zed-editor;
@@ -11,10 +12,6 @@
       "html"
       "toml"
     ];
-    extraPackages = with pkgs; [
-      nil
-      biome
-    ];
 
     userSettings = {
       vim_mode = true;
@@ -23,11 +20,16 @@
       buffer_font_family = "Lilex Nerd Font";
       buffer_font_size = 16;
       theme = {
-        mode = "dark";
+        mode = "system";
+        light = "One Light";
         dark = "Kanagawa";
       };
       load_direnv = "shell_hook";
       nix.binary.path_lookup = true;
     };
   };
+  home.packages = with pkgs; [
+    nil
+    biome
+  ];
 }

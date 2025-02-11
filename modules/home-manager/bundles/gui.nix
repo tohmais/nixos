@@ -24,6 +24,7 @@ in {
     swaync.enable = lib.mkDefault isWayland;
     swayosd.enable = lib.mkDefault isWayland;
     zed.enable = lib.mkDefault true;
+    wlogout.enable = lib.mkDefault isWayland;
   };
 
   gtk.enable = true;
