@@ -36,7 +36,8 @@
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
     # NVIDIA Beta = 560
-    package = #(pkgs.unstable.linuxPackagesFor config.boot.kernelPackages.kernel).nvidiaPackages.beta;
+    package =
+      #(pkgs.unstable.linuxPackagesFor config.boot.kernelPackages.kernel).nvidiaPackages.beta;
       config.boot.kernelPackages.nvidiaPackages.beta;
   };
 

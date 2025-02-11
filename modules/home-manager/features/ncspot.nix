@@ -17,7 +17,7 @@ in {
       backend = "pulseaudio";
 
       audio_cache = true;
-      audio_cache_size = 500;
+      audio_cache_size = 2000;
 
       keybindings = {
         "Shift+p" = "move playing";

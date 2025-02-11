@@ -23,6 +23,7 @@ in {
     fuzzel.enable = lib.mkDefault isWayland;
     swaync.enable = lib.mkDefault isWayland;
     swayosd.enable = lib.mkDefault isWayland;
+    zed.enable = lib.mkDefault true;
   };
 
   gtk.enable = true;
@@ -55,18 +56,19 @@ in {
       mpv
 
       bottles
-      zed-editor
       electron-mail
     ])
-    ++ lib.optionals isWayland (with pkgs; [
-      libsForQt5.qt5.qtwayland
-      qt6.qtwayland
-      wl-clipboard
-      grim
-      slurp
-      wbg
-      wlogout
-      polkit_gnome
-      networkmanagerapplet
-    ]);
+    ++ lib.optionals isWayland (
+      with pkgs; [
+        libsForQt5.qt5.qtwayland
+        qt6.qtwayland
+        wl-clipboard
+        grim
+        slurp
+        wbg
+        wlogout
+        polkit_gnome
+        networkmanagerapplet
+      ]
+    );
 }

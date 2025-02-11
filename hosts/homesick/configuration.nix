@@ -30,7 +30,7 @@
 
   myNixOS = {
     isProfessional = true;
-    
+
     isPrime = true;
     nvidia.enable = true;
 

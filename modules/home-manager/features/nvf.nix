@@ -36,6 +36,7 @@ in {
 
           # Damn you, DOOM emacs!
           mappings.toggle = "<leader>op";
+          openOnSetup = false;
 
           setupOpts = {
             git.enable = true;
