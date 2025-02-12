@@ -4,12 +4,10 @@
   inputs,
   ...
 }: let
-  helpers = myLib.filesIn ./helper;
   opts = myLib.filesIn ./options;
 in {
   imports =
-    []
-    ++ helpers
+    [./helper]
     ++ opts;
 
   config = {
