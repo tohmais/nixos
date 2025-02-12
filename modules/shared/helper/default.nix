@@ -1,4 +1,4 @@
-{pkgs, ...}: let
+{pkgs}: let
   mkMustache = name: template: data:
     pkgs.stdenv.mkDerivation {
       name = "${name}";
