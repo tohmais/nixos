@@ -5,40 +5,43 @@ in {
     enable = true;
     layout = [
       {
-          label = "lock";
-          action = "loginctl lock-session";
-          text = "Lock";
-          keybind = "l";
+        label = "lock";
+        action = "loginctl lock-session";
+        text = "Lock";
+        keybind = "l";
       }
       {
-          label = "hibernate";
-          action = "systemctl hibernate";
-          text = "Hibernate";
-          keybind = "h";
+        label = "hibernate";
+        action = "systemctl hibernate";
+        text = "Hibernate";
+        keybind = "h";
       }
       {
-          label = "logout";
-          action = if de == "hyprland" then "hyprctl dispatch exit" else "loginctl terminate-user $USER";
-          text = "Logout";
-          keybind = "e";
+        label = "logout";
+        action =
+          if de == "hyprland"
+          then "hyprctl dispatch exit"
+          else "loginctl terminate-user $USER";
+        text = "Logout";
+        keybind = "e";
       }
       {
-          label = "shutdown";
-          action = "systemctl poweroff";
-          text = "Shutdown";
-          keybind = "s";
+        label = "shutdown";
+        action = "systemctl poweroff";
+        text = "Shutdown";
+        keybind = "s";
       }
       {
-          label = "suspend";
-          action = "systemctl suspend";
-          text = "Suspend";
-          keybind = "u";
+        label = "suspend";
+        action = "systemctl suspend";
+        text = "Suspend";
+        keybind = "u";
       }
       {
-          label = "reboot";
-          action = "systemctl reboot";
-          text = "Reboot";
-          keybind = "r";
+        label = "reboot";
+        action = "systemctl reboot";
+        text = "Reboot";
+        keybind = "r";
       }
     ];
   };

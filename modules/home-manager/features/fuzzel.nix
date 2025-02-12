@@ -7,7 +7,6 @@
 in {
   programs.fuzzel = {
     enable = true;
-
     settings = {
       main = {
         font = lib.mkForce "${f.monospace.name}:size=${toString f.sizes.popups}";

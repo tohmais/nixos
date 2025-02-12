@@ -60,7 +60,7 @@ in {
     dua
 
     nix-prefetch-scripts
-    nixd
+    unstable.nixd
     alejandra
     nix-search-cli
   ];

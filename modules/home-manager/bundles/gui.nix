@@ -67,7 +67,6 @@ in {
         grim
         slurp
         wbg
-        wlogout
         polkit_gnome
         networkmanagerapplet
       ]
