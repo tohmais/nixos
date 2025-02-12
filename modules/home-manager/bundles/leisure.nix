@@ -10,6 +10,7 @@
     spicetify.enable = lib.mkDefault true;
     cava.enable = lib.mkDefault true;
     ncspot.enable = lib.mkDefault true;
+    es-de.enable = lib.mkDefault true;
   };
 
   home.packages = with pkgs; [

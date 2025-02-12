@@ -1,8 +1,9 @@
-{config, ...}: {
+{
+  config,
+  inputs,
+  ...
+}: {
   home.file = {
-    "ES-DE/custom_systems/es_find_rules.xml".source = config.home {
-      template = builtins.readFile ./es_find_rules.xml.mustache;
-      extension = ".xml";
-    };
+    "ES-DE/custom_systems/es_find_rules.xml".source = config.mkMustache "es_find_rules.xml" ./es_find_rules.xml.mustache config.home;
   };
 }
