@@ -17,7 +17,9 @@ in {
 
   myHomeManager = {
     zsh.enable = lib.mkDefault true;
-    nix-alien.enable = lib.mkDefault true;
+
+    # broken right now
+    # nix-alien.enable = lib.mkDefault true;
     nix-index.enable = lib.mkDefault true;
     bundles.monitors.enable = lib.mkDefault notServer;
     flatpak.enable = lib.mkDefault true;

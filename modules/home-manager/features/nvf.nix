@@ -29,7 +29,13 @@ in {
           enableTreesitter = true;
           nix.enable = true;
         };
-
+        luaConfigPost = ''
+          vim.opt.expandtab = true 
+        '';
+        options = {
+          tabstop = 2;
+          shiftwidth = 0;
+        };
         filetree.nvimTree = {
           enable = true;
 
