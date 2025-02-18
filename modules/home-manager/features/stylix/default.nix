@@ -17,6 +17,7 @@ in {
       qt.enable = true;
       hyprland.enable = false;
       hyprpaper.enable = false;
+      nixcord.enable = true;
     };
   };
 }
