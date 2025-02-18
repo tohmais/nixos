@@ -67,6 +67,11 @@
       url = "github:tohmais/nix-utils";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    inputs.nixcord = {
+      url = "github:kaylorben/nixcord";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {...} @ inputs: let

@@ -21,6 +21,7 @@ in {
           enable = true;
           formatOnSave = true;
           lightbulb.enable = true;
+          lspkind.enable = true;
         };
         languages = {
           enableFormat = true;
@@ -30,7 +31,7 @@ in {
           nix.enable = true;
         };
         luaConfigPost = ''
-          vim.opt.expandtab = true 
+          vim.opt.expandtab = true
         '';
         options = {
           tabstop = 2;

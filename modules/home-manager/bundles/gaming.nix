@@ -43,12 +43,14 @@
     dolphin-emu
     ryujinx
 
+    ares
+    simple64
+
     (retroarch.override {
       cores = with libretro; [
         snes9x
         genesis-plus-gx
         beetle-saturn
-        parallel-n64
         melonds
         mgba
       ];
