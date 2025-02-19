@@ -69,6 +69,7 @@ in {
         wbg
         polkit_gnome
         networkmanagerapplet
+        imv
       ]
     );
 }

@@ -31,7 +31,10 @@
       };
     };
 
-    targets.grub.useImage = false;
+    targets = {
+      grub.useImage = false;
+      plymouth.enable = false;
+    };
 
     cursor = {
       package = pkgs.capitaine-cursors;

@@ -38,8 +38,7 @@ in {
       };
     }
     (lib.mkIf (!isServer) {
-
-      boot.plymouth.enable = true;
+      myNixOS.plymouth.enable = lib.mkDefault true;
 
       # Enable sound with pipewire.
       hardware.pulseaudio.enable = false;
@@ -75,17 +74,17 @@ in {
       services.pipewire.wireplumber.extraConfig = {
         "10-bluez" = {
           "monitor.bluez.properties" = {
-            "bluez5.roles" = [ "a2dp_sink" "a2dp_source" "bap_sink" "bap_source" "hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag"];
+            "bluez5.roles" = ["a2dp_sink" "a2dp_source" "bap_sink" "bap_source" "hsp_hs" "hsp_ag" "hfp_hf" "hfp_ag"];
             "bluez5.enable-hw-volume" = true;
             "bluez5.hfphsp-backend" = "native";
-            
+
             "bluez5.enable-msbc" = true;
             "bluez5.enable-sbc-xq" = true;
             # sbc_xq is the best quality codec that *my headphones* support. so, i'm forcing it to be used.
             # if i get headphones that support a better codec, i'll change this.
-            "bluez5.codecs" = [ "sbc_xq" "sbc" ];
+            "bluez5.codecs" = ["sbc_xq" "sbc"];
           };
-        }; 
+        };
         "11-bluetooth-policy" = {
           "wireplumber.settings" = {"bluetooth.autoswitch-to-headset-profile" = false;};
         };
