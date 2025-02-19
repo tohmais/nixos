@@ -3,16 +3,29 @@
     inputs.nixcord.homeManagerModules.nixcord
   ];
 
-  programs.nixcord = {
+  programs.nixcord = 
+  let
+    _equicordRepo = builtins.fetchGit {
+      url = "https://github.com/Equicord/Equicord.git";
+      rev = "bfb97040b9e939d705778461c1857ccb36883d72";
+    };
+    equicordPlugins = "${_equicordRepo}/src/equicordplugins";
+  in {
     enable = true;
-    # userPlugins = {
-    #   anammox = "github:Equicord/Equicord/bfb97040b9e939d705778461c1857ccb36883d72?dir=src/equicordplugins/anammox";
-    # };
-    # extraConfig = {
-    #   plugins = {
-    #     anammox.enable = true;
-    #   };
-    # };
+    userPlugins = {
+      anammox = "${equicordPlugins}/anammox";
+      betterQuickReact = "${equicordPlugins}/betterQuickReact";
+      homeTyping = "${equicordPlugins}/homeTyping";
+      # noNitroUpsell = "${equicordPlugins}/noNitroUpsell";
+    };
+    extraConfig = {
+      plugins = {
+        anammox.enable = true;
+        betterQuickReact.enable = true;
+        homeTyping.enable = true;
+        # noNitroUpsell.enable = true;
+      };
+    };
 
     config = {
       plugins = {
@@ -20,7 +33,7 @@
           enable = true;
           anonymiseByDefault = true;
         };
-        betterSettings.enable = true;
+        # betterSettings.enable = true;
         biggerStreamPreview.enable = true;
         clearURLs.enable = true;
         noReplyMention.enable = true;
