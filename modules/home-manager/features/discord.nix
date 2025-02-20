@@ -3,8 +3,7 @@
     inputs.nixcord.homeManagerModules.nixcord
   ];
 
-  programs.nixcord = 
-  let
+  programs.nixcord = let
     _equicordRepo = builtins.fetchGit {
       url = "https://github.com/Equicord/Equicord.git";
       rev = "bfb97040b9e939d705778461c1857ccb36883d72";

@@ -2,14 +2,13 @@
   services.swaync = {
     enable = true;
     settings = {
-      
       control-center-margin-top = 5;
       control-center-margin-bottom = 5;
       control-center-margin-right = 5;
 
       notification-window-width = 400;
       image-visibility = "when-available";
-      widgets = ["mpris" "volume" "dnd" "title" "notifications" ];
+      widgets = ["mpris" "volume" "dnd" "title" "notifications"];
     };
 
     style = ''
