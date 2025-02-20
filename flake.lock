@@ -867,11 +867,11 @@
         "tinted-tmux": "tinted-tmux"
       },
       "locked": {
-        "lastModified": 1739854948,
-        "narHash": "sha256-NWez86YzF4RmfOjATxStD6FNbYxOpUO8R1pm2OSDiho=",
+        "lastModified": 1739943615,
+        "narHash": "sha256-R0fN7RDba4nkrACaZ6EAFddsXuQuewGE3pr0NZoUFnM=",
         "owner": "tohmais",
         "repo": "stylix",
-        "rev": "a0b92f3c615973001c11ce96114dc590477c63b4",
+        "rev": "8e83992338726361e06d73ff0c82bbc1256ac99f",
         "type": "github"
       },
       "original": {
