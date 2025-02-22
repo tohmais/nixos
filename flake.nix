@@ -73,7 +73,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixarr ={
+    nixarr = {
       url = "github:rasmus-kirk/nixarr";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
