@@ -47,7 +47,7 @@
 
     # i WOULD enable this, if my internet at home wasn't a packet-dropping piece of shit
     # services.ollama.enable = true;
-    services.nixarr.enable = true;
+    # services.nixarr.enable = true;
 
     amd.enable = true;
 

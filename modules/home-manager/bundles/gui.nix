@@ -25,6 +25,7 @@ in {
     swayosd.enable = lib.mkDefault isWayland;
     zed.enable = lib.mkDefault true;
     wlogout.enable = lib.mkDefault isWayland;
+    mpv.enable = lib.mkDefault true;
   };
 
   gtk.enable = true;
@@ -54,7 +55,6 @@ in {
       libreoffice
 
       pwvucontrol
-      mpv
 
       bottles
       electron-mail
