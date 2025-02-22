@@ -1,4 +1,7 @@
 {inputs, ...}: {
+
+  # NOTE: for discord to do screenshare with audio, the program NEEDS to output PulseAudio!
+
   imports = [
     inputs.nixcord.homeManagerModules.nixcord
   ];
