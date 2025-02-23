@@ -43,7 +43,9 @@
     dolphin-emu
     ryujinx
 
-    ares
+    unstable.ares
+    unstable.libretro-shaders-slang
+
     simple64
 
     (retroarch.override {
