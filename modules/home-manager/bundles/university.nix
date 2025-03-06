@@ -5,10 +5,13 @@
 }: {
   myHomeManager = {
     bundles.gui.enable = true;
+    es-de.enable = lib.mkDefault true;
   };
 
   home.packages = with pkgs; [
     zoom-us
-    jdk
+
+    jetbrains.idea-community-bin
+    corretto21
   ];
 }

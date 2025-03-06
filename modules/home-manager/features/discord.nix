@@ -1,5 +1,4 @@
 {inputs, ...}: {
-
   # NOTE: for discord to do screenshare with audio, the program NEEDS to output PulseAudio!
 
   imports = [
@@ -38,6 +37,12 @@
         # betterSettings.enable = true;
         biggerStreamPreview.enable = true;
         clearURLs.enable = true;
+        fakeNitro = {
+          enable = true;
+          enableEmojiBypass = false;
+          enableStickerBypass = false;
+          enableStreamQualityBypass = true;
+        };
         noReplyMention.enable = true;
         noServerEmojis = {
           enable = true;
