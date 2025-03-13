@@ -11,10 +11,26 @@
     es-de.enable = lib.mkDefault true;
   };
 
-  services.flatpak.packages = [
-    "com.fightcade.Fightcade"
-    "io.github.Foldex.AdwSteamGtk"
-  ];
+  services.flatpak = {
+    packages = [
+      "com.fightcade.Fightcade"
+      "io.github.Foldex.AdwSteamGtk"
+      "io.github.hedge_dev.hedgemodmanager"
+    ];
+
+    overrides = {
+      # See https://github.com/hedge-dev/HedgeModManager/issues/44
+      # I only *really* need the unleashedrecomp one but might as well fix everything
+      "io.github.hedge_dev.hedgemodmanager".Context = {
+        filesystems = [
+          "~/.var/app/io.github.hedge_dev.unleashedrecomp:ro"
+          "~/.var/app/com.valvesoftware.Steam/.steam/steam/steamapps"
+          "~/.var/app/com.heroicgameslauncher.hgl/config/heroic/GamesConfig:ro"
+          "~/.var/app/com.heroicgameslauncher.hgl/config/heroic/legendaryConfig/legendary:ro"
+        ];
+      };
+    };
+  };
 
   home.sessionVariables = {
     SDL_HINT_GAMECONTROLLER_USE_BUTTON_LABELS = 0;
