@@ -23,7 +23,7 @@ in {
     fuzzel.enable = lib.mkDefault isWayland;
     swaync.enable = lib.mkDefault isWayland;
     swayosd.enable = lib.mkDefault isWayland;
-    zed.enable = lib.mkDefault true;
+    # zed.enable = lib.mkDefault true;
     wlogout.enable = lib.mkDefault isWayland;
     mpv.enable = lib.mkDefault true;
   };

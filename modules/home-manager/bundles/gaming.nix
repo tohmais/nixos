@@ -36,6 +36,16 @@
     SDL_HINT_GAMECONTROLLER_USE_BUTTON_LABELS = 0;
   };
 
+  home.file ={
+    ".local/share/ares/Shaders" = {
+      # recursive = true;
+      source = "${pkgs.unstable.libretro-shaders-slang}/share/libretro/shaders/shaders_slang";
+    };
+    ".local/share/ares/Database" = {
+      # recursive = true;
+      source = "${pkgs.unstable.ares}/share/ares/Database";
+    };
+  };
   home.packages = with pkgs; [
     mangohud
 
@@ -60,7 +70,6 @@
     ryujinx
 
     unstable.ares
-    unstable.libretro-shaders-slang
 
     simple64
 
