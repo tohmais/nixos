@@ -1,9 +1,8 @@
 {
   config,
-  inputs,
   ...
 }: let
-  renderMustache = inputs.tohmutils.lib.renderMustache;
+  # renderMustache = inputs.tohmutils.lib.renderMustache;
 in {
   home.file = {
     "ES-DE/custom_systems/es_find_rules.xml"

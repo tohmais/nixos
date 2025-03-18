@@ -32,9 +32,12 @@
     };
   };
 
-  home.sessionVariables = {
-    SDL_HINT_GAMECONTROLLER_USE_BUTTON_LABELS = 0;
-  };
+  # Don't need this anymore, as I have an Xbox layout controller for PC now (8BitDo Ultimate 2C).
+  # This never worked, anyways.
+
+  # home.sessionVariables = {
+    # SDL_HINT_GAMECONTROLLER_USE_BUTTON_LABELS = 0;
+  # };
 
   home.file ={
     ".local/share/ares/Shaders" = {

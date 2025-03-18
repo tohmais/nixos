@@ -63,18 +63,18 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    tohmutils = {
-      url = "github:tohmais/nix-utils";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # tohmutils = {
+      # url = "github:tohmais/nix-utils";
+      # inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
     nixcord = {
-      url = "github:kaylorben/nixcord";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:kaylorben/nixcord?rev=b1613674b49f7025df8615e96fde18c2596b1a6b";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     nixarr = {
-      url = "github:rasmus-kirk/nixarr";
+      url = "github:rasmus-kirk/nixarr?rev=29b7be20d4871b0ebac2db7c1691ecd3e690283f";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };

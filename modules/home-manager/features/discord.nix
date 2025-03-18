@@ -51,6 +51,8 @@
         userMessagesPronouns.enable = true;
         showHiddenChannels.enable = true;
         showHiddenThings.enable = true;
+
+        # i HAVE premium! i just have friends who i want to show music to.
         spotifyCrack.enable = true;
         volumeBooster = {
           enable = true;
