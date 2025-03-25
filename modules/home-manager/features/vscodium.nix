@@ -11,6 +11,7 @@
       vscode-extensions.jnoortheen.nix-ide
       vscode-extensions.asvetliakov.vscode-neovim
       vscode-extensions.biomejs.biome
+      vscode-extensions.mkhl.direnv
     ];
     userSettings = {
       "editor.fontLigatures" = true;
