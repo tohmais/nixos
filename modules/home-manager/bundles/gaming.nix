@@ -36,10 +36,10 @@
   # This never worked, anyways.
 
   # home.sessionVariables = {
-    # SDL_HINT_GAMECONTROLLER_USE_BUTTON_LABELS = 0;
+  # SDL_HINT_GAMECONTROLLER_USE_BUTTON_LABELS = 0;
   # };
 
-  home.file ={
+  home.file = {
     ".local/share/ares/Shaders" = {
       # recursive = true;
       source = "${pkgs.unstable.libretro-shaders-slang}/share/libretro/shaders/shaders_slang";

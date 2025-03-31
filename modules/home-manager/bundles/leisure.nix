@@ -23,6 +23,8 @@
     gimp
 
     vesktop
+    unstable.revolt-desktop
+    element-desktop
 
     unstable.rescrobbled
     unstable.sptlrx

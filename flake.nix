@@ -64,8 +64,8 @@
     };
 
     # tohmutils = {
-      # url = "github:tohmais/nix-utils";
-      # inputs.nixpkgs.follows = "nixpkgs";
+    # url = "github:tohmais/nix-utils";
+    # inputs.nixpkgs.follows = "nixpkgs";
     # };
 
     nixcord = {

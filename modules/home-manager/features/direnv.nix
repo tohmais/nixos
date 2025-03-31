@@ -4,5 +4,4 @@
     enableZshIntegration = true;
     nix-direnv.enable = true;
   };
-  services.lorri.enable = true;
 }

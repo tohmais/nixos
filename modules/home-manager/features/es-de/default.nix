@@ -1,7 +1,4 @@
-{
-  config,
-  ...
-}: let
+{config, ...}: let
   # renderMustache = inputs.tohmutils.lib.renderMustache;
 in {
   home.file = {
