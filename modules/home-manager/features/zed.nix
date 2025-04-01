@@ -19,6 +19,10 @@
     ];
 
     userSettings = {
+      telemetry = {
+        diagnostics = false;
+        metrics = false;
+      };
       vim_mode = true;
       relative_line_numbers = true;
       ui_font_size = 16;
@@ -30,6 +34,9 @@
         dark = "Kanagawa";
       };
       load_direnv = "shell_hook";
+
+      features.edit_prediction_provider = "zed";
+      show_edit_predictions = true;
 
       languages.Nix.language_servers = [
         "nixd"

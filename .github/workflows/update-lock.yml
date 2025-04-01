@@ -1,0 +1,49 @@
+name: update-flake-lock
+on:
+  workflow_dispatch: # allows manual triggering
+  schedule:
+    - cron: '0 0 * * 0' # runs weekly on Sunday at 00:00
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  lockfile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+      - name: Update flake.lock
+        uses: DeterminateSystems/update-flake-lock@main
+        with:
+          pr-title: "Update flake.lock" # Title of PR to be created
+          commit-msg: "chore: flake.lock update"
+          pr-assignees: tohmais
+          pr-reviewers: tohmais
+          pr-labels: |                  # Labels to be set on the PR
+            dependencies
+            automated
+          pr-body: |
+            Automated changes by the [update-flake-lock](https://github.com/DeterminateSystems/update-flake-lock) GitHub Action.
+
+            ### Update Info
+            ```
+            {{ env.GIT_COMMIT_MESSAGE }}
+            ```
+
+            ### Running GitHub Actions on this PR
+
+            GitHub Actions will not run workflows on pull requests which are opened by a GitHub Action.
+
+            To run GitHub Actions workflows on this PR, run:
+
+            ```sh
+            git branch -D update_flake_lock_action
+            git fetch origin
+            git checkout update_flake_lock_action
+            git commit --amend --no-edit
+            git push origin update_flake_lock_action --force
+            ```
