@@ -14,6 +14,9 @@
     history = {
       share = true;
     };
+    initExtra = ''
+      zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+    '';
     /*
        antidote = {
       enable = true;

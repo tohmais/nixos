@@ -13,6 +13,10 @@
     discord.enable = lib.mkDefault true;
   };
 
+  services.flatpak.packages = [
+    "chat.revolt.RevoltDesktop"
+  ];
+
   home.packages = with pkgs; [
     cbonsai
     fastfetch
@@ -23,7 +27,6 @@
     gimp
 
     vesktop
-    unstable.revolt-desktop
     element-desktop
 
     unstable.rescrobbled
