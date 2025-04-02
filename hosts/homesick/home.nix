@@ -11,6 +11,7 @@
   myHomeManager = {
     bundles.leisure.enable = true;
     bundles.university.enable = true;
+    bundles.work.enable = true;
 
     monitors = {
       "eDP-1" = {
