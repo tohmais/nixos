@@ -85,5 +85,7 @@
         mgba
       ];
     })
+
+    inputs.balatro-mod-manager.packages.${pkgs.system}.default
   ];
 }

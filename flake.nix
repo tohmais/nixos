@@ -77,7 +77,13 @@
       url = "github:rasmus-kirk/nixarr?rev=29b7be20d4871b0ebac2db7c1691ecd3e690283f";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+
+     balatro-mod-manager = {
+      url = "github:janw4ld/balatro-mod-manager/66-linux-support-upstream";
+     };
   };
+
+
 
   outputs = {...} @ inputs: let
     myLib = import ./myLib/default.nix {inherit inputs;};
