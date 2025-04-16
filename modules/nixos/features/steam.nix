@@ -6,13 +6,16 @@
 }: {
   imports = [
     inputs.nix-gaming.nixosModules.platformOptimizations
+    inputs.jovian-nixos.nixosModules.deckyLoader
   ];
-
+  
   programs.steam.enable = true;
   programs.steam.gamescopeSession.enable = true;
   programs.steam.localNetworkGameTransfers.openFirewall = true;
   programs.steam.platformOptimizations.enable = true;
   programs.gamemode.enable = true;
+  # TODO: actually test that this works
+  jovian.decky-loader.enable = true;
 
   nixpkgs.config.packageOverrides = pkgs: {
     steam = pkgs.steam.override {

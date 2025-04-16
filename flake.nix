@@ -38,7 +38,6 @@
 
     spicetify-nix = {
       url = "github:Gerg-L/spicetify-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nix-index-database = {
@@ -77,9 +76,12 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-     balatro-mod-manager = {
+    balatro-mod-manager = {
       url = "github:janw4ld/balatro-mod-manager/66-linux-support-upstream";
-     };
+    };
+
+    jovian-nixos.url = "github:tohmais/Jovian-NixOS";
+
   };
 
 
