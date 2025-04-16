@@ -80,8 +80,6 @@
       url = "github:janw4ld/balatro-mod-manager/66-linux-support-upstream";
     };
 
-    jovian-nixos.url = "github:tohmais/Jovian-NixOS";
-
   };
 
 

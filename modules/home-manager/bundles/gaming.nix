@@ -16,6 +16,7 @@
       "com.fightcade.Fightcade"
       "io.github.Foldex.AdwSteamGtk"
       "io.github.hedge_dev.hedgemodmanager"
+      "io.github.doukutsu_rs.doukutsu-rs"
     ];
 
     overrides = {
