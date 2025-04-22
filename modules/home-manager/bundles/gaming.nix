@@ -17,6 +17,7 @@
       "io.github.Foldex.AdwSteamGtk"
       "io.github.hedge_dev.hedgemodmanager"
       "io.github.doukutsu_rs.doukutsu-rs"
+      "io.github.everestapi.Olympus"
     ];
 
     overrides = {

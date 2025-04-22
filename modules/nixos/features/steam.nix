@@ -7,7 +7,7 @@
   imports = [
     inputs.nix-gaming.nixosModules.platformOptimizations
   ];
-  
+
   programs.steam.enable = true;
   programs.steam.gamescopeSession.enable = true;
   programs.steam.localNetworkGameTransfers.openFirewall = true;

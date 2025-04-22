@@ -1,5 +1,8 @@
-{pkgs, lib, ...}: {
-
+{
+  pkgs,
+  lib,
+  ...
+}: {
   myHomeManager = {
     bundles.gui.enable = true;
   };

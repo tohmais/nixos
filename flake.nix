@@ -52,7 +52,7 @@
 
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
 
-    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.5.1";
+    nix-flatpak.url = "github:gmodena/nix-flatpak/latest";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
@@ -79,10 +79,7 @@
     balatro-mod-manager = {
       url = "github:janw4ld/balatro-mod-manager/66-linux-support-upstream";
     };
-
   };
-
-
 
   outputs = {...} @ inputs: let
     myLib = import ./myLib/default.nix {inherit inputs;};
