@@ -25,7 +25,9 @@
     neo
 
     pinta
-    gimp
+
+    # Finally!
+    unstable.gimp3
 
     vesktop
     element-desktop
