@@ -12,6 +12,7 @@ in {
     enable = true;
     settings = {
       vim = {
+        package = pkgs.unstable.neovim-unwrapped;
         viAlias = true;
         vimAlias = true;
         useSystemClipboard = true;
