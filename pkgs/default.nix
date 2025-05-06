@@ -6,5 +6,5 @@ pkgs: {
   xpad-paroj = pkgs.callPackage ./xpad-paroj {};
   catppuccin-se-icons = pkgs.callPackage ./catppuccin-se-icons {};
   kanagawa-icons = pkgs.callPackage ./kanagawa-icons {};
-  tokyo-night-sddm = pkgs.callPackage ./tokyo-night-sddm {};
+  sddm-tokyo-night = pkgs.callPackage ./sddm-tokyo-night {};
 }
