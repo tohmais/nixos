@@ -20,7 +20,7 @@
   };
 
   # TODO: Change back to linuxPackages_zen once https://github.com/NixOS/nixpkgs/issues/396716 is resolved.
-  boot.kernelPackages = pkgs.linuxPackages;
+  boot.kernelPackages = pkgs.linuxPackages_zen;
 
   # Configure keymap in X11
   services.xserver = {

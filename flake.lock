@@ -674,17 +674,16 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1742245505,
-        "narHash": "sha256-3S6TyhdEBr4T7d5JwBo0550CTEvc27ocwkLoFsgV9cU=",
+        "lastModified": 1746469506,
+        "narHash": "sha256-p/Pz7UyvCmrDky3VQxqtTgOarWX3HMJCjCeeI16L3KM=",
         "owner": "kaylorben",
         "repo": "nixcord",
-        "rev": "b1613674b49f7025df8615e96fde18c2596b1a6b",
+        "rev": "5727c23093eee2b8a2de2097052be1c5270b9059",
         "type": "github"
       },
       "original": {
         "owner": "kaylorben",
         "repo": "nixcord",
-        "rev": "b1613674b49f7025df8615e96fde18c2596b1a6b",
         "type": "github"
       }
     },
@@ -799,22 +798,6 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1735554305,
-        "narHash": "sha256-zExSA1i/b+1NMRhGGLtNfFGXgLtgo+dcuzHzaWA6w3Q=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "0e82ab234249d8eee3e8c91437802b32c74bb3fd",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixpkgs-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_4": {
-      "locked": {
         "lastModified": 1746183838,
         "narHash": "sha256-kwaaguGkAqTZ1oK0yXeQ3ayYjs8u/W7eEfrFpFfIDFA=",
         "owner": "NixOS",
@@ -828,7 +811,7 @@
         "type": "indirect"
       }
     },
-    "nixpkgs_5": {
+    "nixpkgs_4": {
       "locked": {
         "lastModified": 1745526057,
         "narHash": "sha256-ITSpPDwvLBZBnPRS2bUcHY3gZSwis/uTe255QgMtTLA=",
@@ -844,7 +827,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_6": {
+    "nixpkgs_5": {
       "locked": {
         "lastModified": 1743448293,
         "narHash": "sha256-bmEPmSjJakAp/JojZRrUvNcDX2R5/nuX6bm+seVaGhs=",
@@ -898,7 +881,7 @@
         "nixarr": "nixarr",
         "nixcord": "nixcord",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs_4",
+        "nixpkgs": "nixpkgs_3",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nvf": "nvf",
         "spicetify-nix": "spicetify-nix",
@@ -930,7 +913,7 @@
     },
     "spicetify-nix": {
       "inputs": {
-        "nixpkgs": "nixpkgs_5",
+        "nixpkgs": "nixpkgs_4",
         "systems": "systems_6"
       },
       "locked": {
@@ -1138,7 +1121,10 @@
     },
     "treefmt-nix": {
       "inputs": {
-        "nixpkgs": "nixpkgs_3"
+        "nixpkgs": [
+          "nixcord",
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1739829690,
@@ -1193,7 +1179,7 @@
     "zen-browser": {
       "inputs": {
         "home-manager": "home-manager_3",
-        "nixpkgs": "nixpkgs_6"
+        "nixpkgs": "nixpkgs_5"
       },
       "locked": {
         "lastModified": 1746285501,

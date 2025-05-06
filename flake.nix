@@ -67,7 +67,7 @@
     # };
 
     nixcord = {
-      url = "github:kaylorben/nixcord?rev=b1613674b49f7025df8615e96fde18c2596b1a6b";
+      url = "github:kaylorben/nixcord";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 

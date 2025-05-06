@@ -170,9 +170,8 @@ in {
       ];
 
       exec-once = [
-        "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
         "hyprctl setcursor ${config.stylix.cursor.name} ${toString config.stylix.cursor.size}"
-        "waybar"
+        "killall -q waybar;sleep .5 && waybar"
         "nm-applet"
         "blueman-applet"
         "swaync"
