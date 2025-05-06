@@ -2,13 +2,11 @@
   pkgs,
   config,
   ...
-}: let
-  icon-theme = import ./catppuccin-se.nix {inherit pkgs;};
-in {
+}: {
   stylix = {
     iconTheme = {
       enable = true;
-      package = icon-theme;
+      package = pkgs.catppuccin-se-icons;
       dark = "Catppuccin-SE";
     };
     targets = {

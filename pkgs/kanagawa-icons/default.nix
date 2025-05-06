@@ -1,9 +1,9 @@
-{pkgs}:
-pkgs.stdenv.mkDerivation {
+{lib, stdenv, fetchFromGitHub}:
+stdenv.mkDerivation {
   name = "kanagawa-icon-theme";
   version = "0-unstable-2023-07-03";
 
-  src = pkgs.fetchFromGitHub {
+  src = fetchFromGitHub {
     owner = "Fausto-Korpsvart";
     repo = "Kanagawa-GKT-Theme";
     rev = "35936a1e3bbd329339991b29725fc1f67f192c1e";

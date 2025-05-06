@@ -85,7 +85,7 @@
     myLib = import ./myLib/default.nix {inherit inputs;};
   in
     with myLib; {
-      packages = forAllSystems (pkgs: import ./pkgs);
+      packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
       overlays = import ./overlays {inherit inputs;};
 
       nixosConfigurations = {
