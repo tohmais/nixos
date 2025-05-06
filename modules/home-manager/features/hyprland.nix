@@ -5,7 +5,7 @@
   lib,
   ...
 }: let
-  mn = "hyprctl activeworkspace -j | jq '.monitor'";
+  mn = "\"$(hyprctl monitors -j | jq -r '.[] | select(.focused == true) | .name')\"";
 in {
   wayland.windowManager.hyprland = {
     enable = true;
@@ -130,8 +130,8 @@ in {
           "$mod, mouse_down, workspace, e+1"
           "$mod, mouse_up, workspace, e-1"
 
-          ",XF86AudioMute,exec,swayosd-client --output-volume mute-toggle"
-          ",XF86AudioMicMute,exec,swayosd-client --input-volume mute-toggle"
+          ",XF86AudioMute,exec,swayosd-client --monitor ${mn} --output-volume mute-toggle"
+          ",XF86AudioMicMute,exec,swayosd-client --monitor ${mn} --input-volume mute-toggle"
 
           ",XF86AudioMedia,exec,playerctl play-pause"
           ",XF86AudioPlay,exec,playerctl play-pause"
@@ -160,10 +160,10 @@ in {
         "$mod, mouse:273, resizewindow"
       ];
       binde = [
-        ",XF86AudioRaiseVolume,exec,swayosd-client --output-volume raise"
-        ",XF86AudioLowerVolume,exec,swayosd-client --output-volume lower"
-        ",XF86MonBrightnessUp,exec,swayosd-client --brightness raise"
-        ",XF86MonBrightnessDown,exec,swayosd-client --brightness lower"
+        ",XF86AudioRaiseVolume,exec,swayosd-client --monitor ${mn} --output-volume raise"
+        ",XF86AudioLowerVolume,exec,swayosd-client --monitor ${mn} --output-volume lower"
+        ",XF86MonBrightnessUp,exec,swayosd-client --monitor ${mn} --brightness raise"
+        ",XF86MonBrightnessDown,exec,swayosd-client --monitor ${mn} --brightness lower"
       ];
       env = [
         "WLR_DRM_NO_ATOMIC,1"
@@ -171,12 +171,14 @@ in {
 
       exec-once = [
         "hyprctl setcursor ${config.stylix.cursor.name} ${toString config.stylix.cursor.size}"
-        "killall -q waybar;sleep .5 && waybar"
         "nm-applet"
         "blueman-applet"
         "swaync"
         "wbg ${config.stylix.image}"
         "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
+      ];
+      exec = [
+        "pkill waybar;sleep .5 && waybar"
       ];
     };
   };

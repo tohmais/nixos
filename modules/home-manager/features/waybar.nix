@@ -2,7 +2,9 @@
   config,
   lib,
   ...
-}: {
+}: let
+  mn = "\"$(hyprctl monitors -j | jq -r '.[] | select(.focused == true) | .name')\"";
+in {
   programs.waybar = {
     enable = true;
     style = lib.mkAfter ''
@@ -174,10 +176,10 @@
             default = ["" "" ""];
           };
           on-click = "pwvucontrol";
-          on-click-middle = "swayosd-client --input-volume mute-toggle";
-          on-click-right = "swayosd-client --output-volume mute-toggle";
-          on-scroll-up = "swayosd-client --output-volume +10";
-          on-scroll-down = "swayosd-client --output-volume -10";
+          on-click-middle = "swayosd-client --monitor ${mn} --input-volume mute-toggle";
+          on-click-right = "swayosd-client --monitor ${mn} --output-volume mute-toggle";
+          on-scroll-up = "swayosd-client --monitor ${mn} --output-volume +10";
+          on-scroll-down = "swayosd-client --monitor ${mn} --output-volume -10";
         };
         network = {
           format = "{ifname}";
