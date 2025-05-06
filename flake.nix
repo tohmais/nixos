@@ -85,7 +85,8 @@
     myLib = import ./myLib/default.nix {inherit inputs;};
   in
     with myLib; {
-      packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
+      # Use nix build .#example to build one of the custom packages!
+      packages = forAllSystems (import ./pkgs);
       overlays = import ./overlays {inherit inputs;};
 
       nixosConfigurations = {

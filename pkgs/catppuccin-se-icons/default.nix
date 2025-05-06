@@ -1,4 +1,9 @@
-{lib, stdenv, fetchurl, gnutar}: let
+{
+  lib,
+  stdenv,
+  fetchurl,
+  gnutar,
+}: let
   link = "https://github.com/ljmill/catppuccin-icons/releases/download/v0.2.0/Catppuccin-SE.tar.bz2";
 in
   stdenv.mkDerivation {

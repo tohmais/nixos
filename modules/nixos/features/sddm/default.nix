@@ -5,13 +5,11 @@
   lib,
   config,
   ...
-}: let
-  sddmTheme = import ./sddm-theme.nix {inherit pkgs;};
-in {
+}: {
   services.displayManager.sddm = {
     enable = true;
     wayland.enable = config.sharedOptions.isWayland;
-    theme = "${sddmTheme}";
+    theme = pkgs.tokyo-night-sddm;
     settings = {
       Theme = {
         CursorTheme = config.stylix.cursor.name;

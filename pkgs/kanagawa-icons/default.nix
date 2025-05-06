@@ -1,4 +1,8 @@
-{lib, stdenv, fetchFromGitHub}:
+{
+  lib,
+  stdenv,
+  fetchFromGitHub,
+}:
 stdenv.mkDerivation {
   name = "kanagawa-icon-theme";
   version = "0-unstable-2023-07-03";
