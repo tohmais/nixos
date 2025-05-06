@@ -85,6 +85,9 @@
     myLib = import ./myLib/default.nix {inherit inputs;};
   in
     with myLib; {
+      packages = forAllSystems (pkgs: import ./pkgs);
+      overlays = import ./overlays {inherit inputs;};
+
       nixosConfigurations = {
         phos = mkSystem ./hosts/phos/configuration.nix;
         homesick = mkSystem ./hosts/homesick/configuration.nix;

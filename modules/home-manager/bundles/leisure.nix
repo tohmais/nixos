@@ -7,7 +7,7 @@
   myHomeManager = {
     bundles.gui.enable = lib.mkDefault true;
 
-    sptlrx.enable = lib.mkDefault true;
+    # sptlrx.enable = lib.mkDefault true;
     spicetify.enable = lib.mkDefault true;
     cava.enable = lib.mkDefault true;
     ncspot.enable = lib.mkDefault true;
@@ -33,7 +33,7 @@
     element-desktop
 
     unstable.rescrobbled
-    # unstable.sptlrx
+    sptlrx
     # v1.2.2 is broken, we build v1.2.3 ourselves
   ];
 }
