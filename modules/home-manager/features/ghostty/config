@@ -1,5 +1,6 @@
 theme = Kanagawa Wave
 font-family = Lilex Nerd Font Mono
-quit-after-last-window-closed = false
-gtk-single-instance = true
 window-decoration = false
+gtk-single-instance = true
+linux-cgroup = single-instance
+shell-integration-features = cursor, sudo, title

@@ -176,6 +176,8 @@ in {
         "swaync"
         "wbg ${config.stylix.image}"
         "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
+      ] ++ lib.optionals (config.myHomeManager.terminal.name == "ghostty") [
+        "ghostty --gtk-single-instance=true --quit-after-last-window-closed=false --initial-window=false"
       ];
       exec = [
         "pkill waybar;sleep .5 && waybar"

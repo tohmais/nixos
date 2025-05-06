@@ -14,6 +14,8 @@
     bundles.university.enable = true;
     bundles.editing.enable = true;
 
+    terminal.name = "ghostty";
+
     monitors = {
       "DP-2" = {
         width = 1920;
