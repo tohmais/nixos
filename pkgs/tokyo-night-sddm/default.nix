@@ -2,6 +2,7 @@
   lib,
   stdenv,
   fetchFromGitHub,
+  libsForQt5,
 }:
 stdenv.mkDerivation {
   name = "sddm-theme";
@@ -15,4 +16,9 @@ stdenv.mkDerivation {
     mkdir -p $out
     cp -R ./* $out/
   '';
+  propagatedUserEnvPkgs = [
+    libsForQt5.qt5.qtquickcontrols2
+    libsForQt5.qt5.qtgraphicaleffects
+    libsForQt5.qt5.qtsvg
+  ];
 }
