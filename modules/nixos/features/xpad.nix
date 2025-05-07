@@ -1,5 +1,5 @@
-{config, ...}: {
-  boot.extraModulePackages = with config.boot.kernelPackages; [xpad-paroj];
+{config, pkgs, ...}: {
+  boot.extraModulePackages = [pkgs.xpad-paroj];
 
   boot.kernelModules = ["xpad"];
 }
