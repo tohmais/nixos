@@ -33,7 +33,6 @@ stdenv.mkDerivation rec {
     runHook postInstall
   '';
 
-
   meta = with lib; {
     description = "xpad kernel module";
     homepage = "https://github.com/paroj/xpad";

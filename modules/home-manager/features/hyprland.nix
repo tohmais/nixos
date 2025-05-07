@@ -169,16 +169,18 @@ in {
         "WLR_DRM_NO_ATOMIC,1"
       ];
 
-      exec-once = [
-        "hyprctl setcursor ${config.stylix.cursor.name} ${toString config.stylix.cursor.size}"
-        "nm-applet"
-        "blueman-applet"
-        "swaync"
-        "wbg ${config.stylix.image}"
-        "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
-      ] ++ lib.optionals (config.myHomeManager.terminal.name == "ghostty") [
-        "ghostty --gtk-single-instance=true --quit-after-last-window-closed=false --initial-window=false"
-      ];
+      exec-once =
+        [
+          "hyprctl setcursor ${config.stylix.cursor.name} ${toString config.stylix.cursor.size}"
+          "nm-applet"
+          "blueman-applet"
+          "swaync"
+          "wbg ${config.stylix.image}"
+          "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
+        ]
+        ++ lib.optionals (config.myHomeManager.terminal.name == "ghostty") [
+          "ghostty --gtk-single-instance=true --quit-after-last-window-closed=false --initial-window=false"
+        ];
       exec = [
         "pkill waybar;sleep .5 && waybar"
       ];
