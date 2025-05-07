@@ -9,7 +9,7 @@
   services.displayManager.sddm = {
     enable = true;
     wayland.enable = config.sharedOptions.isWayland;
-    theme = "${pkgs.sddm-tokyo-night}";
+    theme = "tokyo-night";
     settings = {
       Theme = {
         CursorTheme = config.stylix.cursor.name;
@@ -17,4 +17,8 @@
       };
     };
   };
+
+  environment.systemPackages = with pkgs; [
+    sddm-tokyo-night
+  ];
 }

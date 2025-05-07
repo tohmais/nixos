@@ -1,12 +1,14 @@
 {
   lib,
-  stdenv,
-  fetchFromGitHub,
-  libsForQt5,
+  stdenvNoCC,
+  pkgs,
+  themeConfig ? null,
 }:
-stdenv.mkDerivation {
-  name = "sddm-tokyo-night";
-  src = fetchFromGitHub {
+stdenvNoCC.mkDerivation rec {
+  pname = "sddm-tokyo-night";
+  version = "1.0-unstable-2023-06-13";
+
+  src = pkgs.fetchFromGitHub {
     owner = "siddrs";
     repo = "tokyo-night-sddm";
     rev = "320c8e74ade1e94f640708eee0b9a75a395697c6";
@@ -15,15 +17,32 @@ stdenv.mkDerivation {
 
   dontWrapQtApps = true;
   
-  propagatedBuildInputs = [
-    libsForQt5.qt5.qtquickcontrols2
-    libsForQt5.qt5.qtgraphicaleffects
-    libsForQt5.qt5.qtsvg
-  
+  propagatedUserEnvPkgs = with pkgs.libsForQt5.qt5; [
+    qtquickcontrols2
+    qtgraphicaleffects
+    qtsvg
   ];
-  installPhase = ''
-    mkdir -p $out
-    cp -R ./* $out/
-  '';
+
+  installPhase = let
+      iniFormat = pkgs.formats.ini { };
+      configFile = iniFormat.generate "" { General = themeConfig; };
+
+      basePath = "$out/share/sddm/themes/tokyo-night";
+    in
+    ''
+      mkdir -p ${basePath}
+      cp -r $src/* ${basePath}
+    ''
+    + lib.optionalString (themeConfig != null) ''
+      ln -sf ${configFile} ${basePath}/theme.conf.user
+    '';
+
+    meta = {
+      description = "Tokyo Night for SDDM";
+      homepage = "https://github.com/${src.owner}/${src.repo}";
+      license = lib.licenses.lgpl21;
+
+      platforms = lib.platforms.linux;
+    };
   
 }
