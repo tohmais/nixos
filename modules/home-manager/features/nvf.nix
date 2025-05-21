@@ -27,7 +27,6 @@ in {
         languages = {
           enableFormat = true;
           enableExtraDiagnostics = true;
-          enableLSP = true;
           enableTreesitter = true;
           nix.enable = true;
         };

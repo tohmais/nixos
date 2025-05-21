@@ -34,6 +34,8 @@
     isPrime = true;
     nvidia.enable = true;
 
+    # services.ollama.enable = true;
+
     home-users = {
       "callum" = {
         userConfig = ./home.nix;
