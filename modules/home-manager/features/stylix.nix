@@ -10,6 +10,7 @@
       dark = "Catppuccin-SE";
     };
     targets = {
+      firefox.profileNames = ["${config.home.username}"];
       emacs.enable = false;
       spicetify.enable = true;
       qt.enable = true;

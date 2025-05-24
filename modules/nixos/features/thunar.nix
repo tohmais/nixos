@@ -10,7 +10,7 @@
     };
     xfconf.enable = true;
   };
-
+  xdg.mime.defaultApplications."inode/directory" = "thunar.desktop";
   environment.systemPackages = with pkgs; [
     file-roller
   ];

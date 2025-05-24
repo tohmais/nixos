@@ -9,7 +9,7 @@
   programs.firefox = {
     enable = true;
     profiles."${config.home.username}" = {
-      extensions = with inputs.firefox-addons.packages.${pkgs.system}; [
+      extensions.packages = with inputs.firefox-addons.packages.${pkgs.system}; [
         bitwarden
         ublock-origin
         sponsorblock
@@ -80,20 +80,20 @@
 
           "Brave Search" = {
             urls = [{template = "https://search.brave.com/search?q={searchTerms}";}];
-            iconUpdateURL = "https://brave.com/favicon.ico";
+            icon= "https://brave.com/favicon.ico";
             definedAliases = ["@b"];
           };
 
-          "Google".metaData.hidden = true;
-          "Bing".metaData.hidden = true;
+          "google".metaData.hidden = true;
+          "bing".metaData.hidden = true;
         };
         default = "Brave Search";
         order = [
           "Brave Search"
-          "DuckDuckGo"
+          "ddg"
           "Nix Packages"
           "Nix Options"
-          "Wikipedia (en)"
+          "wikipedia"
         ];
 
         force = true;

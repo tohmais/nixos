@@ -1,6 +1,6 @@
 {pkgs, ...}: {
   services.swayosd = {
     enable = true;
-    package = pkgs.unstable.swayosd;
+    package = pkgs.swayosd;
   };
 }

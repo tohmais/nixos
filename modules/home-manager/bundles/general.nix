@@ -8,12 +8,6 @@
 }: let
   notServer = !config.sharedOptions.isServer;
 in {
-  nixpkgs = {
-    config = {
-      # allowUnfree = true;
-      experimental-features = "nix-command flakes";
-    };
-  };
 
   myHomeManager = {
     zsh.enable = lib.mkDefault true;
@@ -63,7 +57,7 @@ in {
     dua
 
     nix-prefetch-scripts
-    unstable.nixd
+    nixd
     alejandra
     nix-search-cli
   ];

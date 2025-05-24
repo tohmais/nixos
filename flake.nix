@@ -4,11 +4,11 @@
   description = "tohmais' NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-24.11";
+    nixpkgs.url = "nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -32,7 +32,7 @@
     nix-gaming.url = "github:fufexan/nix-gaming";
 
     stylix = {
-      url = "github:tohmais/stylix/release-24.11";
+      url = "github:nix-community/stylix/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -68,12 +68,12 @@
 
     nixcord = {
       url = "github:kaylorben/nixcord";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nixarr = {
-      url = "github:rasmus-kirk/nixarr?rev=29b7be20d4871b0ebac2db7c1691ecd3e690283f";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      url = "github:rasmus-kirk/nixarr";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     balatro-mod-manager = {

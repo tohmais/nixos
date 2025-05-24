@@ -2,7 +2,7 @@
   home.packages = with pkgs; [
     obs-studio
     krita
-    kdenlive
-    davinci-resolve
+    kdePackages.kdenlive
+    # davinci-resolve
   ];
 }

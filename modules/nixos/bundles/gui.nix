@@ -33,7 +33,8 @@
     services.flatpak.enable = true;
 
     fonts.packages = with pkgs; [
-      (nerdfonts.override {fonts = ["Lilex" "NerdFontsSymbolsOnly"];})
+      nerd-fonts.lilex
+      nerd-fonts.symbols-only
       corefonts
       dejavu_fonts
     ];

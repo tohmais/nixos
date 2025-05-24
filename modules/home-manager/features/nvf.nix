@@ -12,10 +12,13 @@ in {
     enable = true;
     settings = {
       vim = {
-        package = pkgs.unstable.neovim-unwrapped;
+        package = pkgs.neovim-unwrapped;
         viAlias = true;
         vimAlias = true;
-        useSystemClipboard = true;
+        clipboard = {
+          enable = true;
+          registers = "unnamedplus";
+        };
         telescope.enable = true;
         autocomplete.nvim-cmp.enable = true;
         lsp = {

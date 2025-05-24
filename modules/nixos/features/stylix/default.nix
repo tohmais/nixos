@@ -19,7 +19,7 @@
 
     fonts = {
       monospace = {
-        package = pkgs.nerdfonts.override {fonts = ["Lilex"];};
+        package = pkgs.nerd-fonts.lilex;
         name = "Lilex Nerd Font Mono";
       };
       emoji = {

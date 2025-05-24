@@ -4,9 +4,9 @@
   ...
 }: {
   xdg.configFile = {
-    "ghostty/config".source = config.lib.file.mkOutOfStoreSymlink ./config;
+    "ghostty/config".source = ./config;
   };
   home.packages = with pkgs; [
-    unstable.ghostty
+    ghostty
   ];
 }

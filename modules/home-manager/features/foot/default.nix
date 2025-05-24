@@ -29,7 +29,7 @@ in {
         };
       };
     };
-    zsh.initExtra = ". ${./zshrc} # enable shell integration for foot terminal";
+    zsh.initContent = ". ${./zshrc} # enable shell integration for foot terminal";
   };
 
   home.packages = with pkgs; [libsixel];

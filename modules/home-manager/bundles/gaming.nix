@@ -44,11 +44,11 @@
   home.file = {
     ".local/share/ares/Shaders" = {
       # recursive = true;
-      source = "${pkgs.unstable.libretro-shaders-slang}/share/libretro/shaders/shaders_slang";
+      source = "${pkgs.libretro-shaders-slang}/share/libretro/shaders/shaders_slang";
     };
     ".local/share/ares/Database" = {
       # recursive = true;
-      source = "${pkgs.unstable.ares}/share/ares/Database";
+      source = "${pkgs.ares}/share/ares/Database";
     };
   };
   home.packages = with pkgs; [
@@ -74,19 +74,19 @@
     dolphin-emu
     ryujinx
 
-    unstable.ares
+    ares
 
     simple64
 
-    (retroarch.override {
-      cores = with libretro; [
+    (retroarch.withCores (
+      cores: with libretro; [
         snes9x
         genesis-plus-gx
         beetle-saturn
         melonds
         mgba
-      ];
-    })
+      ]
+    ))
 
     inputs.balatro-mod-manager.packages.${pkgs.system}.default
   ];

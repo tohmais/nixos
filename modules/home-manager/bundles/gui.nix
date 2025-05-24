@@ -42,14 +42,15 @@ in {
     TERMINAL = "${config.myHomeManager.terminal.name}";
   };
 
-  xdg.configFile."xfce4/helpers.rc".text = ''
-    TerminalEmulator=${config.myHomeManager.terminal.name}
-    TerminalEmulatorDismissed=true
-  '';
+  # this doesn't work, unfortunately.
+  # xdg.configFile."xfce4/helpers.rc".text = ''
+  #   TerminalEmulator=${config.myHomeManager.terminal.name} --working-directory=%f
+  #   TerminalEmulatorDismissed=true
+  # '';
 
   services.mpris-proxy.enable = true;
 
-  home.packages =
+   home.packages =
     (with pkgs; [
       qownnotes
       libreoffice

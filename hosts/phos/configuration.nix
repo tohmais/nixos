@@ -77,7 +77,6 @@
 
   programs.kdeconnect.enable = true;
 
-  fonts.packages = with pkgs; [(nerdfonts.override {fonts = ["GeistMono"];})];
 
   system.stateVersion = "24.05"; # Did you read the comment?
 }

@@ -7,7 +7,7 @@
   programs.vscode = {
     enable = true;
     package = pkgs.vscodium;
-    extensions = with pkgs; [
+    profiles.default = {extensions = with pkgs; [
       vscode-extensions.jnoortheen.nix-ide
       vscode-extensions.asvetliakov.vscode-neovim
       vscode-extensions.biomejs.biome
@@ -34,10 +34,11 @@
       "workbench.sideBar.location" = "right";
       "[typescript]"."editor.defaultFormatter" = "biomejs.biome";
     };
+    };
   };
 
   home.packages = with pkgs; [
     biome
-    unstable.code-cursor
+    code-cursor
   ];
 }

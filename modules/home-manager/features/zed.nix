@@ -7,7 +7,7 @@
 }: {
   programs.zed-editor = {
     enable = true;
-    package = pkgs.unstable.zed-editor;
+    package = pkgs.zed-editor;
     extensions = [
       "kanagawa-themes"
       "catppuccin-icons"
@@ -25,14 +25,6 @@
       };
       vim_mode = true;
       relative_line_numbers = true;
-      ui_font_size = 16;
-      buffer_font_family = "Lilex Nerd Font";
-      buffer_font_size = 16;
-      theme = {
-        mode = "system";
-        light = "One Light";
-        dark = "Kanagawa";
-      };
       load_direnv = "shell_hook";
 
       features.edit_prediction_provider = "zed";
@@ -44,7 +36,7 @@
       ];
 
       lsp.nixd = {
-        binary.path = lib.getExe pkgs.unstable.nixd;
+        binary.path = lib.getExe pkgs.nixd;
         initialization_options.formatting.command = [
           "alejandra"
           "--quiet"
@@ -63,7 +55,7 @@
   };
   home.packages = with pkgs; [
     nil
-    unstable.nixd
+    nixd
     biome
   ];
 }

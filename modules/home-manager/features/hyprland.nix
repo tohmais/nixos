@@ -91,6 +91,7 @@ in {
       # };
       windowrulev2 = [
         "fullscreen,class:(org.libretro.RetroArch)"
+        "fullscreen,class:(simple64-gui)"
         "immediate, class:^(steam_app*)$"
 
         "opacity 0.0 override,class:^(xwaylandvideobridge)$"

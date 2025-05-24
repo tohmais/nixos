@@ -27,12 +27,12 @@
     pinta
 
     # Finally!
-    unstable.gimp3
+    gimp3
 
     vesktop
     element-desktop
 
-    unstable.rescrobbled
+    rescrobbled
     sptlrx
     # v1.2.2 is broken, we build v1.2.3 ourselves
   ];

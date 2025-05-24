@@ -9,6 +9,7 @@ in {
 
   programs.spicetify = {
     enable = true;
+    spotifyPackage = pkgs.spotify;
     # theme = spicePkgs.themes.text;
     # colorScheme = "Kanagawa";
 
