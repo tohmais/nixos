@@ -79,13 +79,14 @@
     simple64
 
     (retroarch.withCores (
-      cores: with libretro; [
-        snes9x
-        genesis-plus-gx
-        beetle-saturn
-        melonds
-        mgba
-      ]
+      cores:
+        with libretro; [
+          snes9x
+          genesis-plus-gx
+          beetle-saturn
+          melonds
+          mgba
+        ]
     ))
 
     inputs.balatro-mod-manager.packages.${pkgs.system}.default

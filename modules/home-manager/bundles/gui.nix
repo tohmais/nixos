@@ -50,7 +50,7 @@ in {
 
   services.mpris-proxy.enable = true;
 
-   home.packages =
+  home.packages =
     (with pkgs; [
       qownnotes
       libreoffice

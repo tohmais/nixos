@@ -80,7 +80,7 @@
 
           "Brave Search" = {
             urls = [{template = "https://search.brave.com/search?q={searchTerms}";}];
-            icon= "https://brave.com/favicon.ico";
+            icon = "https://brave.com/favicon.ico";
             definedAliases = ["@b"];
           };
 

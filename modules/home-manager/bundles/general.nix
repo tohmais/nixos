@@ -8,7 +8,6 @@
 }: let
   notServer = !config.sharedOptions.isServer;
 in {
-
   myHomeManager = {
     zsh.enable = lib.mkDefault true;
 
