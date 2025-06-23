@@ -83,6 +83,7 @@ in {
           animation-timing-function: linear;
           animation-iteration-count: infinite;
           animation-direction: alternate;
+          border-right: 2px solid @base0E;
       }
 
       .modules-left #workspaces button {

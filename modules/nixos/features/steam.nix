@@ -8,27 +8,44 @@
     inputs.nix-gaming.nixosModules.platformOptimizations
   ];
 
-  programs.steam.enable = true;
-  programs.steam.gamescopeSession.enable = true;
-  programs.steam.localNetworkGameTransfers.openFirewall = true;
-  programs.steam.platformOptimizations.enable = true;
-  programs.gamemode.enable = true;
-
-  nixpkgs.config.packageOverrides = pkgs: {
-    steam = pkgs.steam.override {
-      extraPkgs = pkgs:
-        with pkgs; [
-          xorg.libXcursor
-          xorg.libXi
-          xorg.libXinerama
-          xorg.libXScrnSaver
-          libpng
-          libpulseaudio
-          libvorbis
-          stdenv.cc.cc.lib
-          libkrb5
-          keyutils
-        ];
+  programs = {
+    steam = {
+      enable = true;
+      package = pkgs.steam.override {
+        extraPkgs = pkgs':
+          with pkgs'; [
+            xorg.libXcursor
+            xorg.libXi
+            xorg.libXinerama
+            xorg.libXScrnSaver
+            libpng
+            libpulseaudio
+            libvorbis
+            stdenv.cc.cc.lib # Provides libstdc++.so.6
+            libkrb5
+            keyutils
+            # Add other libraries as needed
+          ];
+      };
+      gamescopeSession.enable = true;
+      localNetworkGameTransfers.openFirewall = true;
+      remotePlay.openFirewall = true;
+      platformOptimizations.enable = true;
+      extraCompatPackages = with pkgs; [
+        proton-ge-bin
+        steamtinkerlaunch
+      ];
+      extraPackages = with pkgs; [
+        SDL2
+        gamescope
+      ];
+      protontricks.enable = true;
+      extest.enable = config.sharedOptions.isWayland;
     };
+    gamescope = {
+      enable = true;
+      capSysNice = true;
+    };
+    gamemode.enable = true;
   };
 }

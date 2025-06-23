@@ -17,9 +17,4 @@
   };
 
   services.pipewire.lowLatency.enable = true;
-  # we have to install retroarch for all users so other
-  # programs can source retroarch cores correctly.
-  environment.systemPackages = with pkgs; [
-    steamtinkerlaunch
-  ];
 }

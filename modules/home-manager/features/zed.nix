@@ -9,7 +9,6 @@
     enable = true;
     package = pkgs.zed-editor;
     extensions = [
-      "kanagawa-themes"
       "catppuccin-icons"
 
       "nix"
@@ -26,6 +25,8 @@
       vim_mode = true;
       relative_line_numbers = true;
       load_direnv = "shell_hook";
+
+      diagnostics.inline.enabled = true;
 
       features.edit_prediction_provider = "zed";
       show_edit_predictions = true;
