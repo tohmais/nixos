@@ -185,6 +185,11 @@ in {
       exec = [
         "pkill waybar;sleep .5 && waybar"
       ];
+
+      # https://github.com/ValveSoftware/gamescope/issues/1825
+      # https://github.com/hyprwm/Hyprland/issues/9064
+      debug.full_cm_proto = true;
+      
     };
   };
 

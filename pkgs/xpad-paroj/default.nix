@@ -11,8 +11,8 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "paroj";
     repo = "xpad";
-    rev = "ffc6910bf4e089288a500935bee49216a5017836";
-    sha256 = "sha256-rkn8xs9G8YdDgOscEd0vclZVOYySGnsKWsg/NLzjYuI=";
+    rev = "902ffabe6cc6c3cbbdc5c55f163a0fc59e5fd8f3";
+    sha256 = "sha256-vTpyI1QbirCsvkQ0xRrEeYfgsvADau6PKSELcXKXMMk=";
   };
 
   setSourceRoot = ''
