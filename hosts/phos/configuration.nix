@@ -69,8 +69,8 @@
 
   # might or might not need this for amd, idk.
   boot.kernelParams = [
-    "video=DP-2:1920x1080@75"
-    "video=HDMI-A-1:1920x1080@60"
+    "video=DP-3:1920x1080@60"
+    "video=HDMI-A-1:1920x1080@75"
   ];
 
   nixpkgs.config.permittedInsecurePackages = ["electron-25.9.0" "electron-19.1.9"];
