@@ -17,18 +17,18 @@
     terminal.name = "ghostty";
 
     monitors = {
-      "DP-2" = {
+      "DP-3" = {
         width = 1920;
         height = 1080;
-        refreshRate = 75.0;
-        x = 0;
+        refreshRate = 60.0;
+        x = 1920;
         y = 0;
       };
       "HDMI-A-1" = {
         width = 1920;
         height = 1080;
-        refreshRate = 60.0;
-        x = 1920;
+        refreshRate = 75.0;
+        x = 0;
         y = 0;
       };
     };
