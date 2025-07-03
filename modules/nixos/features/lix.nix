@@ -4,5 +4,5 @@
   ...
 }: {
   # imports = [inputs.lix-module.nixosModules.default];
-  nix.package = pkgs.lix;
+  nix.package = pkgs.unstable.lix;
 }

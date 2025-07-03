@@ -57,7 +57,6 @@
     protonup
     protonup-qt
     winetricks
-    protontricks
 
     r2modman
     lutris
