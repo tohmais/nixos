@@ -60,6 +60,7 @@
 
     r2modman
     lutris
+    heroic
 
     prismlauncher
     xivlauncher

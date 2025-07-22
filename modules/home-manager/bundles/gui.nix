@@ -59,6 +59,7 @@ in {
 
       bottles
       electron-mail
+      mission-center
     ])
     ++ lib.optionals isWayland (
       with pkgs; [
