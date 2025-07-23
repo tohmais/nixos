@@ -68,7 +68,7 @@
 
     nixcord = {
       # TODO: Change back to "kaylorben/nixcord" once the issue has been fixed.
-      url = "github:kaylorben/nixcord?rev=8c61402edd3164749aae09176bf373f88bfcd0bf";
+      url = "github:kaylorben/nixcord/hash";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
