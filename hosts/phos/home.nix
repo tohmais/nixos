@@ -6,35 +6,34 @@
   config,
   ...
 }: {
-  imports = [outputs.homeManagerModules.default];
 
-  myHomeManager = {
-    bundles.gaming.enable = true;
-    bundles.downloader.enable = true;
-    bundles.university.enable = true;
-    bundles.editing.enable = true;
+  # myHomeManager = {
+  #   bundles.gaming.enable = true;
+  #   bundles.downloader.enable = true;
+  #   bundles.university.enable = true;
+  #   bundles.editing.enable = true;
 
-    terminal.name = "ghostty";
+  #   terminal.name = "ghostty";
 
-    monitors = {
-      "DP-3" = {
-        width = 1920;
-        height = 1080;
-        refreshRate = 60.0;
-        x = 1920;
-        y = 0;
-      };
-      "HDMI-A-1" = {
-        width = 1920;
-        height = 1080;
-        refreshRate = 75.0;
-        x = 0;
-        y = 0;
-      };
-    };
-  };
+  #   monitors = {
+  #     "DP-3" = {
+  #       width = 1920;
+  #       height = 1080;
+  #       refreshRate = 60.0;
+  #       x = 1920;
+  #       y = 0;
+  #     };
+  #     "HDMI-A-1" = {
+  #       width = 1920;
+  #       height = 1080;
+  #       refreshRate = 75.0;
+  #       x = 0;
+  #       y = 0;
+  #     };
+  #   };
+  # };
 
-  home = {
+  hm.home = {
     username = "callum";
     homeDirectory = lib.mkDefault "/home/callum";
     stateVersion = "24.05";
