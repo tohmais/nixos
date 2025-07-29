@@ -12,4 +12,4 @@ let
     useBuiltinsFetchTree = true;
   };
 in
-flake.inputs
+  flake.inputs

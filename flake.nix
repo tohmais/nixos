@@ -36,8 +36,8 @@
     # hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
 
     # gBar = {
-      # url = "github:scorpion-26/gBar";
-      # inputs.nixpkgs.follows = "nixpkgs";
+    # url = "github:scorpion-26/gBar";
+    # inputs.nixpkgs.follows = "nixpkgs";
     # };
 
     nix-gaming.url = "github:fufexan/nix-gaming";
@@ -95,10 +95,33 @@
       url = "git+https://git.lix.systems/lix-project/flake-compat.git";
       flake = false;
     };
-
   };
 
-  outputs = _: { };
+  outputs = {...} @ inputs: let
+    create = import ./util/create.nix;
+  in {
+    nixosConfigurations = create.systems {
+      phos = {
+        user = "callum";
+        imports = [
+          ./base
+          ./workstation
+          ./opt/gaming
+          ./hosts/phos
+        ];
+        system = "x86_64-linux";
+      };
+      homesick = {
+        user = "callum";
+        imports = [
+          ./base
+          ./workstation
+          ./hosts/homesick
+        ];
+        system = "x86_64-linux";
+      };
+    };
+  };
   # outputs = {...} @ inputs: let
   #   myLib = import ./myLib/default.nix {inherit inputs;};
   # in
