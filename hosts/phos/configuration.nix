@@ -42,21 +42,21 @@
     };
   };
 
-  myNixOS = {
-    bundles.gaming.enable = true;
+  # myNixOS = {
+  #   bundles.gaming.enable = true;
 
-    # i WOULD enable this, if my internet at home wasn't a packet-dropping piece of shit
-    # services.ollama.enable = true;
-    # services.nixarr.enable = true;
+  #   # i WOULD enable this, if my internet at home wasn't a packet-dropping piece of shit
+  #   # services.ollama.enable = true;
+  #   # services.nixarr.enable = true;
 
-    amd.enable = true;
+  #   amd.enable = true;
 
-    home-users = {
-      "callum" = {
-        userConfig = ./home.nix;
-      };
-    };
-  };
+  #   home-users = {
+  #     "callum" = {
+  #       userConfig = ./home.nix;
+  #     };
+  #   };
+  # };
 
   # boot.kernelParams =
   # lib.mapAttrsToList

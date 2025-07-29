@@ -1,5 +1,5 @@
 {...}: {
-  programs.kitty = {
+  hm.programs.kitty = {
     enable = true;
     shellIntegration = {
       enableZshIntegration = true;
