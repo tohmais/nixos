@@ -77,6 +77,7 @@
     ares
 
     simple64
+    unstable.rpcs3
 
     (retroarch.withCores (
       cores:

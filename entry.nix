@@ -1,13 +1,12 @@
 let
   create = import ./util/create.nix;
-in
-{
+in {
   nixosConfigurations = create.systems {
     phos = {
       user = "callum";
       imports = [
         ./base
-        ./graphical
+        ./workstation
         ./opt/gaming
         ./hosts/phos
       ];
@@ -17,7 +16,7 @@ in
       user = "callum";
       imports = [
         ./base
-        ./graphical
+        ./workstation
         ./hosts/homesick
       ];
       system = "x86_64-linux";
