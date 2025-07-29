@@ -40,7 +40,7 @@
         gamescope
       ];
       protontricks.enable = true;
-      extest.enable = config.sharedOptions.isWayland;
+      extest.enable = true;
     };
     gamescope = {
       enable = true;
