@@ -15,4 +15,6 @@
     useUserPackages = true;
     backupFileExtension = "backup";
   };
+
+  nixpkgs.config.allowUnfree = true;
 }
