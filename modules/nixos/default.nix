@@ -61,6 +61,7 @@ in {
 
   config = {
     nix.settings.experimental-features = ["nix-command" "flakes"];
+    nix.settings.allow-import-from-derivation = false;
     programs.nix-ld.enable = true;
 
     nixpkgs = {
