@@ -60,7 +60,7 @@ in {
     ++ opts;
 
   config = {
-    nix.settings.experimental-features = ["nix-command" "flakes"];
+    nix.settings.experimental-features = ["nix-command" "flakes" "pipe-operator"];
     nix.settings.allow-import-from-derivation = false;
     programs.nix-ld.enable = true;
 

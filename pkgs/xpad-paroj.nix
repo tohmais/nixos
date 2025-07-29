@@ -5,7 +5,7 @@
   kernel,
 }:
 stdenv.mkDerivation rec {
-  pname = "xpad";
+  pname = "xpad-paroj";
   version = "0.4";
 
   src = fetchFromGitHub {

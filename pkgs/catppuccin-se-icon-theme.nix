@@ -7,7 +7,7 @@
   link = "https://github.com/ljmill/catppuccin-icons/releases/download/v0.2.0/Catppuccin-SE.tar.bz2";
 in
   stdenv.mkDerivation {
-    name = "Catppuccin-SE";
+    name = "catppuccin-se-icon-theme";
 
     src = fetchurl {
       url = link;
