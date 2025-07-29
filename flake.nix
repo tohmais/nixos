@@ -106,6 +106,8 @@
         imports = [
           ./base
           ./workstation
+          ./hardware/gpu/amd
+          ./hardware/cpu/amd
           ./opt/gaming
           ./hosts/phos
         ];
