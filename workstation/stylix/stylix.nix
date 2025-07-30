@@ -6,11 +6,11 @@
   userPkgs,
   ...
 }: {
-  imports = [inputs.stylix.homeModules.stylix];
+  hm.imports = [inputs.stylix.homeModules.stylix];
   
   hm.stylix = {
     enable = true;
-    base16Scheme = "./kanagawa.yaml";
+    base16Scheme = ./kanagawa.yaml;
 
     polarity = "dark";
     image = ../../assets/wallhaven-y8e1vl.jpg;
@@ -47,9 +47,11 @@
 
     iconTheme = {
       enable = true;
-      package = pkgs.callPackage userPkgs.catppuccin-se-icons {};
+      package = pkgs.callPackage userPkgs.catppuccin-se-icon-theme {};
       dark = "Catppuccin-SE";
     };
   };
   environment.systemPackages = [config.hm.stylix.cursor.package];
+
+  programs.dconf.enable = true;
 }

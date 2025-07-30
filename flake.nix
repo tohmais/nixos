@@ -119,6 +119,8 @@
           ./base
           ./workstation
           ./hosts/homesick
+          ./hardware/cpu/intel
+          ./hardware/gpu/nvidia/optimus
         ];
         system = "x86_64-linux";
       };
