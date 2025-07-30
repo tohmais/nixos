@@ -16,6 +16,8 @@
       polarity = "dark";
       image = ../../assets/wallhaven-y8e1vl.jpg;
 
+      overlays.enable = false;
+
       fonts = {
         monospace = {
           package = pkgs.nerd-fonts.lilex;

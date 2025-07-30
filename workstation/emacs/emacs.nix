@@ -3,7 +3,7 @@
   config,
   ...
 }: let
-  f = config.stylix.fonts;
+  f = config.hm.stylix.fonts;
 in {
   hm = {
     programs.emacs = {
@@ -29,7 +29,7 @@ in {
       '';
 
       "doom/themes/doom-stylix-theme.el" = {
-        source = config.lib.stylix.colors {
+        source = config.hm.lib.stylix.colors {
           template = builtins.readFile ./doom-stylix-theme.el.mustache;
           extension = ".el";
         };
