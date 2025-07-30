@@ -1,13 +1,14 @@
 # Copyright (c) 2023 Yurii M
 # Modified by Callum Wishart
 {
-  pkgs,
+  userPkgs,
   config,
+  pkgs,
   ...
 }: {
   services.displayManager.sddm = {
     enable = true;
-    wayland.enable = config.sharedOptions.isWayland;
+    wayland.enable = true;
     theme = "tokyo-night";
     settings = {
       Theme = {
@@ -17,7 +18,5 @@
     };
   };
 
-  environment.systemPackages = with pkgs; [
-    sddm-tokyo-night
-  ];
+  environment.systemPackages = [(pkgs.callPackage userPkgs.sddm-tokyo-night {})];
 }
