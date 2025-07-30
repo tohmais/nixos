@@ -1,4 +1,4 @@
-{...}: {
+{pkgs, ...}: {
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -31,5 +31,11 @@
     };
   };
 
-  hm.services.mpris-proxy.enable = true;
+  hm = {
+    services.mpris-proxy.enable = true;
+    home.packages = with pkgs; [
+      playerctl
+      pamixer
+    ];
+  };
 }
