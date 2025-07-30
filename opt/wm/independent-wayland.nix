@@ -2,7 +2,8 @@
   services.dbus.enable = true;
   security.polkit.enable = true;
 
-  hm = {xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-gtk];
+  hm = {
+    xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-gtk];
 
     home.packages = with pkgs; [
       libsForQt5.qt5.qtwayland
@@ -16,7 +17,7 @@
     ];
   };
   environment.sessionVariables = {
-        NIXOS_OZONE_WL = "1";
-        NIXOS_WAYLAND = "1";
+    NIXOS_OZONE_WL = "1";
+    NIXOS_WAYLAND = "1";
   };
 }

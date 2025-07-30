@@ -2,12 +2,15 @@
   environment.systemPackages = with pkgs; [
     distrobox
     steam-run
+
+    pipx
+    cargo-binstall
   ];
 
   virtualisation.podman = {
-        enable = true;
-        dockerCompat = true;
-      };
+    enable = true;
+    dockerCompat = true;
+  };
 
   environment.localBinInPath = true;
   # I want to get shit done
