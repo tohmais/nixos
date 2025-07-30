@@ -5,7 +5,7 @@
   inputs,
   ...
 }: {
-  imports = [ ../generic.nix ];
+  imports = [../generic.nix];
 
   environment.sessionVariables = {
     LIBVA_DRIVER_NAME = "nvidia";

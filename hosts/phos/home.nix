@@ -6,7 +6,6 @@
   config,
   ...
 }: {
-
   # myHomeManager = {
   #   bundles.gaming.enable = true;
   #   bundles.downloader.enable = true;

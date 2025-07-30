@@ -1,6 +1,5 @@
-{ mainUser, ...}: {
-
-  nix.settings.trusted-users = [ mainUser ];
+{mainUser, ...}: {
+  nix.settings.trusted-users = [mainUser];
   users.users.${mainUser} = {
     isNormalUser = true;
     extraGroups = [
@@ -12,5 +11,4 @@
     username = mainUser;
     homeDirectory = "/home/${mainUser}";
   };
-
 }

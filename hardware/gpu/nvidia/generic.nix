@@ -1,4 +1,9 @@
-{pkgs, lib, config, ...}: {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}: {
   services.xserver.videoDrivers = ["nvidia"];
 
   hardware.nvidia = {
@@ -47,8 +52,6 @@
     #   persistencedSha256 = "sha256-4l8N83Spj0MccA8+8R1uqiXBS0Ag4JrLPjrU3TaXHnM=";
     # };
   };
-
-  
 
   boot.kernelParams = lib.mkDefault ["nvidia.NVreg_PreserveVideoMemoryAllocations=1"];
 

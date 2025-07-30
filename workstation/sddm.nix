@@ -2,7 +2,6 @@
 # Modified by Callum Wishart
 {
   pkgs,
-  lib,
   config,
   ...
 }: {
@@ -12,8 +11,8 @@
     theme = "tokyo-night";
     settings = {
       Theme = {
-        CursorTheme = config.stylix.cursor.name;
-        CursorSize = config.stylix.cursor.size;
+        CursorTheme = config.hm.stylix.cursor.name;
+        CursorSize = config.hm.stylix.cursor.size;
       };
     };
   };
