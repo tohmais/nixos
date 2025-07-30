@@ -6,7 +6,7 @@
   config,
   ...
 }: {
-  imports = [outputs.homeManagerModules.default];
+  /* imports = [outputs.homeManagerModules.default];
 
   myHomeManager = {
     bundles.leisure.enable = true;
@@ -23,9 +23,9 @@
         scale = 1.0;
       };
     };
-  };
+  }; */
 
-  home = {
+  hm.home = {
     username = "callum";
     homeDirectory = lib.mkDefault "/home/callum";
     stateVersion = "24.11";

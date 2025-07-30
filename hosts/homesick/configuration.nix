@@ -28,7 +28,7 @@
     xkb.variant = "";
   };
 
-  myNixOS = {
+  /* myNixOS = {
     isProfessional = true;
 
     isPrime = true;
@@ -41,7 +41,7 @@
         userConfig = ./home.nix;
       };
     };
-  };
+  }; */
 
   system.stateVersion = "24.11";
 }
