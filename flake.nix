@@ -109,6 +109,7 @@
           ./hardware/gpu/amd
           ./hardware/cpu/amd
           ./opt/gaming
+          ./opt/wm/hyprland
           ./hosts/phos
         ];
         system = "x86_64-linux";
