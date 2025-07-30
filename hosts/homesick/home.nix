@@ -6,7 +6,8 @@
   config,
   ...
 }: {
-  /* imports = [outputs.homeManagerModules.default];
+  /*
+     imports = [outputs.homeManagerModules.default];
 
   myHomeManager = {
     bundles.leisure.enable = true;
@@ -23,7 +24,8 @@
         scale = 1.0;
       };
     };
-  }; */
+  };
+  */
 
   hm.home = {
     username = "callum";
