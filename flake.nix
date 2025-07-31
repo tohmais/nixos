@@ -12,11 +12,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-alien = {
-      url = "github:thiagokokada/nix-alien";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     lix = {
       url = "https://git.lix.systems/lix-project/lix/archive/main.tar.gz";
       flake = false;
@@ -32,13 +27,6 @@
       url = "github:feel-co/hjem";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
-
-    # gBar = {
-    # url = "github:scorpion-26/gBar";
-    # inputs.nixpkgs.follows = "nixpkgs";
-    # };
 
     nix-gaming.url = "github:fufexan/nix-gaming";
 
@@ -71,11 +59,6 @@
       url = "github:notashelf/nvf";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # tohmutils = {
-    # url = "github:tohmais/nix-utils";
-    # inputs.nixpkgs.follows = "nixpkgs";
-    # };
 
     nixcord = {
       url = "github:kaylorben/nixcord";
