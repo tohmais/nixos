@@ -21,8 +21,6 @@
 
   # environment.systemPackages = [(pkgs.callPackage userPkgs.sddm-tokyo-night {})];
 
-  services.greetd = {
-    enable = true;
     services.greetd = {
     enable = true;
     settings = {
@@ -52,6 +50,5 @@
       };
       vt = 1;
     };
-  };
   };
 }
