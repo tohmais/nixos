@@ -52,6 +52,7 @@
   hm = {
     home.packages = with pkgs; [
       mangohud
+      adwsteamgtk
 
       protonup-ng
       protonup-qt
@@ -62,10 +63,6 @@
 
       prismlauncher
       xivlauncher
-    ];
-
-    services.flatpak.packages = [
-      "io.github.Foldex.AdwSteamGtk"
     ];
   };
 }

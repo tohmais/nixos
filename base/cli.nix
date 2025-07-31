@@ -16,6 +16,7 @@
     fd
     ouch
     fzf
+    tealdeer
 
     uutils-coreutils-noprefix
   ];
