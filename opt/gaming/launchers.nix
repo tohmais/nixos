@@ -48,4 +48,24 @@
     };
     gamemode.enable = true;
   };
+
+  hm = {
+    home.packages = with pkgs; [
+    mangohud
+
+    protonup-ng
+    protonup-qt
+    winetricks
+
+    lutris
+    heroic
+
+    prismlauncher
+    xivlauncher
+  ];
+
+  services.flatpak.packages = [
+    "io.github.Foldex.AdwSteamGtk"
+  ];
+  };
 }
