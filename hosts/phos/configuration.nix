@@ -73,6 +73,8 @@
     "video=HDMI-A-1:1920x1080@75"
   ];
 
+  hm.home.sessionVariables."TERMINAL" = "ghostty";
+
   nixpkgs.config.permittedInsecurePackages = ["electron-25.9.0" "electron-19.1.9"];
 
   programs.kdeconnect.enable = true;

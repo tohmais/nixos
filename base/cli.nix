@@ -6,7 +6,7 @@
     wget
   ];
 
-  hm.homePackages = with pkgs; [
+  hm.home.packages = with pkgs; [
     ripgrep
     bat
     zellij
@@ -15,6 +15,7 @@
     lazygit
     fd
     ouch
+    fzf
 
     uutils-coreutils-noprefix
   ];

@@ -9,9 +9,13 @@
 
   programs.zoxide = {
     enable = true;
-    options = ["--cmd cd"];
+    flags = ["--cmd cd"];
   };
 
   environment.shells = [pkgs.fish];
   users.defaultUserShell = pkgs.fish;
+  hm = {
+    home.shell.enableFishIntegration = true;
+    programs.fish.enable = true;
+  };
 }

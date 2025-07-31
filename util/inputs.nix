@@ -1,3 +1,4 @@
+# Copied from https://git.atagen.co/atagen/nix/src/commit/353499a037fd01ebfa373ba3047e92083eb4bdb8/util/inputs.nix
 let
   lock = builtins.fromJSON (builtins.readFile ../flake.lock);
   node = lock.nodes.root.inputs.__flake-compat;
