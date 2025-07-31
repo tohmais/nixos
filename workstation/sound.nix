@@ -36,6 +36,8 @@
     home.packages = with pkgs; [
       playerctl
       pamixer
+
+      pwvucontrol
     ];
   };
 }

@@ -1,8 +1,9 @@
-{...}: {
+{pkgs, ...}: {
   xdg.autostart.enable = true;
   xdg.portal.enable = true;
 
-  hm.xdg = {
+  hm = {
+    xdg = {
     enable = true;
     userDirs = {
       enable = true;
@@ -10,5 +11,7 @@
     };
     autostart.enable = true;
     portal.enable = true;
+  };
+  home.packages = [pkgs.xdg-utils];
   };
 }

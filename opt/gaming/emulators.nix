@@ -1,6 +1,10 @@
-{mainUser, ...}: let
+{mainUser, pkgs, unstablePkgs, ...}: let
   # renderMustache = inputs.tohmutils.lib.renderMustache;
 in {
+
+  environment.systemPackags = [pkgs.ares];
+
+  hm = {
   home.file = {
     "ES-DE/custom_systems/es_find_rules.xml"
     
@@ -21,4 +25,27 @@ in {
       </ruleList>
     '';
   };
+  services.flatpak.packages = [
+    "com.fightcade.Fightcade"
+  ];
+  home.packages = (with pkgs; [
+    dolphin-emu
+        ryujinx
+        simple64
+
+        (retroarch.withCores (
+          cores:
+            with libretro; [
+              snes9x
+              genesis-plus-gx
+              beetle-saturn
+              melonds
+              mgba
+            ]
+        ))
+  ])++ (with unstablePkgs; [
+        rpcs3
+      ]);
+  }
+  ;
 }
