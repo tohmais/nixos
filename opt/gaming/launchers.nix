@@ -51,21 +51,21 @@
 
   hm = {
     home.packages = with pkgs; [
-    mangohud
+      mangohud
 
-    protonup-ng
-    protonup-qt
-    winetricks
+      protonup-ng
+      protonup-qt
+      winetricks
 
-    lutris
-    heroic
+      lutris
+      heroic
 
-    prismlauncher
-    xivlauncher
-  ];
+      prismlauncher
+      xivlauncher
+    ];
 
-  services.flatpak.packages = [
-    "io.github.Foldex.AdwSteamGtk"
-  ];
+    services.flatpak.packages = [
+      "io.github.Foldex.AdwSteamGtk"
+    ];
   };
 }

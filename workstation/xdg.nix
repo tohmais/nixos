@@ -4,14 +4,14 @@
 
   hm = {
     xdg = {
-    enable = true;
-    userDirs = {
       enable = true;
-      createDirectories = true;
+      userDirs = {
+        enable = true;
+        createDirectories = true;
+      };
+      autostart.enable = true;
+      portal.enable = true;
     };
-    autostart.enable = true;
-    portal.enable = true;
-  };
-  home.packages = [pkgs.xdg-utils];
+    home.packages = [pkgs.xdg-utils];
   };
 }

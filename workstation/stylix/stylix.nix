@@ -58,4 +58,24 @@
   environment.systemPackages = [config.hm.stylix.cursor.package];
 
   programs.dconf.enable = true;
+
+  console.colors = with config.hm.lib.stylix.colors; [
+    base00-hex
+    red
+    green
+    yellow
+    blue
+    magenta
+    cyan
+    base05-hex
+    base03-hex
+    red
+    green
+    yellow
+    blue
+    magenta
+    cyan
+    base07-hex
+  ];
+  console.font = config.hm.stylix.fonts.monospace.name;
 }
