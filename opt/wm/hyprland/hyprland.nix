@@ -98,9 +98,10 @@ in {
         ];
 
         "$mod" = "SUPER";
+        "$terminal" = config.hm.home.sessionVariables."TERMINAL";
         bind =
           [
-            "$mod, RETURN, exec, $TERMINAL"
+            "$mod, RETURN, exec, $terminal"
             "$mod SHIFT, Q, killactive"
             "$mod SHIFT, E, exec, wlogout"
             "$mod, Space, togglefloating"
@@ -164,14 +165,17 @@ in {
           "WLR_DRM_NO_ATOMIC,1"
         ];
 
-        exec-once = [
-          "hyprctl setcursor ${config.hm.stylix.cursor.name} ${toString config.hm.stylix.cursor.size}"
-          "nm-applet"
-          "blueman-applet"
-          "swaync"
-          "wbg ${config.hm.stylix.image}"
-          "bash -c '[ \"$TERMINAL\" = \"ghostty\" ] && ghostty --gtk-single-instance=true --quit-after-last-window-closed=false --initial-window=false"
-        ];
+        exec-once =
+          [
+            "hyprctl setcursor ${config.hm.stylix.cursor.name} ${toString config.hm.stylix.cursor.size}"
+            "nm-applet"
+            "blueman-applet"
+            "swaync"
+            "wbg ${config.hm.stylix.image}"
+          ]
+          ++ lib.optionals (config.hm.home.sessionVariables."TERMINAL" == "ghostty") [
+            "ghostty --gtk-single-instance=true --quit-after-last-window-closed=false --initial-window=false"
+          ];
         exec = [
           "pkill waybar;sleep .5 && waybar"
         ];
@@ -186,6 +190,8 @@ in {
       grimblast
       nwg-displays
       jq
+      fuzzel
+      wlogout
     ];
   };
 }
