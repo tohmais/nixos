@@ -21,31 +21,11 @@
 
   # environment.systemPackages = [(pkgs.callPackage userPkgs.sddm-tokyo-night {})];
 
-    services.greetd = {
+  services.greetd = {
     enable = true;
     settings = {
       default_session = {
-        command = lib.concatStringsSep " " [
-          (lib.getExe pkgs.greetd.tuigreet)
-          "--time"
-          "--asterisks"
-          "--remember"
-          "--remember-session"
-          "--user-menu"
-          "--greeting \"Welcome to NixOS! Please authenticate below.\""
-          "--theme ${
-            lib.concatStringsSep ";" [
-              "border=magenta"
-              "text=cyan"
-              "prompt=green"
-              "time=red"
-              "action=blue"
-              "button=yellow"
-              "container=black"
-              "input=red"
-            ]
-          }"
-        ];
+        command = "${lib.getExe pkgs.greetd.tuigreet} --time --asterisks --remember --remember-session --user-menu --greeting \"Welcome to NixOS! Please authenticate below.\" --theme border=magenta;button=blue;prompt=blue";
         user = "greeter";
       };
       vt = 1;

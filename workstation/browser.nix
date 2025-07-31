@@ -1,14 +1,12 @@
-# Copyright (c) 2023 Yurii M
-# Modified by Callum Wishart
 {
   pkgs,
   inputs,
-  config,
+  mainUser,
   ...
 }: {
-  programs.firefox = {
+  hm.programs.firefox = {
     enable = true;
-    profiles."${config.home.username}" = {
+    profiles."${mainUser}" = {
       extensions.packages = with inputs.firefox-addons.packages.${pkgs.system}; [
         bitwarden
         ublock-origin
@@ -100,9 +98,4 @@
       };
     };
   };
-
-  home.packages = with pkgs; [
-    tor-browser
-    inputs.zen-browser.packages.${pkgs.system}.default
-  ];
 }

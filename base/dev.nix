@@ -6,12 +6,7 @@
     };
 
     home.packages = with pkgs; [
-      git
       gh
-      wget
-
-      uutils-coreutils-noprefix
-      p7zip
 
       nix-prefetch-scripts
       nixd
