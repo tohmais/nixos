@@ -2,7 +2,7 @@
   # renderMustache = inputs.tohmutils.lib.renderMustache;
 in {
 
-  environment.systemPackags = [pkgs.ares];
+  environment.systemPackages = [pkgs.ares];
 
   hm = {
   home.file = {
