@@ -3,6 +3,7 @@
   inputs,
   config,
   userPkgs,
+  lib,
   ...
 }: let
   colors = config.hm.lib.stylix.colors.withHashtag;
