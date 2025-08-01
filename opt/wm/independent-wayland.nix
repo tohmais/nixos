@@ -1,6 +1,8 @@
 {pkgs, ...}: {
   services.dbus.enable = true;
   security.polkit.enable = true;
+  services.gnome.gnome-keyring.enable = true;
+  security.soteria.enable = true;
 
   hm = {
     xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-gtk];
