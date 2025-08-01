@@ -182,6 +182,13 @@ in {
         # https://github.com/hyprwm/Hyprland/issues/9064
         debug.full_cm_proto = true;
       };
+      systemd.variables = [
+        "DISPLAY"
+        "HYPRLAND_INSTANCE_SIGNATURE"
+        "WAYLAND_DISPLAY"
+        "XDG_CURRENT_DESKTOP"
+        "XDG_SESSION_ID"
+      ];
     };
 
     home.packages = with pkgs; [
