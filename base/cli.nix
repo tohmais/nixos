@@ -6,6 +6,7 @@
     wget
   ];
 
+  documentation.man.generateCaches = false;
   hm.home.packages = with pkgs; [
     ripgrep
     bat

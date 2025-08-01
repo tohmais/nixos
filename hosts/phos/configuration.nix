@@ -35,11 +35,6 @@
     enable = true;
     xkb.layout = "us";
     xkb.variant = "";
-
-    desktopManager = {
-      xfce.enable = true;
-      xterm.enable = true;
-    };
   };
 
   # myNixOS = {
