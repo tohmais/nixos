@@ -17,8 +17,6 @@ in {
 
   services.displayManager.defaultSession = "hyprland";
 
-  services.gnome.gnome-keyring.enable = true;
-
   hm = {
     wayland.windowManager.hyprland = {
       enable = true;
