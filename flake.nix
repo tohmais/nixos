@@ -4,11 +4,10 @@
   description = "tohmais' NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-25.05";
-    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
+    nixpkgs.url = "nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -31,7 +30,7 @@
     nix-gaming.url = "github:fufexan/nix-gaming";
 
     stylix = {
-      url = "github:nix-community/stylix/release-25.05";
+      url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -94,6 +93,7 @@
           ./opt/gaming
           ./opt/wm/hyprland
           ./opt/leisure
+          ./opt/downloader
           ./hosts/phos
         ];
         system = "x86_64-linux";

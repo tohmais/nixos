@@ -16,10 +16,6 @@ in {
           specialArgs = {
             inherit inputs;
             userPkgs = recursivePkgs ../pkgs;
-            unstablePkgs = import inputs.nixpkgs-unstable {
-              inherit system;
-              config.allowUnfree = true;
-            };
             mainUser = info.user;
           };
           modules =
