@@ -1,7 +1,6 @@
 {pkgs, ...}: {
   environment.systemPackages = with pkgs; [
     distrobox
-    steam-run
 
     pipx
     cargo-binstall

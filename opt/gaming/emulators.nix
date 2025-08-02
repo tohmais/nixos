@@ -1,7 +1,6 @@
 {
   mainUser,
   pkgs,
-  unstablePkgs,
   ...
 }: let
   # renderMustache = inputs.tohmutils.lib.renderMustache;
@@ -32,25 +31,22 @@ in {
     services.flatpak.packages = [
       "com.fightcade.Fightcade"
     ];
-    home.packages =
-      (with pkgs; [
-        dolphin-emu
-        ryujinx
-        simple64
+    home.packages = with pkgs; [
+      dolphin-emu
+      ryujinx
+      simple64
+      rpcs3
 
-        (retroarch.withCores (
-          cores:
-            with libretro; [
-              snes9x
-              genesis-plus-gx
-              beetle-saturn
-              melonds
-              mgba
-            ]
-        ))
-      ])
-      ++ (with unstablePkgs; [
-        rpcs3
-      ]);
+      (retroarch.withCores (
+        cores:
+          with libretro; [
+            snes9x
+            genesis-plus-gx
+            beetle-saturn
+            melonds
+            mgba
+          ]
+      ))
+    ];
   };
 }
