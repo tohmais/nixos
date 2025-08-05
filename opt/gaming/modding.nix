@@ -4,16 +4,12 @@
   ...
 }: {
   hm = {
-    services.flatpak = {
-      packages = [
-        "io.github.everestapi.Olympus"
-      ];
-    };
-
     home.packages = [
       pkgs.r2modman
       pkgs.hedgemodmanager
-
+      (pkgs.olympus.override {
+        celesteWrapper = "steam-run";
+      })
       inputs.balatro-mod-manager.packages.${pkgs.system}.default
     ];
   };
