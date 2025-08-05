@@ -11,8 +11,6 @@
   swayosd-client = pkgs.writeShellScriptBin "swayosd-client" ''
     #!/usr/bin/env bash
 
-    monitor="eDP-1"
-
     case "$XDG_SESSION_DESKTOP" in
       sway)
         monitor=$(${swaymsg} -t get_outputs | ${jq} -r '.[] | select(.focused == true).name')
