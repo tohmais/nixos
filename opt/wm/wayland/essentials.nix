@@ -4,6 +4,10 @@
 
   services.gnome.gnome-keyring.enable = true;
   security.soteria.enable = true;
+  environment.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+    NIXOS_WAYLAND = "1";
+  };
 
   hm = {
     xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-gtk];
@@ -18,10 +22,5 @@
       networkmanagerapplet
       imv
     ];
-
-    environment.sessionVariables = {
-      NIXOS_OZONE_WL = "1";
-      NIXOS_WAYLAND = "1";
-    };
   };
 }

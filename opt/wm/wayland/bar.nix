@@ -3,7 +3,7 @@
   config,
   ...
 }: {
-  programs.waybar = {
+  hm.programs.waybar = {
     enable = true;
     style = lib.mkAfter ''
       * {
