@@ -1,7 +1,7 @@
 {
   pkgs,
-  config,
   osConfig,
+  mainUser,
   ...
 }: {
   hm = {
@@ -28,8 +28,8 @@
             formatting.command = ["alejandra" "--quiet" "--"];
 
             options = {
-              nixos.expr = "(builtins.getFlake \"${config.home.homeDirectory}/nixos\").nixosConfigurations.${osConfig.networking.hostName}.options";
-              home-manager.expr = "(builtins.getFlake \"${config.home.homeDirectory}/nixos\").homeConfigurations.\"${config.home.username}@${osConfig.networking.hostName}\".options";
+              nixos.expr = "(builtins.getFlake \"/home/${mainUser}/nixos\").nixosConfigurations.${osConfig.networking.hostName}.options";
+              home-manager.expr = "(builtins.getFlake \"/home/${mainUser}/nixos\").homeConfigurations.\"${mainUser}@${osConfig.networking.hostName}\".options";
             };
           };
 
