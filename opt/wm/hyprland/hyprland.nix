@@ -92,7 +92,7 @@ in {
           "maxsize 1 1,class:^(xwaylandvideobridge)$"
           "noblur,class:^(xwaylandvideobridge)$"
 
-          "pin,class:polkit-gnome-authentication-agent-1"
+          "pin,class:gay.vaskel.soteria"
         ];
 
         "$mod" = "SUPER";

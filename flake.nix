@@ -106,6 +106,8 @@
           ./hosts/homesick
           ./hardware/cpu/intel
           ./hardware/gpu/nvidia/optimus
+          ./opt/wm/hyprland
+          ./opt/leisure
         ];
         system = "x86_64-linux";
       };
