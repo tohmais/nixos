@@ -6,4 +6,9 @@
       gearlever
     ];
   };
+
+  fonts.packages = with pkgs; [
+    corefonts
+    dejavu_fonts
+  ];
 }
