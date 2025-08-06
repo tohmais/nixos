@@ -4,6 +4,9 @@
       mission-center
       bottles
       gearlever
+
+      libreoffice
+      electronmail
     ];
   };
 
