@@ -1,8 +1,16 @@
-{mainUser, ...}: {
+{
+  mainUser,
+  config,
+  ...
+}: {
   programs.nh = {
     enable = true;
     clean.enable = true;
     clean.extraArgs = "--keep-since 4d --keep 3 --nogcroots";
-    flake = "/home/${mainUser}/nixos";
+  };
+
+  hm.home.sessionVariables = {
+    NH_FILE = "/home/${mainUser}/nixos/entry.nix";
+    NH_ATTRP = "nixosConfigurations.${config.networking.hostName}";
   };
 }

@@ -1,4 +1,8 @@
-{inputs, ...}: {
+{
+  inputs,
+  pkgs,
+  ...
+}: {
   # NOTE: for discord to do screenshare with audio, the program NEEDS to output PulseAudio!
   hm = {
     imports = [
@@ -60,5 +64,9 @@
         };
       };
     };
+
+    home.packages = with pkgs; [
+      revolt-desktop
+    ];
   };
 }

@@ -6,7 +6,7 @@
       gearlever
 
       libreoffice
-      electronmail
+      electron-mail
     ];
   };
 
