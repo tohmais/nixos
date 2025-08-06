@@ -9,7 +9,6 @@
 
   services.flatpak.enable = true;
   hm.services.flatpak.packages = [
-    "it.mijorus.gearlever"
     "com.github.tchx84.Flatseal"
   ];
 }
