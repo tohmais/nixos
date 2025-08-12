@@ -84,4 +84,8 @@ in {
       (pkgs.callPackage userPkgs.sptlrx {})
     ];
   };
+
+  networking.hosts = {
+    "0.0.0.0" = ["apresolve.spotify.com"];
+  };
 }
