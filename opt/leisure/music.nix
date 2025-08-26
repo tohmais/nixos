@@ -31,6 +31,7 @@ in {
       };
       ncspot = {
         enable = true;
+        package = pkgs.callPackage userPkgs.sptlrx {};
         settings = {
           use_nerdfont = true;
           notify = true;
@@ -83,9 +84,5 @@ in {
       pkgs.rescrobbled
       (pkgs.callPackage userPkgs.sptlrx {})
     ];
-  };
-
-  networking.hosts = {
-    "0.0.0.0" = ["apresolve.spotify.com"];
   };
 }
