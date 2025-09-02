@@ -4,7 +4,6 @@
     nicotine-plus
     picard
     ani-cli
-    miru
     hydralauncher
 
     aria2

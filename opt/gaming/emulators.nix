@@ -33,9 +33,10 @@ in {
     ];
     home.packages = with pkgs; [
       dolphin-emu
-      ryujinx
+      ryubing
       simple64
       rpcs3
+      pcsx2
 
       (retroarch.withCores (
         cores:

@@ -6,6 +6,7 @@
       ringracers
       clonehero
       yarg
+      sm64coopdx
     ];
 
     services.flatpak.packages = [
