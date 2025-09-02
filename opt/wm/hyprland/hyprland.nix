@@ -191,7 +191,7 @@
 
     home.packages = with pkgs; [
       grimblast
-      nwg-displays
+      # nwg-displays (currently broken)
       jq
       fuzzel
       wlogout

@@ -25,7 +25,7 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${lib.getExe pkgs.greetd.tuigreet} --time --asterisks --remember --remember-session --user-menu --greeting \"Welcome to NixOS! Please authenticate below.\" --theme border=magenta;button=blue;prompt=blue";
+        command = "${lib.getExe pkgs.tuigreet} --time --asterisks --remember --remember-session --user-menu --greeting \"Welcome to NixOS! Please authenticate below.\" --theme border=magenta;button=blue;prompt=blue";
         user = "greeter";
       };
       vt = 1;
