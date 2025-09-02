@@ -1,8 +1,8 @@
 {
   pkgs,
+  userPkgs,
   inputs,
   config,
-  userPkgs,
   lib,
   ...
 }: let
@@ -31,7 +31,6 @@ in {
       };
       ncspot = {
         enable = true;
-        package = pkgs.callPackage userPkgs.sptlrx {};
         settings = {
           use_nerdfont = true;
           notify = true;
