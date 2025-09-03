@@ -1,6 +1,4 @@
-{inputs, ...}: {
-  imports = [inputs.lix-module.nixosModules.default];
-
+{pkgs, ...}: {
   nix = {
     settings = {
       experimental-features = ["nix-command" "flakes" "pipe-operator"];
@@ -8,6 +6,7 @@
       auto-optimise-store = true;
     };
     optimise.automatic = true;
+    package = pkgs.lixPackageSets.latest.lix;
   };
 
   home-manager = {
