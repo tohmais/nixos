@@ -4,6 +4,7 @@
   config,
   mainUser,
   userPkgs,
+  lib,
   ...
 }: {
   hm = {
@@ -14,7 +15,7 @@
       base16Scheme = ./kanagawa.yaml;
 
       polarity = "dark";
-      image = ../../assets/wallhaven-y8e1vl.jpg;
+      image = lib.mkDefault ../../assets/wallhaven-y8e1vl.jpg;
 
       overlays.enable = false;
 

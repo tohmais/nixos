@@ -69,9 +69,9 @@
           force_default_wallpaper = 0;
           vfr = true;
         };
-        gestures = {
-          workspace_swipe = true;
-        };
+        gesture = [
+          "3, horizontal, workspace"
+        ];
         # cursor = {
         #   no_hardware_cursors = true;
         # };
@@ -167,7 +167,7 @@
             "nm-applet"
             "blueman-applet"
             "swaync"
-            "wbg ${config.hm.stylix.image}"
+            "wbg -s ${config.hm.stylix.image}"
           ]
           ++ lib.optionals (config.hm.home.sessionVariables."TERMINAL" == "ghostty") [
             "ghostty --gtk-single-instance=true --quit-after-last-window-closed=false --initial-window=false"

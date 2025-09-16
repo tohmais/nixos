@@ -27,9 +27,13 @@
   };
   */
 
-  hm.home = {
-    username = "callum";
-    homeDirectory = lib.mkDefault "/home/callum";
-    stateVersion = "24.11";
+  hm = {
+    stylix.image = ../../assets/wallhaven-vq81j3.jpg;
+
+    home = {
+      username = "callum";
+      homeDirectory = lib.mkDefault "/home/callum";
+      stateVersion = "24.11";
+    };
   };
 }
