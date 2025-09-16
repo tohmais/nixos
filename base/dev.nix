@@ -4,7 +4,7 @@
       enable = true;
       nix-direnv = {
         enable = true;
-        package = pkgs.lixPackageSets.latest.nix-direnv;
+        package = pkgs.lixPackageSets.git.nix-direnv;
       };
     };
 

@@ -69,6 +69,8 @@ in {
       spicetify = {
         enable = true;
         spotifyPackage = pkgs.spotify;
+        # fix upstream problems with wayland-native spotify.
+        wayland = false;
         # theme = spicePkgs.themes.text;
         # colorScheme = "Kanagawa";
 
