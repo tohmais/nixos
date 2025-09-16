@@ -1,4 +1,5 @@
-# NixOS Configuration
+# THIS IS A LEGACY CONFIGURATION KEPT FOR ARCHIVAL PURPOSES.  
+# DO NOT USE. SWITCH BACK TO MAIN.
 
 Notes for non-reproducible parts of system:
 * Install ES-DE AppImage. NixOS core settings should already be placed in the correct spot.  
