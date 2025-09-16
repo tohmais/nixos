@@ -35,6 +35,7 @@
 
           "workbench.sideBar.location" = "right";
           "[typescript]"."editor.defaultFormatter" = "biomejs.biome";
+          "zig.zls.enabled" = true;
         };
       };
     };
