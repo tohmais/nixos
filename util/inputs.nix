@@ -1,4 +1,5 @@
-# Copied from https://git.atagen.co/atagen/nix/src/commit/353499a037fd01ebfa373ba3047e92083eb4bdb8/util/inputs.nix
+# Copied from https://git.atagen.co/atagen/nix/src/commit/353499a037fd01ebfa373ba3047e92083eb4bdb8/util/create.nix
+# The original licence is included in the file LICENCE at the root of this project.
 let
   lock = builtins.fromJSON (builtins.readFile ../flake.lock);
   node = lock.nodes.root.inputs.__flake-compat;

@@ -1,5 +1,3 @@
-# Copyright (c) 2023 Yurii M
-# Modified by Callum Wishart
 {
   description = "tohmais' NixOS configuration";
 
