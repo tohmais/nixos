@@ -50,7 +50,7 @@
 
       iconTheme = {
         enable = true;
-        package = pkgs.callPackage userPkgs.catppuccin-se-icon-theme {};
+        package = userPkgs.catppuccin-se-icon-theme;
         dark = "Catppuccin-SE";
       };
     };
