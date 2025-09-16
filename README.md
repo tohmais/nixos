@@ -16,5 +16,5 @@ Notes for non-reproducible parts of system:
 ### Credits
 
 * HUGE credit towards vimjoyer, whose videos encouraged me to start on my nix journey, and whose personal config I based previous versions of this config on.
-* HUGE credit towards atagen, whose amazing work on [their personal config](https://git.atagen.co/atagen/nix) is what this current version of this config is based on.
+* HUGE credit towards atagen, whose amazing work on [their personal config](https://git.atagen.co/atagen/nix) includes work I have copied. A notice is included on all such files.
    
