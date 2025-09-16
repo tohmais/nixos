@@ -34,7 +34,7 @@ in {
     home.packages = with pkgs; [
       dolphin-emu
       ryubing
-      simple64
+      gopher64
       rpcs3
       pcsx2
 

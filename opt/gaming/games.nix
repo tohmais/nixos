@@ -7,6 +7,7 @@
       clonehero
       yarg
       sm64coopdx
+      shipwright
     ];
 
     services.flatpak.packages = [
