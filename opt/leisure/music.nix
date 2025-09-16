@@ -83,7 +83,7 @@ in {
 
     home.packages = [
       pkgs.rescrobbled
-      (pkgs.callPackage userPkgs.sptlrx {})
+      userPkgs.sptlrx
     ];
   };
 }

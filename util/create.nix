@@ -5,18 +5,18 @@ let
   inherit (inputs) nixpkgs;
   inherit (nixpkgs) lib;
   recursivelyImport = import ./recursively-import.nix {inherit lib;};
-  recursivePkgs = import ./recursive-pkgs.nix {inherit lib;};
 in {
   systems = definitions:
     lib.mapAttrs (
-      name: info: let
-        system = info.system;
-      in
+      name: info:
         lib.nixosSystem {
-          inherit system;
           specialArgs = {
+            inherit (info) system;
             inherit inputs;
-            userPkgs = recursivePkgs ../pkgs;
+            userPkgs = lib.packagesFromDirectoryRecursive {
+              inherit (inputs.nixpkgs.legacyPackages.${info.system}) callPackage;
+              directory = ../pkgs;
+            };
             mainUser = info.user;
           };
           modules =
