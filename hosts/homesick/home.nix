@@ -28,7 +28,7 @@
   */
 
   hm = {
-    stylix.image = ../../assets/wallhaven-vq81j3.jpg;
+    stylix.image = ../../assets/wallhaven-9omr8k.png;
 
     home = {
       username = "callum";
