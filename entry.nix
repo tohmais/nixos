@@ -26,6 +26,7 @@ in {
         ./hosts/homesick
         ./hardware/cpu/intel
         ./hardware/gpu/nvidia/optimus
+        ./hardware/laptop
         ./opt/wm/wayland
         ./opt/wm/hyprland
         ./opt/leisure
