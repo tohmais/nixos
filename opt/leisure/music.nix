@@ -74,8 +74,6 @@ in {
         # theme = spicePkgs.themes.text;
         # colorScheme = "Kanagawa";
 
-        windowManagerPatch = true;
-
         enabledExtensions = with spicePkgs.extensions; [
           shuffle
           hidePodcasts

@@ -6,7 +6,7 @@
       auto-optimise-store = true;
     };
     optimise.automatic = true;
-    package = pkgs.lixPackageSets.git.lix;
+    package = pkgs.lixPackageSets.latest.lix;
   };
 
   home-manager = {

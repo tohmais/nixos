@@ -103,7 +103,7 @@
             "$mod, Space, togglefloating"
             "$mod, F, fullscreen"
             "$mod, D, exec, pkill fuzzel || fuzzel"
-            "$mod, O, exec, firefox"
+            "$mod, O, exec, zen"
             "$mod SHIFT, N, exec, swaync-client -t -sw"
 
             ", Print, exec, grimblast --notify save screen"

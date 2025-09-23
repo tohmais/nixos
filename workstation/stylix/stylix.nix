@@ -34,7 +34,7 @@
       };
 
       targets = {
-        firefox.profileNames = [mainUser];
+        zen-browser.profileNames = [mainUser];
         emacs.enable = false;
         spicetify.enable = true;
         qt.enable = true;
