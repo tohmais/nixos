@@ -7,14 +7,17 @@ in {
       imports = [
         ./base
         ./workstation
-        ./hardware/gpu/amd
+        ./hosts/phos
+
         ./hardware/cpu/amd
-        ./opt/gaming
+        ./hardware/gpu/amd
+
         ./opt/wm/wayland
         ./opt/wm/hyprland
+
         ./opt/leisure
+        ./opt/gaming
         ./opt/downloader
-        ./hosts/phos
       ];
       system = "x86_64-linux";
     };
@@ -24,11 +27,14 @@ in {
         ./base
         ./workstation
         ./hosts/homesick
+
         ./hardware/cpu/intel
         ./hardware/gpu/nvidia/optimus
         ./hardware/laptop
+
         ./opt/wm/wayland
         ./opt/wm/hyprland
+
         ./opt/leisure
       ];
       system = "x86_64-linux";
