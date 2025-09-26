@@ -106,8 +106,8 @@
             "$mod, O, exec, zen"
             "$mod SHIFT, N, exec, swaync-client -t -sw"
 
-            ", Print, exec, grimblast --notify save screen"
-            "CTRL, Print, exec, grimblast --notify save area"
+            ", Print, exec, grimblast --notify copysave output"
+            "CTRL, Print, exec, grimblast --notify copysave area"
 
             "$mod,left,movefocus,l"
             "$mod,right,movefocus,r"

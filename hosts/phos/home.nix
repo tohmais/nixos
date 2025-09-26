@@ -32,9 +32,19 @@
   #   };
   # };
 
-  hm.home = {
-    username = "callum";
-    homeDirectory = lib.mkDefault "/home/callum";
-    stateVersion = "24.05";
+  hm = {
+    # 75% keyboard
+    wayland.windowManager.hyprland.settings.bind = [
+      ", Home, exec, grimblast --notify copysave output"
+      "CTRL, Home, exec, grimblast --notify copysave area"
+    ];
+    home = {
+      packages = with pkgs; [
+        vial
+      ];
+      username = "callum";
+      homeDirectory = lib.mkDefault "/home/callum";
+      stateVersion = "24.05";
+    };
   };
 }
