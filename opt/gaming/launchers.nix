@@ -44,7 +44,10 @@
     };
     gamescope = {
       enable = true;
-      capSysNice = true;
+
+      # this breaks running gamescope in steam, for some reason.
+      # set to false to make it work.
+      capSysNice = false;
     };
     gamemode.enable = true;
   };
