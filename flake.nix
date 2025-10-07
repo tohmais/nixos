@@ -59,10 +59,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    balatro-mod-manager = {
-      url = "github:janw4ld/balatro-mod-manager/66-linux-support-upstream";
-    };
-
     __flake-compat = {
       url = "git+https://git.lix.systems/lix-project/flake-compat.git";
       flake = false;
