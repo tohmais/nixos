@@ -22,10 +22,13 @@
   boot.kernelPackages = pkgs.linuxPackages_zen;
 
   # Configure keymap in X11
-  services.xserver = {
-    enable = true;
-    xkb.layout = "us";
-    xkb.variant = "";
+  services = {
+    xserver = {
+      enable = true;
+      xkb.layout = "us";
+      xkb.variant = "";
+    };
+    thermald.enable = true;
   };
 
   /*

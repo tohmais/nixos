@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   services = {
     auto-cpufreq.enable = true;
+    tlp.enable = false;
     logind.settings.Login.HandleLidSwitch = "suspend-then-hibernate";
   };
 

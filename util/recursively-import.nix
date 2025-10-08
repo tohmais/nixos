@@ -12,7 +12,7 @@
   filterNixFiles = paths:
     builtins.filter
     # filter the files for `.nix` files. if it's not a file, it can stay.
-    (path: !builtins.isPath path || lib.hasSuffix ".nix" path)
+    (path: !builtins.isPath path || lib.hasSuffix ".nix" (toString path))
     # Expand any folders into all the files within them. Note that this comes
     # BEFORE the filtering that's happening above
     (builtins.concatMap recurseIntoFolders paths);
