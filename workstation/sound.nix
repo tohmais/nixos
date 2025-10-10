@@ -35,8 +35,6 @@
     services.mpris-proxy.enable = true;
     home.packages = with pkgs; [
       playerctl
-      pamixer
-
       pwvucontrol
     ];
   };

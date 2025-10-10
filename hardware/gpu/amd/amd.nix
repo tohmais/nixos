@@ -1,16 +1,14 @@
-{
-  pkgs,
-  config,
-  lib,
-  ...
-}: {
-  boot.initrd.kernelModules = ["amdgpu"];
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
+{pkgs, ...}: {
+  hardware = {
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+    };
+    amdgpu = {
+      initrd.enable = true;
+      opencl.enable = true;
+    };
   };
-  services.xserver.enable = true;
-  services.xserver.videoDrivers = ["amdgpu"];
 
   systemd.tmpfiles.rules = let
     rocmEnv = pkgs.symlinkJoin {
@@ -24,10 +22,8 @@
   in [
     "L+    /opt/rocm   -    -    -     -    ${rocmEnv}"
   ];
-  hardware.graphics.extraPackages = with pkgs; [
-    rocmPackages.clr.icd
-    libvdpau-va-gl
-  ];
+
   environment.systemPackages = with pkgs; [rocmPackages.rocm-smi];
   nixpkgs.config.rocmSupport = true;
+  services.lact.enable = true;
 }

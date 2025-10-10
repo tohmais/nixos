@@ -9,10 +9,10 @@ stdenv.mkDerivation rec {
   version = "0-unstable-2025-09-04";
 
   src = fetchFromGitHub {
-    owner = "forkymcforkface";
+    owner = "tohmais";
     repo = "xpad-noone";
-    rev = "9ad89fdf2daeb29162a95702217bb9436ecf5da2f";
-    sha256 = "sha256-etDsEXnbh3qC0Tri4vhHPsesNSkwNC48ryEWUiuj2Yo=";
+    rev = "b32477c8807c3fd88e1a0bcbc2426941e570906c";
+    sha256 = "sha256-CzuIa9KQZz7lpwXu5ALd+JkDatfLOQ84UQqMXS6GCiA=";
   };
 
   setSourceRoot = ''
@@ -22,7 +22,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = kernel.moduleBuildDependencies;
 
   postPatch = ''
-    substituteInPlace Makefile --replace-fail "/lib/modules/\$(shell uname -r)/build" "${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
+    substituteInPlace Makefile --replace-fail "/lib/modules/\$(KVERSION)/build" "${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
   '';
 
   installPhase = ''

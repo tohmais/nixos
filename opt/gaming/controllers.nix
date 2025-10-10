@@ -23,5 +23,8 @@
   hardware = {
     xpadneo.enable = true;
     xone.enable = true;
+
+    # xone enables this by default, but this conflicts with our version of xpad-noone!
+    xpad-noone.enable = false;
   };
 }
