@@ -2,7 +2,7 @@
 # The original licence is included in the file LICENCE at the root of this project.
 let
   lock = builtins.fromJSON (builtins.readFile ../flake.lock);
-  node = lock.nodes.root.inputs.__flake-compat;
+  node = lock.nodes.root.inputs.flake-compat;
   inherit (lock.nodes.${node}.locked) narHash rev url;
   flake-compat = builtins.fetchTarball {
     url = "${url}/archive/${rev}.tar.gz";
