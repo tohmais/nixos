@@ -78,5 +78,4 @@
     cyan
     base07-hex
   ];
-  console.font = config.hm.stylix.fonts.monospace.name;
 }
