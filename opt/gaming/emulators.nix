@@ -37,6 +37,7 @@ in {
       gopher64
       rpcs3
       pcsx2
+      xemu
 
       (retroarch.withCores (
         cores:

@@ -37,6 +37,7 @@
     xkb.variant = "";
   };
 
+  programs.zoom-us.enable = true;
   # myNixOS = {
   #   bundles.gaming.enable = true;
 
