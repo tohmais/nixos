@@ -4,10 +4,11 @@
   inputs,
   config,
   lib,
+  system,
   ...
 }: let
   colors = config.hm.lib.stylix.colors.withHashtag;
-  spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
+  spicePkgs = inputs.spicetify-nix.legacyPackages.${system};
 in {
   hm = {
     imports = [inputs.spicetify-nix.homeManagerModules.default];

@@ -2,6 +2,7 @@
   pkgs,
   inputs,
   mainUser,
+  system,
   ...
 }: {
   hm = {
@@ -28,7 +29,7 @@
         HttpsOnlyMode = true;
       };
       profiles."${mainUser}" = {
-        extensions.packages = with inputs.firefox-addons.packages.${pkgs.system}; [
+        extensions.packages = with inputs.firefox-addons.packages.${system}; [
           bitwarden
           ublock-origin
           sponsorblock
@@ -114,7 +115,7 @@
 
     xdg.mimeApps = let
       value = let
-        zen-browser = inputs.zen-browser.packages.${pkgs.system}.twilight; # or twilight
+        zen-browser = inputs.zen-browser.packages.${system}.twilight; # or twilight
       in
         zen-browser.meta.desktopFileName;
 
