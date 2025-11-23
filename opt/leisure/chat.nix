@@ -16,6 +16,10 @@
       # };
       # equicordPlugins = "${_equicordRepo}/src/equicordplugins";
       enable = true;
+      discord = {
+        equicord.enable = true;
+        vencord.enable = false;
+      };
       # userPlugins = {
       #   anammox = "${equicordPlugins}/anammox";
       #   betterQuickReact = "${equicordPlugins}/betterQuickReact";
@@ -33,19 +37,23 @@
 
       config = {
         plugins = {
+          anammox.enable = true;
           anonymiseFileNames = {
             enable = true;
             anonymiseByDefault = true;
           };
           # betterSettings.enable = true;
+          betterQuickReact.enable = true;
           biggerStreamPreview.enable = true;
-          clearURLs.enable = true;
+          clearUrLs.enable = true;
           fakeNitro = {
             enable = true;
             enableEmojiBypass = false;
             enableStickerBypass = false;
             enableStreamQualityBypass = true;
           };
+          homeTyping.enable = true;
+          noNitroUpsell.enable = true;
           noReplyMention.enable = true;
           noServerEmojis = {
             enable = true;
@@ -59,7 +67,7 @@
           spotifyCrack.enable = true;
           volumeBooster = {
             enable = true;
-            multiplier = 4;
+            multiplier = 4.0;
           };
         };
       };
