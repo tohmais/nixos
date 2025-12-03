@@ -168,6 +168,7 @@
             "blueman-applet"
             "swaync"
             "wbg -s ${config.hm.stylix.image}"
+            "soteria"
           ]
           ++ lib.optionals (config.hm.home.sessionVariables."TERMINAL" == "ghostty") [
             "ghostty --gtk-single-instance=true --quit-after-last-window-closed=false --initial-window=false"
