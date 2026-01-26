@@ -45,7 +45,7 @@
           # betterSettings.enable = true;
           betterQuickReact.enable = true;
           biggerStreamPreview.enable = true;
-          clearUrLs.enable = true;
+          ClearURLs.enable = true;
           fakeNitro = {
             enable = true;
             enableEmojiBypass = false;

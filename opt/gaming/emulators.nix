@@ -38,6 +38,7 @@ in {
       rpcs3
       pcsx2
       xemu
+      mesen
 
       (retroarch.withCores (
         cores:
@@ -47,6 +48,7 @@ in {
             beetle-saturn
             melonds
             mgba
+            sameboy
           ]
       ))
     ];
