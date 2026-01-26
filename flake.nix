@@ -62,7 +62,7 @@
     };
 
     nixcord = {
-      url = "github:kaylorben/nixcord";
+      url = "github:FlameFlag/nixcord";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-compat.follows = "flake-compat";
       inputs.flake-parts.follows = "flake-parts";
