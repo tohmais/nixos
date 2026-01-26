@@ -49,7 +49,7 @@
         size = 32;
       };
 
-      iconTheme = {
+      icons = {
         enable = true;
         package = userPkgs.catppuccin-se-icon-theme;
         dark = "Catppuccin-SE";

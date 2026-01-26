@@ -49,7 +49,7 @@ in {
         fd
         ranger
         nodejs
-        nixfmt-rfc-style
+        nixfmt
       ];
     };
   };
