@@ -2,11 +2,7 @@
   mainUser,
   pkgs,
   ...
-}: let
-  # renderMustache = inputs.tohmutils.lib.renderMustache;
-in {
-  environment.systemPackages = [pkgs.ares];
-
+}: {
   hm = {
     home.file = {
       "ES-DE/custom_systems/es_find_rules.xml"
@@ -35,10 +31,13 @@ in {
       dolphin-emu
       ryubing
       gopher64
+      # parallel-launcher TODO: uncomment when https://github.com/NixOS/nixpkgs/pull/485839 is merged.
       rpcs3
       pcsx2
       xemu
       mesen
+
+      ares
 
       (retroarch.withCores (
         cores:

@@ -56,6 +56,7 @@
     home.packages = with pkgs; [
       mangohud
       adwsteamgtk
+      sgdboop
 
       protonup-ng
       protonup-qt

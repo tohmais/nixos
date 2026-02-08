@@ -4,6 +4,7 @@
       yarg
       sm64coopdx
       shipwright
+      ringracers
     ];
 
     services.flatpak.packages = [

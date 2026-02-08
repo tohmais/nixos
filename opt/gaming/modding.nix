@@ -4,12 +4,14 @@
   ...
 }: {
   hm = {
-    home.packages = [
-      pkgs.r2modman
-      pkgs.hedgemodmanager
-      pkgs.lumafly
-      pkgs.doomrunner
-      pkgs.mono
+    home.packages = with pkgs; [
+      r2modman
+      hedgemodmanager
+      lumafly
+      doomrunner
+      mono
+      wheelwizard
+
       (pkgs.olympus.override {
         celesteWrapper = "steam-run";
       })
