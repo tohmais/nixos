@@ -65,8 +65,8 @@
 
   # might or might not need this for amd, idk.
   boot.kernelParams = [
-    "video=DP-3:1920x1080@60"
-    "video=HDMI-A-1:1920x1080@75"
+    "video=DP-3:1920x1080@75"
+    "video=HDMI-A-1:2560x1440@180"
   ];
 
   hm.home.sessionVariables."TERMINAL" = "ghostty";

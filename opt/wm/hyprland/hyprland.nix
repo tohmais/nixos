@@ -68,6 +68,7 @@
         misc = {
           force_default_wallpaper = 0;
           vfr = true;
+          vrr = 1;
         };
         gesture = [
           "3, horizontal, workspace"
@@ -79,18 +80,11 @@
         # explicit_sync = 0;
         # explicit_sync_kms = 0;
         # };
-        windowrulev2 = [
-          "fullscreen,class:(org.libretro.RetroArch)"
-          "fullscreen,class:(simple64-gui)"
-          "immediate, class:^(steam_app*)$"
-
-          "opacity 0.0 override,class:^(xwaylandvideobridge)$"
-          "noanim,class:^(xwaylandvideobridge)$"
-          "noinitialfocus,class:^(xwaylandvideobridge)$"
-          "maxsize 1 1,class:^(xwaylandvideobridge)$"
-          "noblur,class:^(xwaylandvideobridge)$"
-
-          "pin,class:gay.vaskel.soteria"
+        windowrule = [
+          "match:class org.libretro.RetroArch, fullscreen on"
+          "match:class simple64-gui, fullscreen on"
+          "match:class steam_app*, immediate on"
+          "match:class gay.vaskel.soteria, pin on"
         ];
 
         "$mod" = "SUPER";
@@ -181,6 +175,21 @@
         # https://github.com/hyprwm/Hyprland/issues/9064
         debug.full_cm_proto = true;
       };
+
+      extraConfig = ''
+        # fix xwayland screen sharing
+        windowrule {
+          name = xwayland-video-bridge-fixes
+          match:class = xwaylandvideobridge
+
+          no_initial_focus = true
+          no_focus = true
+          no_anim = true
+          no_blur = true
+          max_size = 1 1
+          opacity = 0.0
+        }
+      '';
       systemd.variables = [
         "DISPLAY"
         "HYPRLAND_INSTANCE_SIGNATURE"
