@@ -8,6 +8,8 @@
 
     aria2
 
+    webtorrent_desktop
+
     # i wish jdownloader would stop lying about being FOSS
     # so use this and megabasterd
     motrix
