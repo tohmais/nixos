@@ -30,10 +30,14 @@
     home.packages = with pkgs; [
       dolphin-emu
       ryubing
+
       gopher64
-      # parallel-launcher TODO: uncomment when https://github.com/NixOS/nixpkgs/pull/485839 is merged.
-      rpcs3
+      parallel-launcher
+
       pcsx2
+      ppsspp
+      rpcs3
+
       xemu
       mesen
 
