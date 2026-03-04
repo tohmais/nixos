@@ -18,6 +18,7 @@
       url = "github:fufexan/nix-gaming";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
+      inputs.git-hooks.inputs.flake-compat.follows = "flake-compat";
     };
 
     stylix = {

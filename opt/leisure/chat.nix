@@ -15,7 +15,7 @@
       #   rev = "334ce7c113ab86f964d96a0fa5000d98bd29fade";
       # };
       # equicordPlugins = "${_equicordRepo}/src/equicordplugins";
-      enable = true;
+      enable = false; #TODO: wait until https://github.com/FlameFlag/nixcord/issues/182 is fixed.
       discord = {
         equicord.enable = true;
         vencord.enable = false;
@@ -75,6 +75,8 @@
 
     home.packages = with pkgs; [
       revolt-desktop
+      goofcord
+      dorion
     ];
   };
 }

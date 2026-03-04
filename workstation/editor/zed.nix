@@ -7,7 +7,7 @@
 }: {
   hm = {
     programs.zed-editor = {
-      enable = true;
+      enable = false; #TODO: wait for hydra to cache
       package = pkgs.zed-editor;
       extensions = [
         "catppuccin-icons"

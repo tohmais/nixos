@@ -3,10 +3,10 @@
     home.packages = with pkgs; [
       mission-center
       bottles
-      gearlever
+      # gearlever TODO: same issue
       bazaar
 
-      libreoffice
+      # libreoffice TODO: wait for https://github.com/NixOS/nixpkgs/pull/495245 to be merged.
       electron-mail
     ];
 

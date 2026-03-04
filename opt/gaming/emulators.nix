@@ -32,7 +32,7 @@
       ryubing
 
       gopher64
-      parallel-launcher
+      # parallel-launcher TODO: wait until https://github.com/NixOS/nixpkgs/issues/496624 is resolved (my issue!!!!)
 
       pcsx2
       ppsspp
