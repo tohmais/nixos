@@ -169,7 +169,7 @@
             default = ["" "" ""];
           };
           on-click = "pwvucontrol";
-          on-click-middle = "swayosd-client --input-volume mute-toggle";
+          on-click-middle = "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; # comment when it stops being broken "swayosd-client --input-volume mute-toggle";
           on-click-right = "swayosd-client --output-volume mute-toggle";
           on-scroll-up = "swayosd-client --output-volume +10";
           on-scroll-down = "swayosd-client --output-volume -10";

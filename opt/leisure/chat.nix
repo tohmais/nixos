@@ -37,7 +37,6 @@
 
       config = {
         plugins = {
-          anammox.enable = true; #now called declutter
           anonymiseFileNames = {
             enable = true;
             anonymiseByDefault = true;
@@ -46,7 +45,7 @@
           biggerStreamPreview.enable = true;
           ClearURLs.enable = true;
           consoleJanitor.enable = true;
-          # declutter.enable = true;
+          declutter.enable = true;
           fakeNitro = {
             enable = true;
             enableEmojiBypass = false;
