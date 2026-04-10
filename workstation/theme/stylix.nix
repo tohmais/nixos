@@ -55,6 +55,8 @@
         dark = "Catppuccin-SE";
       };
     };
+
+    gtk.gtk4.theme = config.hm.gtk.theme;
   };
   environment.systemPackages = [config.hm.stylix.cursor.package];
 

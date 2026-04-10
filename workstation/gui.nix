@@ -30,5 +30,6 @@
   fonts.packages = with pkgs; [
     corefonts
     dejavu_fonts
+    noto-fonts-cjk-sans
   ];
 }
