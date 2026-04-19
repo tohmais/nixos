@@ -30,6 +30,7 @@
     };
     thermald.enable = true;
   };
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
 
   /*
      myNixOS = {

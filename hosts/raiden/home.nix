@@ -1,4 +1,8 @@
-{lib, mainUser, ...}: {
+{
+  lib,
+  mainUser,
+  ...
+}: {
   hm = {
     stylix.image = ../../assets/wallhaven-9omr8k.png;
 
