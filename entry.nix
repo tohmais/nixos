@@ -39,5 +39,23 @@ in {
       ];
       system = "x86_64-linux";
     };
+    raiden = {
+      user = "callum";
+      imports = [
+        ./base
+        ./workstation
+        ./hosts/raiden
+
+        ./hardware/cpu/intel
+        ./hardware/gpu/nvidia/optimus
+        ./hardware/laptop
+
+        ./opt/wm/wayland
+        ./opt/wm/hyprland
+
+        ./opt/leisure
+      ];
+      system = "x86_64-linux";
+    };
   };
 }
