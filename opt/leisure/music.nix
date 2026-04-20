@@ -70,11 +70,6 @@ in {
       spicetify = {
         enable = true;
         spotifyPackage = pkgs.spotify;
-        # fix upstream problems with wayland-native spotify.
-        wayland = false;
-        # theme = spicePkgs.themes.text;
-        # colorScheme = "Kanagawa";
-
         enabledExtensions = with spicePkgs.extensions; [
           shuffle
           hidePodcasts
@@ -82,9 +77,9 @@ in {
       };
     };
 
-    home.packages = [
-      pkgs.rescrobbled
-      userPkgs.sptlrx
+    home.packages = with pkgs; [
+      rescrobbled
+      sptlrx
     ];
   };
 }
