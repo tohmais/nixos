@@ -6,6 +6,7 @@
       gearlever
       bazaar
 
+      bitwarden-desktop
       libreoffice
       electron-mail
     ];

@@ -1,9 +1,14 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   services.dbus.enable = true;
   security.polkit.enable = true;
+  security.soteria.enable = lib.mkDefault false;
 
   services.gnome.gnome-keyring.enable = true;
-  security.soteria.enable = true;
+
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
     NIXOS_WAYLAND = "1";
@@ -19,7 +24,6 @@
       grim
       slurp
       wbg
-      networkmanagerapplet
       imv
     ];
   };

@@ -1,6 +1,6 @@
-{...}: {
+{lib, ...}: {
   hm.services.swaync = {
-    enable = true;
+    enable = lib.mkDefault false;
     settings = {
       control-center-margin-top = 5;
       control-center-margin-bottom = 5;

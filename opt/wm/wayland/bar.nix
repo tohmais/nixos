@@ -4,7 +4,7 @@
   ...
 }: {
   hm.programs.waybar = {
-    enable = true;
+    enable = lib.mkDefault false;
     style = lib.mkAfter ''
       * {
         font-family: "${lib.strings.removeSuffix " Mono" config.hm.stylix.fonts.monospace.name}";

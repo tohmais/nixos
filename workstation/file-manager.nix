@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   programs = {
     thunar = {
       enable = true;
@@ -10,9 +14,19 @@
     };
     xfconf.enable = true;
   };
-  xdg.mime.defaultApplications."inode/directory" = "thunar.desktop";
+  hm.xdg.configFile."xfce4/helpers.rc".text = ''
+    TerminalEmulator=${config.hm.home.sessionVariables."TERMINAL"}
+    TerminalEmulatorDismissed=true
+  '';
+  xdg.mime.defaultApplications = {
+    "inode/directory" = ["thunar.desktop"];
+    "x-scheme-handler/terminal" = ["${config.hm.home.sessionVariables."TERMINAL"}.desktop"];
+  };
   environment.systemPackages = with pkgs; [
     file-roller
+  ];
+  hm.home.packages = with pkgs; [
+    yazi
   ];
   services = {
     gvfs.enable = true;

@@ -4,7 +4,7 @@
   ...
 }: {
   hm.programs.fuzzel = {
-    enable = true;
+    enable = lib.mkDefault false;
     settings = {
       main = {
         font = lib.mkForce "${config.hm.stylix.fonts.monospace.name}:size=${toString config.hm.stylix.fonts.sizes.popups}";

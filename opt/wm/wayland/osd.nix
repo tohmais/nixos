@@ -40,7 +40,7 @@
 in {
   hm = {
     services.swayosd = {
-      enable = true;
+      enable = lib.mkDefault false;
       package = swayosd-wrapped;
     };
   };

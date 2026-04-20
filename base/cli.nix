@@ -18,6 +18,7 @@
     ouch
     fzf
     tealdeer
+    p7zip
 
     uutils-coreutils-noprefix
   ];

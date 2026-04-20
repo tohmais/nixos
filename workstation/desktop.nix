@@ -15,6 +15,7 @@
       portal.enable = true;
     };
     home.packages = [pkgs.xdg-utils];
+    home.file.".face".source = ../assets/.face;
   };
 
   boot.plymouth = {
