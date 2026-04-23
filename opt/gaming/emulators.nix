@@ -32,14 +32,8 @@
       ryubing
 
       gopher64
-      # parallel-launcher TODO: wait until https://github.com/NixOS/nixpkgs/issues/496624 is resolved (my issue!!!!)
-      (pkgs.parallel-launcher.overrideAttrs (oldAttrs: {
-        preConfigure =
-          ''
-            QMAKE="${pkgs.qt6.qtbase}/bin/qmake"
-          ''
-          + oldAttrs.preConfigure;
-      }))
+      parallel-launcher
+
       pcsx2
       ppsspp
       rpcs3

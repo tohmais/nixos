@@ -177,6 +177,7 @@
           enableClipboardHistory = true;
           terminalCommand = "${config.hm.home.sessionVariables."TERMINAL"} -e";
           overviewLayer = true;
+          enableSettingsSearch = false;
         };
 
         controlCenter = {
@@ -232,7 +233,10 @@
           ];
         };
         dock.dockType = "attached";
-        osd.location = "bottom";
+        osd = {
+          enabledTypes = [0 1 2 3];
+          location = "bottom";
+        };
         templates.enableUserTheming = false;
       };
     };

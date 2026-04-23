@@ -4,7 +4,6 @@
       neovide
       nodejs
       zls
-      zig
     ];
   };
 }

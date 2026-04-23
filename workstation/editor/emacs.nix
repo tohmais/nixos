@@ -54,5 +54,8 @@ in {
     };
   };
 
-  fonts.packages = [pkgs.nerd-fonts.symbols-only];
+  fonts.packages = with pkgs; [
+    nerd-fonts.symbols-only
+    symbola
+  ];
 }

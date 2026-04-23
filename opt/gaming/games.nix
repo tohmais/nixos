@@ -2,8 +2,6 @@
   hm = {
     home.packages = with pkgs; [
       yarg
-      sm64coopdx
-      shipwright
       ringracers
     ];
 

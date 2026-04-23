@@ -54,6 +54,8 @@ in {
         ./opt/wm/hyprland
 
         ./opt/leisure
+        ./opt/gaming
+        ./opt/downloader
       ];
       system = "x86_64-linux";
     };

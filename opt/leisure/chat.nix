@@ -78,7 +78,7 @@
     };
 
     home.packages = with pkgs; [
-      revolt-desktop
+      stoat-desktop
     ];
   };
 }

@@ -8,8 +8,6 @@
 
     aria2
 
-    webtorrent_desktop
-
     # get FUCKED jdownloader
     gopeed
   ];

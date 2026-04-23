@@ -57,11 +57,11 @@
       gamescope-wsi
 
       mangohud
-      adwsteamgtk
       sgdboop
 
-      protonup-ng
-      protonup-qt
+      protonup-rs
+      protonplus
+
       winetricks
 
       lutris
