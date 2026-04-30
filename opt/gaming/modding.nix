@@ -1,5 +1,6 @@
 {
   pkgs,
+  userPkgs,
   inputs,
   ...
 }: {
@@ -9,9 +10,8 @@
       hedgemodmanager
       lumafly
       doomrunner
-      mono
       wheelwizard
-
+      (userPkgs.duck-game-rebuilt)
       (pkgs.olympus.override {
         celesteWrapper = "steam-run";
       })
