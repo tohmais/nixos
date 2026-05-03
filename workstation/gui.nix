@@ -3,6 +3,8 @@
     home.packages = with pkgs; [
       mission-center
       gearlever
+
+      # TODO: solution from https://github.com/NixOS/nixpkgs/issues/513245#issuecomment-4319854191, monitor when fixed
       (pkgs.bottles.override {
         # Intercept buildFHSEnv to modify target packages
         buildFHSEnv = args:
@@ -18,6 +20,8 @@
                 # Replace broken openldap with the custom one
                 builtins.filter (p: (p.pname or "") != "openldap") originalPkgs ++ [customLdap];
             });
+
+        removeWarningPopup = true;
       })
       bazaar
 

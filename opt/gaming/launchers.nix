@@ -33,6 +33,7 @@
       platformOptimizations.enable = true;
       extraCompatPackages = with pkgs; [
         proton-ge-bin
+        dwproton-bin
         steamtinkerlaunch
       ];
       extraPackages = with pkgs; [
@@ -63,6 +64,8 @@
       protonplus
 
       winetricks
+
+      # TODO: solution from https://github.com/NixOS/nixpkgs/issues/513245#issuecomment-4319854191, monitor when fixed
       (pkgs.lutris.override {
         # Intercept buildFHSEnv to modify target packages
         buildFHSEnv = args:
@@ -80,7 +83,6 @@
             });
       })
       heroic
-
       prismlauncher
       xivlauncher
     ];
