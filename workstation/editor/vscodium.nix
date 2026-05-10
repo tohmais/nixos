@@ -5,7 +5,7 @@
   ...
 }: {
   hm = {
-    programs.vscode = {
+    programs.vscodium = {
       enable = true;
       package = pkgs.vscodium;
       profiles.default = {
@@ -42,7 +42,7 @@
 
     home.packages = with pkgs; [
       biome
-      claude-code-bin
+      claude-code
     ];
   };
 }

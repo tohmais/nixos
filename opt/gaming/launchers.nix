@@ -47,10 +47,17 @@
       enable = true;
 
       # this breaks running gamescope in steam, for some reason.
-      # set to false to make it work.
+      # set to false to make it work. https://github.com/NixOS/nixpkgs/issues/351516
       capSysNice = false;
     };
     gamemode.enable = true;
+  };
+
+  services.ananicy = {
+    enable = true;
+    # do the capsysnice thing for gamescope
+    package = pkgs.ananicy-cpp;
+    rulesProvider = pkgs.ananicy-rules-cachyos;
   };
 
   hm = {
