@@ -19,6 +19,12 @@
       discord = {
         equicord.enable = true;
         vencord.enable = false;
+        /*
+          settings = {
+          SKIP_HOST_UPDATE = true;
+          SKIP_MODULE_UPDATE = true;
+        };
+        */
       };
       # userPlugins = {
       #   anammox = "${equicordPlugins}/anammox";

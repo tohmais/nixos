@@ -2,6 +2,7 @@
   services = {
     printing = {
       enable = true;
+      startWhenNeeded = true;
       drivers = with pkgs; [
         cups-filters
         cups-browsed

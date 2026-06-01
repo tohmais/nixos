@@ -1,38 +1,40 @@
 {
   lib,
-  stdenv,
   fetchFromGitHub,
   ...
 }: {kernel}:
-stdenv.mkDerivation rec {
+kernel.stdenv.mkDerivation rec {
+  # ← use the kernel's stdenv
   pname = "xpad-noone-upstream";
   version = "0-unstable-2025-09-04";
-
   src = fetchFromGitHub {
     owner = "tohmais";
     repo = "xpad-noone";
     rev = "b32477c8807c3fd88e1a0bcbc2426941e570906c";
     sha256 = "sha256-CzuIa9KQZz7lpwXu5ALd+JkDatfLOQ84UQqMXS6GCiA=";
   };
-
   setSourceRoot = ''
     export sourceRoot=$(pwd)/source
   '';
 
+  hardeningDisable = ["pic" "format"]; # ← avoids spurious flag rejections
   nativeBuildInputs = kernel.moduleBuildDependencies;
-
+  makeFlags =
+    [
+      "ARCH=${kernel.stdenv.hostPlatform.linuxArch}"
+    ]
+    ++ lib.optionals (kernel.stdenv.cc.isClang or false) [
+      "LLVM=1"
+      "LLVM_IAS=1"
+    ];
   postPatch = ''
     substituteInPlace Makefile --replace-fail "/lib/modules/\$(KVERSION)/build" "${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
   '';
-
   installPhase = ''
     runHook preInstall
-
     install *.ko -Dm444 -t $out/lib/modules/${kernel.modDirVersion}/kernel/drivers/xpad-noone
-
     runHook postInstall
   '';
-
   meta = with lib; {
     description = "Xpad driver from the Linux kernel with support for Xbox One controllers removed, synchronised with upstream device support";
     homepage = "https://github.com/forkymcforkface/xpad-noone";

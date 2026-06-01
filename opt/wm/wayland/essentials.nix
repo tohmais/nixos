@@ -7,11 +7,12 @@
   security.polkit.enable = true;
   security.soteria.enable = lib.mkDefault false;
 
-  services.gnome.gnome-keyring.enable = true;
-
-  environment.sessionVariables = {
-    NIXOS_OZONE_WL = "1";
-    NIXOS_WAYLAND = "1";
+  environment = {
+    sessionVariables = {
+      NIXOS_OZONE_WL = "1";
+      NIXOS_WAYLAND = "1";
+    };
+    systemPackages = [pkgs.gnome-keyring];
   };
 
   hm = {

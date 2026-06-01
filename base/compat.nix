@@ -2,7 +2,7 @@
   environment.systemPackages = with pkgs; [
     distrobox
 
-    pipx
+    uv
     cargo-binstall
   ];
 

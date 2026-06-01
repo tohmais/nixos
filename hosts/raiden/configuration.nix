@@ -1,6 +1,8 @@
 {
   lib,
   config,
+  inputs,
+  system,
   ...
 }: {
   boot.loader.systemd-boot.enable = true;
@@ -29,7 +31,10 @@
 
   services.thermald.enable = lib.mkDefault true;
 
-  networking.hostName = "raiden";
+  internal-config.thunar.enable = false;
 
+  boot.kernelPackages = inputs.nix-cachyos-kernel.legacyPackages.x86_64-linux.linuxPackages-cachyos-bore-lto-x86_64-v4;
+
+  networking.hostName = "raiden";
   system.stateVersion = "24.11";
 }

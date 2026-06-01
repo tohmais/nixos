@@ -78,7 +78,7 @@
                 showAlbumArt = true;
                 showArtistFirst = true;
                 showProgressRing = true;
-                showVisualizer = true;
+                showVisualizer = false;
                 textColor = "none";
                 useFixedWidth = false;
                 visualizerType = "linear";
@@ -174,7 +174,7 @@
         wallpaper.enabled = false;
 
         appLauncher = {
-          enableClipboardHistory = true;
+          enableClipboardHistory = false;
           terminalCommand = "${config.hm.home.sessionVariables."TERMINAL"} -e";
           overviewLayer = true;
           enableSettingsSearch = false;
@@ -211,15 +211,15 @@
               id = "profile-card";
             }
             {
-              enabled = true;
+              enabled = false;
               id = "shortcuts-card";
             }
             {
-              enabled = true;
+              enabled = false;
               id = "audio-card";
             }
             {
-              enabled = true;
+              enabled = false;
               id = "brightness-card";
             }
             {
@@ -232,7 +232,7 @@
             }
           ];
         };
-        dock.dockType = "attached";
+        dock.enabled = false;
         osd = {
           enabledTypes = [0 1 2 3];
           location = "bottom";

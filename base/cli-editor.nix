@@ -61,6 +61,7 @@
             whichKey.enable = true;
           };
           statusline.lualine.enable = true;
+          notes.todo-comments.enable = true;
         };
       };
     };

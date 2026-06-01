@@ -80,6 +80,19 @@
       inputs.noctalia-qs.inputs.systems.follows = "systems";
     };
 
+    nix-cachyos-kernel = {
+      url = "github:xddxdd/nix-cachyos-kernel/release";
+      # inputs.nixpkgs.follows = "nixpkgs";
+      # feels bad but we need the cache to hit
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.flake-compat.follows = "flake-compat";
+    };
+
+    watt = {
+      url = "github:notashelf/watt";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     flake-compat = {
       url = "git+https://git.lix.systems/lix-project/flake-compat.git";
       flake = false;
