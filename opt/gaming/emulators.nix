@@ -36,7 +36,7 @@
 
       pcsx2
       ppsspp
-      rpcs3
+      # rpcs3 TODO: monitor https://github.com/NixOS/nixpkgs/issues/529700 for fix
 
       xemu
       mesen

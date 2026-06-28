@@ -17,7 +17,7 @@ stdenvNoCC.mkDerivation rec {
 
   dontWrapQtApps = true;
 
-  propagatedUserEnvPkgs = with pkgs.libsForQt5.qt5; [
+  propagatedUserEnvPkgs = with pkgs.qt5; [
     qtquickcontrols2
     qtgraphicaleffects
     qtsvg

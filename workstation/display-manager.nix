@@ -29,4 +29,6 @@
       vt = 1;
     };
   };
+
+  security.pam.services.greetd.startSession = true;
 }

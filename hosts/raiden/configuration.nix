@@ -3,6 +3,7 @@
   config,
   inputs,
   system,
+  pkgs,
   ...
 }: {
   boot.loader.systemd-boot.enable = true;
@@ -22,6 +23,11 @@
 
   hardware.bumblebee.connectDisplay = true;
 
+  # From https://wiki.nixos.org/wiki/Accelerated_Video_Playback:
+  # "NVIDIA users with a separate iGPU should generally prefer to use their iGPU
+  # for this, and therefore look to the above Intel and AMD sections instead."
+  hardware.graphics.extraPackages = lib.singleton pkgs.intel-vaapi-driver;
+
   # New ThinkPads have a different TrackPoint manufacturer/name.
   # See also https://certification.ubuntu.com/catalog/component/input/5313/input%3ATPPS/2ElanTrackPoint/
   hardware.trackpoint.device = "TPPS/2 Elan TrackPoint";
@@ -34,6 +40,11 @@
   internal-config.thunar.enable = false;
 
   boot.kernelPackages = inputs.nix-cachyos-kernel.legacyPackages.x86_64-linux.linuxPackages-cachyos-bore-lto-x86_64-v4;
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-39.8.10" # bitwarden-desktop
+    "electron-38.8.4" # stoat-desktop
+  ];
 
   networking.hostName = "raiden";
   system.stateVersion = "24.11";

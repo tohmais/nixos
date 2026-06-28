@@ -81,11 +81,11 @@
               ];
 
               icon = "https://nixos.org/favicon.ico";
-              definedAliases = ["@np"];
+              definedAliases = ["@no"];
             };
 
             "NixOS Wiki" = {
-              urls = [{template = "https://wiki.nixos.org/index.php?search={searchTerms}";}];
+              urls = [{template = "https://wiki.nixos.org/w/index.php?search={searchTerms}";}];
               icon = "https://nixos.org/favicon.ico";
               definedAliases = ["@nw"];
             };

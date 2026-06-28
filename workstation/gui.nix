@@ -2,34 +2,17 @@
   hm = {
     home.packages = with pkgs; [
       mission-center
-      gearlever
-
-      # TODO: solution from https://github.com/NixOS/nixpkgs/issues/513245#issuecomment-4319854191, monitor when fixed
-      (pkgs.bottles.override {
-        # Intercept buildFHSEnv to modify target packages
-        buildFHSEnv = args:
-          pkgs.buildFHSEnv (args
-            // {
-              multiPkgs = envPkgs: let
-                # Fetch original package list
-                originalPkgs = args.multiPkgs envPkgs;
-
-                # Disable tests for openldap
-                customLdap = envPkgs.openldap.overrideAttrs (_: {doCheck = false;});
-              in
-                # Replace broken openldap with the custom one
-                builtins.filter (p: (p.pname or "") != "openldap") originalPkgs ++ [customLdap];
-            });
-
-        removeWarningPopup = true;
-      })
+      # gearlever TODO: nixpkgs is super out of date, use flatpak
+      bottles
       bazaar
 
-      bitwarden-desktop
+      # bitwarden-desktop
       libreoffice
       electron-mail
     ];
-
+    services.flatpak.packages = [
+      "it.mijorus.gearlever"
+    ];
     programs.mpv = {
       enable = true;
       config = {
@@ -46,7 +29,6 @@
       };
     };
   };
-
   fonts.packages = with pkgs; [
     corefonts
     dejavu_fonts

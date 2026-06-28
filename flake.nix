@@ -18,6 +18,7 @@
       url = "github:fufexan/nix-gaming";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
+      inputs.flake-compat.follows = "flake-compat";
       inputs.git-hooks.inputs.flake-compat.follows = "flake-compat";
     };
 
@@ -52,7 +53,10 @@
 
     nix-flatpak.url = "github:gmodena/nix-flatpak/latest";
 
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nvf = {
       url = "github:notashelf/nvf";
@@ -72,12 +76,16 @@
     nixarr = {
       url = "github:rasmus-kirk/nixarr";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.treefmt-nix.follows = "treefmt-nix";
     };
 
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.noctalia-qs.inputs.systems.follows = "systems";
+      #inputs.noctalia-qs = {
+      #  inputs.systems.follows = "systems";
+      #  inputs.treefmt-nix.follows = "treefmt-nix";
+      #};
     };
 
     nix-cachyos-kernel = {
@@ -106,6 +114,11 @@
     systems = {
       url = "github:nix-systems/default";
       flake = false;
+    };
+
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 

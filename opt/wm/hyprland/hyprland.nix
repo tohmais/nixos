@@ -8,7 +8,7 @@
 
   mod = "SUPER";
   terminal = config.hm.home.sessionVariables."TERMINAL";
-  ipc = "noctalia-shell ipc call";
+  ipc = "noctalia msg";
 
   # hl.bind(KEY, DISPATCHER) / hl.bind(KEY, DISPATCHER, OPTIONS).
   mkBind = key: action: {_args = [key (mkLuaInline action)];};
@@ -37,9 +37,10 @@ in {
     # package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     # portalPackage = inputs.hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland;
     xwayland.enable = true;
+    withUWSM = true;
   };
 
-  services.displayManager.defaultSession = "hyprland";
+  services.displayManager.defaultSession = "hyprland-uwsm";
 
   hm = {
     wayland.windowManager.hyprland = {
@@ -47,8 +48,9 @@ in {
       configType = "lua";
 
       systemd = {
-        enable = true;
-        enableXdgAutostart = true;
+        enable = false;
+        /*
+           enableXdgAutostart = true;
         variables = [
           "DISPLAY"
           "HYPRLAND_INSTANCE_SIGNATURE"
@@ -56,6 +58,7 @@ in {
           "XDG_CURRENT_DESKTOP"
           "XDG_SESSION_ID"
         ];
+        */
       };
 
       settings = {
@@ -193,17 +196,17 @@ in {
 
         bind =
           [
-            (exec "${mod} + RETURN" terminal)
+            (exec "${mod} + RETURN" "runapp ${terminal}")
             (mkBind "${mod} + SHIFT + Q" "hl.dsp.window.close()")
-            (exec "${mod} + SHIFT + E" "${ipc} sessionMenu toggle")
+            (exec "${mod} + SHIFT + E" "${ipc} panel-toggle session")
             (mkBind "${mod} + Space" ''hl.dsp.window.float({ action = "toggle" })'')
             (mkBind "${mod} + F" "hl.dsp.window.fullscreen()")
-            (exec "${mod} + D" "${ipc} launcher toggle")
-            (exec "${mod} + O" "zen")
-            (exec "${mod} + SHIFT + N" "${ipc} notifications toggleHistory")
+            (exec "${mod} + D" "${ipc} panel-toggle launcher")
+            (exec "${mod} + O" "runapp zen")
+            (exec "${mod} + SHIFT + N" "${ipc} panel-toggle control-center notifications")
 
-            (exec "Print" "grimblast --notify copysave output")
-            (exec "CTRL + Print" "grimblast --notify copysave area")
+            (exec "Print" "runapp grimblast --notify copysave output")
+            (exec "CTRL + Print" "runapp grimblast --notify copysave area")
 
             (mkBind "${mod} + left" ''hl.dsp.focus({ direction = "l" })'')
             (mkBind "${mod} + right" ''hl.dsp.focus({ direction = "r" })'')
@@ -218,17 +221,17 @@ in {
             (mkBind "${mod} + mouse_down" ''hl.dsp.focus({ workspace = "e+1" })'')
             (mkBind "${mod} + mouse_up" ''hl.dsp.focus({ workspace = "e-1" })'')
 
-            (exec "XF86AudioMute" "${ipc} volume muteOutput")
-            (exec "XF86AudioMicMute" "${ipc} volume muteInput")
-            (exec "XF86AudioMedia" "${ipc} media playPause")
-            (exec "XF86AudioPlay" "${ipc} media playPause")
+            (exec "XF86AudioMute" "${ipc} volume-mute")
+            (exec "XF86AudioMicMute" "${ipc} mic-mute")
+            (exec "XF86AudioMedia" "${ipc} media toggle")
+            (exec "XF86AudioPlay" "${ipc} media toggle")
             (exec "XF86AudioPrev" "${ipc} media previous")
             (exec "XF86AudioNext" "${ipc} media next")
 
-            (execOpts "XF86AudioRaiseVolume" "${ipc} volume increase" {repeating = true;})
-            (execOpts "XF86AudioLowerVolume" "${ipc} volume decrease" {repeating = true;})
-            (execOpts "XF86MonBrightnessUp" "${ipc} brightness increase" {repeating = true;})
-            (execOpts "XF86MonBrightnessDown" "${ipc} brightness decrease" {repeating = true;})
+            (execOpts "XF86AudioRaiseVolume" "${ipc} volume-up" {repeating = true;})
+            (execOpts "XF86AudioLowerVolume" "${ipc} volume-down" {repeating = true;})
+            (execOpts "XF86MonBrightnessUp" "${ipc} brightness-up" {repeating = true;})
+            (execOpts "XF86MonBrightnessDown" "${ipc} brightness-down" {repeating = true;})
 
             (mkBindOpts "${mod} + mouse:272" "hl.dsp.window.drag()" {mouse = true;})
             (mkBindOpts "${mod} + mouse:273" "hl.dsp.window.resize()" {mouse = true;})
@@ -241,11 +244,11 @@ in {
             (mkLuaInline ''
               function()
                 hl.exec_cmd("hyprctl setcursor ${config.hm.stylix.cursor.name} ${toString config.hm.stylix.cursor.size}")
-                hl.exec_cmd("noctalia-shell")
+                hl.exec_cmd("runapp noctalia")
                 hl.exec_cmd("wbg -s ${config.hm.stylix.image}")${
                 lib.optionalString (config.hm.home.sessionVariables."TERMINAL" == "ghostty") ''
 
-                  hl.exec_cmd("ghostty --gtk-single-instance=true --quit-after-last-window-closed=false --initial-window=false")''
+                  hl.exec_cmd("runapp ghostty --gtk-single-instance=true --quit-after-last-window-closed=false --initial-window=false")''
               }
               end
             '')
@@ -262,6 +265,7 @@ in {
     home.packages = with pkgs; [
       grimblast
       nwg-displays
+      runapp
     ];
   };
 }

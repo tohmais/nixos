@@ -7,26 +7,16 @@
   hm = {
     imports = [inputs.noctalia.homeModules.default];
 
-    programs.noctalia-shell = {
+    programs.noctalia = {
       enable = true;
-      plugins = {
-        sources = [
-          {
-            enabled = true;
-            name = "Official Noctalia Plugins";
-            url = "https://github.com/noctalia-dev/noctalia-plugins";
-          }
-        ];
-        states = {
-          polkit-agent = {
-            enabled = true;
-            sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
-          };
-        };
-        version = 2;
-      };
       settings = {
-        settingsVersion = 59;
+        shell = {
+          telementry_enabled = false;
+          polkit_agent = true;
+          font_family = lib.mkForce config.hm.stylix.fonts.monospace.name;
+          avatar_path = "${config.hm.home.homeDirectory}/.face";
+          app_icon_colorize = false;
+        };
         bar = {
           barType = "floating";
           position = "top";
@@ -160,11 +150,11 @@
           };
         };
         general = {
-          avatarImage = "${config.hm.home.homeDirectory}/.face";
+          # avatarImage = "${config.hm.home.homeDirectory}/.face";
         };
         ui = {
-          fontDefault = lib.mkForce config.hm.stylix.fonts.monospace.name;
-          fontFixed = lib.mkForce config.hm.stylix.fonts.monospace.name;
+          #fontDefault = lib.mkForce config.hm.stylix.fonts.monospace.name;
+          #fontFixed = lib.mkForce config.hm.stylix.fonts.monospace.name;
         };
         location = {
           weatherEnabled = false;
@@ -175,7 +165,7 @@
 
         appLauncher = {
           enableClipboardHistory = false;
-          terminalCommand = "${config.hm.home.sessionVariables."TERMINAL"} -e";
+          # terminalCommand = "${config.hm.home.sessionVariables."TERMINAL"} -e";
           overviewLayer = true;
           enableSettingsSearch = false;
         };

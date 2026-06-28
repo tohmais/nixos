@@ -49,9 +49,15 @@
           };
           # betterSettings.enable = true;
           biggerStreamPreview.enable = true;
-          ClearURLs.enable = true;
+          clearUrls.enable = true;
           consoleJanitor.enable = true;
-          declutter.enable = true;
+          declutter = {
+            enable = true;
+            removeClanTag = false;
+            removeNameplate = false;
+            removeProfileEffect = false;
+            removeShopAboveDms = true;
+          };
           fakeNitro = {
             enable = true;
             enableEmojiBypass = false;
@@ -87,7 +93,4 @@
       stoat-desktop
     ];
   };
-  nixpkgs.config.permittedInsecurePackages = [
-    "electron-38.8.4"
-  ];
 }

@@ -22,9 +22,6 @@
           autocomplete.nvim-cmp.enable = true;
           lsp = {
             enable = true;
-            servers.nil.settings = {
-              nil.nix.autoArchive = false;
-            };
             formatOnSave = true;
             lightbulb.enable = true;
             lspkind.enable = true;

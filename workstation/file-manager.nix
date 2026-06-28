@@ -13,15 +13,25 @@
       hm.programs.yazi = {
         enable = true;
         shellWrapperName = "y";
+        enableFishIntegration = true;
+        plugins = {
+          mount = pkgs.yaziPlugins.mount;
+        };
         keymap = {
           mgr.prepend_keymap = [
             {
               run = ["shell -- for path in %s; do echo \"file://$path\"; done | wl-copy -t text/uri-list" "yank"];
               on = ["y"];
             }
+            {
+              on = ["M"];
+              run = "plugin mount";
+            }
           ];
         };
       };
+
+      services.udisks2.enable = true;
     }
 
     (lib.mkIf config.internal-config.thunar.enable {
