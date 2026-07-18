@@ -42,7 +42,7 @@
 
     home.packages = with pkgs; [
       biome
-      claude-code
+      # claude-code
     ];
   };
 }

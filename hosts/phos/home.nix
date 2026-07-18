@@ -35,8 +35,20 @@
   hm = {
     # 75% keyboard
     wayland.windowManager.hyprland.settings.bind = [
-      ", Home, exec, grimblast --notify copysave output"
-      "CTRL, Home, exec, grimblast --notify copysave area"
+      {
+        _args = [
+          "Home"
+          (lib.generators.mkLuaInline
+            ''hl.dsp.exec_cmd("grimblast --notify copysave output")'')
+        ];
+      }
+      {
+        _args = [
+          "CTRL + Home"
+          (lib.generators.mkLuaInline
+            ''hl.dsp.exec_cmd("grimblast --notify copysave area")'')
+        ];
+      }
     ];
     home = {
       packages = with pkgs; [

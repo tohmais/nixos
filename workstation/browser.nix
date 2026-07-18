@@ -10,7 +10,7 @@
 
     programs.zen-browser = {
       enable = true;
-      nativeMessagingHosts = [pkgs.firefoxpwa];
+      # nativeMessagingHosts = [pkgs.firefoxpwa];
       policies = {
         AutofillAddressEnabled = false;
         AutofillCreditCardEnabled = false;

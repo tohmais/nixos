@@ -27,8 +27,8 @@
   networking.hostName = "phos"; # Define your hostname.
 
   time.hardwareClockInLocalTime = true;
-  # Set up Zen kernel
-  boot.kernelPackages = pkgs.linuxPackages_zen;
+  # Set up CachyOS kernel
+  boot.kernelPackages = inputs.nix-cachyos-kernel.legacyPackages.x86_64-linux.linuxPackages-cachyos-bore-lto-x86_64-v4;
 
   # Configure keymap in X11
   services.xserver = {
@@ -36,6 +36,11 @@
     xkb.layout = "us";
     xkb.variant = "";
   };
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-39.8.10" # bitwarden-desktop
+    # "electron-38.8.4" # stoat-desktop
+  ];
 
   # programs.zoom-us.enable = true;
   # myNixOS = {
@@ -65,13 +70,11 @@
 
   # might or might not need this for amd, idk.
   boot.kernelParams = [
-    "video=DP-3:1920x1080@75"
-    "video=HDMI-A-1:2560x1440@180"
+    "video=DP-2:1920x1080@75"
+    "video=DP-1:2560x1440@180"
   ];
 
   hm.home.sessionVariables."TERMINAL" = "ghostty";
-
-  nixpkgs.config.permittedInsecurePackages = ["electron-25.9.0" "electron-19.1.9"];
 
   programs.kdeconnect.enable = true;
 

@@ -3,7 +3,7 @@
     home.packages = with pkgs; [
       mission-center
       # gearlever TODO: nixpkgs is super out of date, use flatpak
-      bottles
+      # bottles TODO: the devs are pissy about using this and it's broken right now.
       bazaar
 
       # bitwarden-desktop
