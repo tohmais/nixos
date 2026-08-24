@@ -12,6 +12,7 @@
 
     stylix = {
       enable = true;
+      autoEnable = true;
       base16Scheme = ./kanagawa.yaml;
 
       polarity = "dark";
@@ -38,6 +39,12 @@
         emacs.enable = false;
         spicetify.enable = true;
         qt.enable = true;
+        gtk = {
+          enable = true;
+          colors.enable = true;
+          flatpakSupport.enable = true;
+          fonts.enable = true;
+        };
         hyprland.enable = false;
         hyprpaper.enable = false;
         nixcord.enable = true;

@@ -38,7 +38,7 @@
   };
 
   nixpkgs.config.permittedInsecurePackages = [
-    "electron-39.8.10" # bitwarden-desktop
+    #"electron-39.8.10" # bitwarden-desktop
     # "electron-38.8.4" # stoat-desktop
   ];
 

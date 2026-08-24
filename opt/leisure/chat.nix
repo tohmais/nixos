@@ -90,7 +90,7 @@
     };
 
     home.packages = with pkgs; [
-      # stoat-desktop TODO: seemingly not in binary cache for now
+      stoat-desktop
     ];
   };
 }

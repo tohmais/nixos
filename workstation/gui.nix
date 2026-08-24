@@ -2,16 +2,15 @@
   hm = {
     home.packages = with pkgs; [
       mission-center
-      # gearlever TODO: nixpkgs is super out of date, use flatpak
-      # bottles TODO: the devs are pissy about using this and it's broken right now.
       bazaar
 
-      # bitwarden-desktop
+      bitwarden-desktop
       libreoffice
       electron-mail
     ];
     services.flatpak.packages = [
       "it.mijorus.gearlever"
+      "com.usebottles.bottles"
     ];
     programs.mpv = {
       enable = true;

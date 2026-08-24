@@ -14,6 +14,7 @@
           vscode-extensions.asvetliakov.vscode-neovim
           vscode-extensions.biomejs.biome
           vscode-extensions.mkhl.direnv
+          vscode-extensions.redhat.java
         ];
         userSettings = {
           "editor.fontLigatures" = true;
