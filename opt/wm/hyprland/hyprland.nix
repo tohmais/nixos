@@ -244,7 +244,6 @@ in {
             (mkLuaInline ''
               function()
                 hl.exec_cmd("hyprctl setcursor ${config.hm.stylix.cursor.name} ${toString config.hm.stylix.cursor.size}")
-                hl.exec_cmd("runapp noctalia")
                 hl.exec_cmd("wbg -s ${config.hm.stylix.image}")${
                 lib.optionalString (config.hm.home.sessionVariables."TERMINAL" == "ghostty") ''
 

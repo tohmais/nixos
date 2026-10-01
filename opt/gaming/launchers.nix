@@ -2,6 +2,7 @@
   pkgs,
   config,
   inputs,
+  system,
   ...
 }: {
   imports = [
@@ -76,6 +77,8 @@
       heroic
       prismlauncher
       xivlauncher
+      faugus-launcher
+      inputs.bedrock-on-linux.packages.${system}.default
     ];
   };
 }

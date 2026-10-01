@@ -18,7 +18,7 @@
     ouch
     fzf
     tealdeer
-    p7zip
+    p7zip-rar
 
     uutils-coreutils-noprefix
   ];

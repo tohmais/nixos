@@ -1,14 +1,13 @@
 {
-  inputs,
   config,
   lib,
   ...
 }: {
   hm = {
-    imports = [inputs.noctalia.homeModules.default];
-
     programs.noctalia = {
       enable = true;
+      systemd.enable = true;
+      checkConfig = false;
       settings = {
         shell = {
           telementry_enabled = false;
@@ -16,6 +15,7 @@
           font_family = lib.mkForce config.hm.stylix.fonts.monospace.name;
           avatar_path = "${config.hm.home.homeDirectory}/.face";
           app_icon_colorize = false;
+          launch_apps_as_systemd_services = true;
         };
         bar = {
           barType = "floating";

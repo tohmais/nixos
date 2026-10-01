@@ -2,11 +2,15 @@
   pkgs,
   userPkgs,
   inputs,
+  system,
   ...
 }: {
   hm = {
     home.packages = with pkgs; [
-      r2modman
+      gale
+      # limo
+      inputs.amethyst.packages.${system}.default
+      # TODO: add fluorine and amethyst when they become available in nixpkgs
       hedgemodmanager
       lumafly
       doomrunner

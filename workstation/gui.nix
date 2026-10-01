@@ -7,6 +7,7 @@
       bitwarden-desktop
       libreoffice
       electron-mail
+      optipng # for mpv
     ];
     services.flatpak.packages = [
       "it.mijorus.gearlever"
@@ -14,7 +15,8 @@
     ];
     programs.mpv = {
       enable = true;
-      config = {
+      /*
+         config = {
         # NOTE: if you want mpv discord screensharing, you NEED pulseaudio!
         # i'd recommend making a entry in thunar to switch between the two.
         profile = "gpu-hq";
@@ -25,6 +27,17 @@
         interpolation = "yes";
         target-colorspace-hint = "yes";
         hdr-reference-white = 150;
+      };
+      */
+    };
+    xdg.configFile = {
+      "mpv" = {
+        source = builtins.fetchGit {
+          url = "https://github.com/JySzE/SoM-MPV-Config.git";
+          ref = "main-linux-wip";
+          rev = "b7b61c2d24fd8379418108f20d72c9ad7fb1f17d";
+        };
+        recursive = true;
       };
     };
   };

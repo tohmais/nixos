@@ -67,7 +67,7 @@
     nixcord = {
       url = "github:FlameFlag/nixcord";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-parts.follows = "flake-parts";
+      inputs.home-manager.follows = "home-manager";
       inputs.treefmt-nix.follows = "treefmt-nix";
     };
 
@@ -77,14 +77,14 @@
       inputs.treefmt-nix.follows = "treefmt-nix";
     };
 
-    noctalia = {
-      url = "github:noctalia-dev/noctalia-shell";
-      inputs.nixpkgs.follows = "nixpkgs";
-      #inputs.noctalia-qs = {
-      #  inputs.systems.follows = "systems";
-      #  inputs.treefmt-nix.follows = "treefmt-nix";
-      #};
-    };
+    #noctalia = {
+    #  url = "github:noctalia-dev/noctalia-shell";
+    #  inputs.nixpkgs.follows = "nixpkgs";
+    #inputs.noctalia-qs = {
+    #  inputs.systems.follows = "systems";
+    #  inputs.treefmt-nix.follows = "treefmt-nix";
+    #};
+    #};
 
     nix-cachyos-kernel = {
       url = "github:xddxdd/nix-cachyos-kernel/release";
@@ -116,6 +116,21 @@
 
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    jovian-nixos = {
+      url = "github:Jovian-Experiments/Jovian-NixOS";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    bedrock-on-linux = {
+      url = "github:Wyze3306/BedrockOnLinux";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    amethyst = {
+      url = "github:ChrisDKN/Amethyst-Mod-Manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
