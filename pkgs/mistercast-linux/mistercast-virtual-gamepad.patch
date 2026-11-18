@@ -1,0 +1,1065 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 211094b..60fc58d 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -26,6 +26,8 @@ add_library(mistercast_core
+     src/input/ControllerReceiver.h
+     src/input/MpvIpc.cpp
+     src/input/MpvIpc.h
++    src/input/VirtualGamepad.cpp
++    src/input/VirtualGamepad.h
+     src/core/AudioFrameCadence.h
+     src/core/FrameFields.cpp
+     src/core/FrameFields.h
+@@ -119,6 +121,14 @@ if(BUILD_TESTING)
+     add_test(NAME controller_input COMMAND controller_input_test)
+     set_tests_properties(controller_input PROPERTIES TIMEOUT 15 LABELS "unit;integration")
+ 
++    add_executable(virtual_gamepad_test tests/VirtualGamepadTest.cpp)
++    target_link_libraries(virtual_gamepad_test PRIVATE mistercast_core)
++    # Fakes the uinput ioctls so the full UDP-to-evdev path runs without /dev/uinput.
++    target_link_options(virtual_gamepad_test PRIVATE -Wl,--wrap=ioctl -Wl,--wrap=write)
++    target_compile_options(virtual_gamepad_test PRIVATE -Wall -Wextra -Wpedantic)
++    add_test(NAME virtual_gamepad COMMAND virtual_gamepad_test)
++    set_tests_properties(virtual_gamepad PROPERTIES TIMEOUT 15 LABELS "unit;integration")
++
+     add_executable(scaler_test tests/ScalerTest.cpp src/ui/ScalingSelector.cpp)
+     set_target_properties(scaler_test PROPERTIES AUTOMOC ON)
+     target_link_libraries(scaler_test PRIVATE mistercast_core Qt6::Test Qt6::Widgets)
+diff --git a/README.md b/README.md
+index aa65065..9adaa5c 100644
+--- a/README.md
++++ b/README.md
+@@ -97,3 +97,6 @@ The arguments are worker count & measured iterations. Defaults use hardware conc
+ MiSTer controllers can control an external mpv player's JSON IPC socket while
+ streaming. This is disabled by default. See [setup, bindings, protocol references
+ & tests](docs/mpv-controller.md).
++
++They can instead appear as local Xbox 360-layout gamepads for SDL games,
++Wine/Proton & Steam. See [virtual gamepad](docs/virtual-gamepad.md).
+diff --git a/docs/virtual-gamepad.md b/docs/virtual-gamepad.md
+new file mode 100644
+index 0000000..4b58c1b
+--- /dev/null
++++ b/docs/virtual-gamepad.md
+@@ -0,0 +1,47 @@
++# Virtual gamepad
++
++Set **MiSTer controllers** to **Virtual gamepad for games** to expose the
++controllers plugged into the MiSTer as local gamepads while streaming. Each one
++is a uinput device with the kernel `xpad` driver's Xbox 360 identity
++(`045e:028e`) and layout, so SDL 2/3, Wine/Proton and Steam pick it up with
++their built-in mappings and no configuration.
++
++## Requirements
++
++* Write access to `/dev/uinput`. On NixOS: `hardware.uinput.enable = true;` and
++  add your user to the `uinput` group (log out and in again). Elsewhere, a udev
++  rule such as `KERNEL=="uinput", GROUP="uinput", MODE="0660"` does the same.
++* Enable **Joysticks: Digital** or **Analog** in Groovy_MiSTer's OSD before
++  starting the stream. Analog also forwards both sticks.
++
++## Mapping
++
++Map buttons in the MiSTer OSD by position, following RetroArch's
++`mister_joypad` convention:
++
++| Groovy input | Virtual pad |
++| --- | --- |
++| D-pad | D-pad (hat) |
++| Button 1 / 2 / 3 / 4 | A (bottom) / B (right) / X (left) / Y (top) |
++| Button 5 / 6 | Back / Start |
++| Button 7 / 8 | LB / RB |
++| Button 9 / 10 | LT / RT (fully pressed or released) |
++| Left / right analog | Left / right stick |
++
++Guide and stick clicks are advertised so button indices match the standard
++mapping, but Groovy has no inputs for them. With **Digital**, the sticks stay
++centred.
++
++## Behaviour
++
++Controller 1 appears when streaming starts; controller 2 appears on its first
++input, so games do not see a phantom second pad. Both are released and removed
++when streaming stops. Games that do not hotplug controllers should be started
++after the stream.
++
++Each Groovy snapshot becomes a single `write()` of evdev events on the input
++thread, which sleeps in `poll()` with no timeout and is woken by the packet
++itself. Unlike mpv mode there are no repeats, bindings or IPC in the path.
++Stale and duplicate snapshots are discarded using the same frame/order rule as
++the mpv mode; after a second without accepted input any snapshot is accepted,
++so a counter reset cannot freeze the pad.
+diff --git a/src/app/StreamingCoordinator.cpp b/src/app/StreamingCoordinator.cpp
+index 300dfc6..3de6bff 100644
+--- a/src/app/StreamingCoordinator.cpp
++++ b/src/app/StreamingCoordinator.cpp
+@@ -110,7 +110,7 @@ void StreamingCoordinator::selectSource()
+ }
+ 
+ void StreamingCoordinator::startStreaming(std::string host, bool audioEnabled,
+-                                          bool controllerEnabled, std::string mpvIpcPath)
++                                          ControllerMode controllerMode, std::string mpvIpcPath)
+ {
+     if (!sourceReady_ || controller_.running()) {
+         return;
+@@ -131,7 +131,7 @@ void StreamingCoordinator::startStreaming(std::string host, bool audioEnabled,
+         audioEnabled,
+         outputMode_,
+         modeEpoch_,
+-        controllerEnabled,
++        controllerMode,
+         std::move(mpvIpcPath),
+     };
+ 
+diff --git a/src/app/StreamingCoordinator.h b/src/app/StreamingCoordinator.h
+index d7d1e48..cf35b5e 100644
+--- a/src/app/StreamingCoordinator.h
++++ b/src/app/StreamingCoordinator.h
+@@ -25,7 +25,8 @@ public:
+ 
+     void selectSource();
+     void startStreaming(std::string host, bool audioEnabled,
+-                        bool controllerEnabled = false, std::string mpvIpcPath = {});
++                        ControllerMode controllerMode = ControllerMode::Off,
++                        std::string mpvIpcPath = {});
+     void stopStreaming();
+     void shutdown();
+     void setOutputMode(const Modeline& modeline);
+diff --git a/src/input/ControllerInput.cpp b/src/input/ControllerInput.cpp
+index 4ba0759..2544a20 100644
+--- a/src/input/ControllerInput.cpp
++++ b/src/input/ControllerInput.cpp
+@@ -23,7 +23,11 @@ std::optional<ControllerPacket> decodeControllerPacket(std::span<const std::uint
+     p.order = b[4];
+     for (unsigned i = 0; i < 2; ++i)
+         p.buttons[i] = std::uint16_t(b[5 + 2 * i]) | (std::uint16_t(b[6 + 2 * i]) << 8);
+-    return p; // The optional eight analog bytes have no playback bindings.
++    // The optional analog bytes have no playback bindings; the virtual gamepad uses them.
++    p.hasAnalog = b.size() == 17;
++    if (p.hasAnalog)
++        for (unsigned i = 0; i < p.analog.size(); ++i) p.analog[i] = static_cast<std::int8_t>(b[9 + i]);
++    return p;
+ }
+ std::string_view mpvCommand(PlaybackAction action)
+ {
+diff --git a/src/input/ControllerInput.h b/src/input/ControllerInput.h
+index 79a06ef..f95d09b 100644
+--- a/src/input/ControllerInput.h
++++ b/src/input/ControllerInput.h
+@@ -13,12 +13,19 @@ namespace controller_button {
+ constexpr std::uint16_t Right = 1 << 0, Left = 1 << 1;
+ constexpr std::uint16_t Down = 1 << 2, Up = 1 << 3;
+ constexpr std::uint16_t Button1 = 1 << 4;
++constexpr std::uint16_t Button2 = 1 << 5, Button3 = 1 << 6, Button4 = 1 << 7;
++constexpr std::uint16_t Button5 = 1 << 8, Button6 = 1 << 9;
+ constexpr std::uint16_t LeftShoulder = 1 << 10, RightShoulder = 1 << 11;
++constexpr std::uint16_t Button9 = 1 << 12, Button10 = 1 << 13;
+ }
+ struct ControllerPacket {
+     std::uint32_t frame{};
+     std::uint8_t order{};
+     std::array<std::uint16_t, 2> buttons{};
++    // Present in 17-byte packets (Joysticks: Analog). Signed, Y positive down:
++    // controller 0 LX, LY, RX, RY, then controller 1 LX, LY, RX, RY.
++    bool hasAnalog{};
++    std::array<std::int8_t, 8> analog{};
+ };
+ std::optional<ControllerPacket> decodeControllerPacket(std::span<const std::uint8_t> bytes);
+ enum class PlaybackAction { Pause, SeekBack, SeekForward, VolumeUp, VolumeDown, Previous, Next };
+diff --git a/src/input/ControllerReceiver.cpp b/src/input/ControllerReceiver.cpp
+index 8a0653a..c97b171 100644
+--- a/src/input/ControllerReceiver.cpp
++++ b/src/input/ControllerReceiver.cpp
+@@ -1,7 +1,10 @@
+ #include "input/ControllerReceiver.h"
+ #include "input/ControllerInput.h"
+ #include "input/MpvIpc.h"
++#include "input/VirtualGamepad.h"
+ #include <array>
++#include <memory>
++#include <sys/eventfd.h>
+ #include <cerrno>
+ #include <cstring>
+ #include <netdb.h>
+@@ -15,24 +18,10 @@ struct Socket {
+     int fd{-1};
+     ~Socket() { if (fd >= 0) ::close(fd); }
+ };
+-}
+-ControllerReceiver::~ControllerReceiver() { stop(); }
+-void ControllerReceiver::stop()
++// Connected UDP filters both source IP and source port. Like BindInputs, use an
++// ephemeral client port; 32101 is the MiSTer server port.
++int openRegisteredSocket(const std::string& host, std::uint16_t port, std::string& error)
+ {
+-    active_ = false;
+-    if (thread_.joinable()) {
+-        thread_.request_stop();
+-        thread_.join();
+-    }
+-}
+-bool ControllerReceiver::start(const std::string& host, const std::string& ipcPath,
+-                               Warning warning, std::string& error, std::uint16_t port)
+-{
+-    stop();
+-    if (ipcPath.empty() || ipcPath[0] != '/' || ipcPath.size() >= 108) {
+-        error = "Set an absolute mpv IPC socket path shorter than 108 bytes";
+-        return false;
+-    }
+     addrinfo hints{};
+     hints.ai_family = AF_INET;
+     hints.ai_socktype = SOCK_DGRAM;
+@@ -40,24 +29,46 @@ bool ControllerReceiver::start(const std::string& host, const std::string& ipcPa
+     addrinfo* addresses = nullptr;
+     const auto service = std::to_string(port);
+     const auto rc = getaddrinfo(host.c_str(), service.c_str(), &hints, &addresses);
+-    if (rc != 0) { error = "Cannot resolve controller endpoint: " + std::string(gai_strerror(rc)); return false; }
++    if (rc != 0) { error = "Cannot resolve controller endpoint: " + std::string(gai_strerror(rc)); return -1; }
+     Socket socket;
+     for (auto* address = addresses; address; address = address->ai_next) {
+         socket.fd = ::socket(AF_INET, SOCK_DGRAM | SOCK_NONBLOCK | SOCK_CLOEXEC, IPPROTO_UDP);
+         if (socket.fd < 0) continue;
+-        // Connected UDP filters both source IP and source port. Like BindInputs,
+-        // use an ephemeral client port; 32101 is the MiSTer server port.
+         if (::connect(socket.fd, address->ai_addr, address->ai_addrlen) == 0) break;
+         ::close(socket.fd);
+         socket.fd = -1;
+     }
+     freeaddrinfo(addresses);
+-    if (socket.fd < 0) { error = "Cannot open controller UDP socket"; return false; }
++    if (socket.fd < 0) { error = "Cannot open controller UDP socket"; return -1; }
+     const std::uint8_t registration = 0; // Payload ignored by upstream.
+     if (::send(socket.fd, &registration, 1, MSG_DONTWAIT | MSG_NOSIGNAL) != 1) {
+         error = "Cannot register controller receiver: " + std::string(std::strerror(errno));
++        return -1;
++    }
++    const int fd = socket.fd;
++    socket.fd = -1;
++    return fd;
++}
++}
++ControllerReceiver::~ControllerReceiver() { stop(); }
++void ControllerReceiver::stop()
++{
++    active_ = false;
++    if (thread_.joinable()) {
++        thread_.request_stop();
++        thread_.join();
++    }
++}
++bool ControllerReceiver::start(const std::string& host, const std::string& ipcPath,
++                               Warning warning, std::string& error, std::uint16_t port)
++{
++    stop();
++    if (ipcPath.empty() || ipcPath[0] != '/' || ipcPath.size() >= 108) {
++        error = "Set an absolute mpv IPC socket path shorter than 108 bytes";
+         return false;
+     }
++    Socket socket{openRegisteredSocket(host, port, error)};
++    if (socket.fd < 0) return false;
+     try {
+         thread_ = std::jthread([this, fd = socket.fd, ipcPath, warning = std::move(warning)](std::stop_token stop) {
+             Socket udp{fd};
+@@ -129,4 +140,71 @@ bool ControllerReceiver::start(const std::string& host, const std::string& ipcPa
+     }
+     return true;
+ }
++bool ControllerReceiver::startGamepad(const std::string& host, Warning warning, std::string& error,
++                                      std::uint16_t port, const std::string& uinputPath)
++{
++    stop();
++    auto pads = std::make_unique<std::array<VirtualGamepad, 2>>();
++    if (!(*pads)[0].open(0, error, uinputPath)) return false;
++    Socket socket{openRegisteredSocket(host, port, error)};
++    if (socket.fd < 0) return false;
++    Socket wake{::eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC)};
++    if (wake.fd < 0) { error = "Cannot create controller wake-up descriptor: " + std::string(std::strerror(errno)); return false; }
++    try {
++        thread_ = std::jthread([fd = socket.fd, wakeFd = wake.fd, pads = std::move(pads), uinputPath,
++                                warning = std::move(warning)](std::stop_token stop) {
++            Socket udp{fd}, wakeUp{wakeFd};
++            // Block in poll() without a timeout: input is forwarded the moment it arrives
++            // and the thread costs nothing while idle. Stopping signals the eventfd.
++            std::stop_callback onStop(stop, [wakeFd] {
++                const std::uint64_t one = 1;
++                [[maybe_unused]] const auto n = ::write(wakeFd, &one, sizeof(one));
++            });
++            ControllerSequence sequence;
++            bool secondAttempted = false;
++            std::string message;
++            while (!stop.stop_requested()) {
++                std::array<pollfd, 2> fds{pollfd{udp.fd, POLLIN, 0}, pollfd{wakeUp.fd, POLLIN, 0}};
++                if (::poll(fds.data(), fds.size(), -1) < 0 && errno != EINTR) {
++                    warning("Controller poll failed: " + std::string(std::strerror(errno)));
++                    return;
++                }
++                // Cap each drain so a UDP flood cannot starve shutdown.
++                for (unsigned packets = 0; packets < 64 && !stop.stop_requested(); ++packets) {
++                    std::array<std::uint8_t, 18> bytes{};
++                    const auto n = ::recv(udp.fd, bytes.data(), bytes.size(), MSG_DONTWAIT | MSG_TRUNC);
++                    if (n < 0) {
++                        if (errno == EAGAIN || errno == EWOULDBLOCK || errno == EINTR) break;
++                        // A connected UDP socket reports ICMP errors (e.g. MiSTer not yet
++                        // listening) here; they are transient, so keep the pads alive.
++                        if (errno == ECONNREFUSED) continue;
++                        warning("Controller UDP receive failed: " + std::string(std::strerror(errno)));
++                        return;
++                    }
++                    if (n != 9 && n != 17) continue;
++                    const auto packet = decodeControllerPacket(std::span(bytes).first(static_cast<std::size_t>(n)));
++                    if (!packet || !sequence.accept(*packet, ControllerSequence::Clock::now())) continue;
++                    for (unsigned c = 0; c < 2; ++c) {
++                        auto& pad = (*pads)[c];
++                        const auto state = gamepadState(*packet, c);
++                        if (!pad.isOpen()) {
++                            // Only create controller 2 once it is actually used, so games
++                            // do not see a phantom second pad.
++                            if (c == 0 || secondAttempted || state == GamepadState{}) continue;
++                            secondAttempted = true;
++                            if (!pad.open(1, message, uinputPath)) { warning(message); continue; }
++                        }
++                        if (!pad.apply(state, message)) { warning(message); pad.close(); }
++                    }
++                }
++            }
++        });
++        socket.fd = -1; // Worker owns the descriptors only after construction succeeds.
++        wake.fd = -1;
++    } catch (const std::exception& exception) {
++        error = "Cannot start controller worker: " + std::string(exception.what());
++        return false;
++    }
++    return true;
++}
+ } // namespace mistercast
+diff --git a/src/input/ControllerReceiver.h b/src/input/ControllerReceiver.h
+index 39feeee..922597b 100644
+--- a/src/input/ControllerReceiver.h
++++ b/src/input/ControllerReceiver.h
+@@ -14,6 +14,10 @@ public:
+     // Register before the streaming CMD_INIT: upstream consumes registration there.
+     bool start(const std::string& host, const std::string& ipcPath,
+                Warning warning, std::string& error, std::uint16_t port = Port);
++    // Presents both Groovy controllers as Xbox 360-layout uinput pads. Controller 1
++    // is created immediately; controller 2 on its first non-neutral snapshot.
++    bool startGamepad(const std::string& host, Warning warning, std::string& error,
++                      std::uint16_t port = Port, const std::string& uinputPath = "/dev/uinput");
+     void activate() { active_ = true; }
+     void stop();
+ private:
+diff --git a/src/input/VirtualGamepad.cpp b/src/input/VirtualGamepad.cpp
+new file mode 100644
+index 0000000..4247e8d
+--- /dev/null
++++ b/src/input/VirtualGamepad.cpp
+@@ -0,0 +1,154 @@
++#include "input/VirtualGamepad.h"
++#include <algorithm>
++#include <cerrno>
++#include <cstring>
++#include <fcntl.h>
++#include <linux/uinput.h>
++#include <sys/ioctl.h>
++#include <unistd.h>
++
++namespace mistercast {
++namespace {
++using namespace controller_button;
++struct ButtonBinding { std::uint16_t mask; std::uint16_t code; };
++// xpad reports the left face button as BTN_X and the top one as BTN_Y; SDL's
++// Xbox 360 mapping and Proton expect exactly that, so mirror it.
++constexpr std::array buttonBindings{
++    ButtonBinding{Button1, BTN_A},       ButtonBinding{Button2, BTN_B},
++    ButtonBinding{Button3, BTN_X},       ButtonBinding{Button4, BTN_Y},
++    ButtonBinding{Button5, BTN_SELECT},  ButtonBinding{Button6, BTN_START},
++    ButtonBinding{LeftShoulder, BTN_TL}, ButtonBinding{RightShoulder, BTN_TR},
++};
++// The full xpad key set must be advertised so evdev button indices line up with
++// the Xbox 360 mapping (guide and stick clicks have no Groovy equivalent).
++constexpr std::array advertisedKeys{
++    BTN_A, BTN_B, BTN_X, BTN_Y, BTN_TL, BTN_TR, BTN_SELECT, BTN_START, BTN_MODE, BTN_THUMBL, BTN_THUMBR,
++};
++constexpr std::array stickAxes{ABS_X, ABS_Y, ABS_RX, ABS_RY};
++constexpr std::int32_t TriggerMax = 255;
++
++int hatX(std::uint16_t b) { return int((b & Right) != 0) - int((b & Left) != 0); }
++int hatY(std::uint16_t b) { return int((b & Down) != 0) - int((b & Up) != 0); }
++std::int32_t stick(std::int8_t v) { return std::clamp(std::int32_t{v} * 258, -32768, 32767); }
++void push(std::vector<input_event>& events, std::uint16_t type, std::uint16_t code, std::int32_t value)
++{
++    input_event e{};
++    e.type = type;
++    e.code = code;
++    e.value = value;
++    events.push_back(e);
++}
++}
++
++GamepadState gamepadState(const ControllerPacket& packet, unsigned controller)
++{
++    GamepadState state;
++    state.buttons = packet.buttons[controller];
++    // Digital-only snapshots centre the sticks rather than freezing stale values.
++    if (packet.hasAnalog)
++        for (unsigned i = 0; i < state.axes.size(); ++i) state.axes[i] = packet.analog[controller * 4 + i];
++    return state;
++}
++
++void appendGamepadEvents(const GamepadState& from, const GamepadState& to, std::vector<input_event>& events)
++{
++    const auto changed = std::uint16_t(from.buttons ^ to.buttons);
++    for (const auto& b : buttonBindings)
++        if (changed & b.mask) push(events, EV_KEY, b.code, (to.buttons & b.mask) ? 1 : 0);
++    if (changed & Button9) push(events, EV_ABS, ABS_Z, (to.buttons & Button9) ? TriggerMax : 0);
++    if (changed & Button10) push(events, EV_ABS, ABS_RZ, (to.buttons & Button10) ? TriggerMax : 0);
++    if (hatX(from.buttons) != hatX(to.buttons)) push(events, EV_ABS, ABS_HAT0X, hatX(to.buttons));
++    if (hatY(from.buttons) != hatY(to.buttons)) push(events, EV_ABS, ABS_HAT0Y, hatY(to.buttons));
++    for (unsigned i = 0; i < stickAxes.size(); ++i)
++        if (from.axes[i] != to.axes[i]) push(events, EV_ABS, stickAxes[i], stick(to.axes[i]));
++}
++
++bool ControllerSequence::accept(const ControllerPacket& p, Clock::time_point now)
++{
++    if (have_ && now - lastAccepted_ < Rebaseline) {
++        const auto delta = std::uint32_t(p.frame - last_.frame);
++        if ((delta == 0 && p.order <= last_.order) || delta >= 0x80000000u) return false;
++    }
++    last_ = p;
++    lastAccepted_ = now;
++    have_ = true;
++    return true;
++}
++
++VirtualGamepad::~VirtualGamepad() { close(); }
++
++bool VirtualGamepad::open(unsigned index, std::string& error, const std::string& path)
++{
++    close();
++    fd_ = ::open(path.c_str(), O_WRONLY | O_NONBLOCK | O_CLOEXEC);
++    if (fd_ < 0) {
++        error = "Cannot open " + path + ": " + std::strerror(errno) +
++            (errno == EACCES || errno == EPERM
++                 ? "; give your user write access to it (for example the uinput group)" : "");
++        return false;
++    }
++    auto fail = [&](const char* what) {
++        error = std::string("Cannot create virtual gamepad (") + what + "): " + std::strerror(errno);
++        ::close(fd_);
++        fd_ = -1;
++        return false;
++    };
++    if (::ioctl(fd_, UI_SET_EVBIT, EV_KEY) < 0) return fail("EV_KEY");
++    for (auto key : advertisedKeys)
++        if (::ioctl(fd_, UI_SET_KEYBIT, key) < 0) return fail("key");
++    if (::ioctl(fd_, UI_SET_EVBIT, EV_ABS) < 0) return fail("EV_ABS");
++    auto axis = [&](std::uint16_t code, std::int32_t min, std::int32_t max, std::int32_t flat) {
++        uinput_abs_setup setup{};
++        setup.code = code;
++        setup.absinfo.minimum = min;
++        setup.absinfo.maximum = max;
++        setup.absinfo.flat = flat; // fuzz stays 0: no kernel smoothing between snapshots
++        return ::ioctl(fd_, UI_SET_ABSBIT, code) >= 0 && ::ioctl(fd_, UI_ABS_SETUP, &setup) >= 0;
++    };
++    for (auto code : stickAxes)
++        if (!axis(code, -32768, 32767, 128)) return fail("stick axis");
++    if (!axis(ABS_Z, 0, TriggerMax, 0) || !axis(ABS_RZ, 0, TriggerMax, 0)) return fail("trigger axis");
++    if (!axis(ABS_HAT0X, -1, 1, 0) || !axis(ABS_HAT0Y, -1, 1, 0)) return fail("d-pad axis");
++    const auto phys = "mistercast/pad" + std::to_string(index);
++    if (::ioctl(fd_, UI_SET_PHYS, phys.c_str()) < 0) return fail("phys");
++    uinput_setup setup{};
++    setup.id.bustype = BUS_USB;
++    setup.id.vendor = Vendor;
++    setup.id.product = Product;
++    setup.id.version = Version;
++    const auto name = "MiSTerCast Controller " + std::to_string(index + 1);
++    std::strncpy(setup.name, name.c_str(), sizeof(setup.name) - 1);
++    if (::ioctl(fd_, UI_DEV_SETUP, &setup) < 0) return fail("setup");
++    if (::ioctl(fd_, UI_DEV_CREATE) < 0) return fail("create");
++    state_ = {};
++    return true;
++}
++
++bool VirtualGamepad::apply(const GamepadState& state, std::string& error)
++{
++    if (fd_ < 0) return false;
++    events_.clear();
++    appendGamepadEvents(state_, state, events_);
++    if (events_.empty()) return true;
++    push(events_, EV_SYN, SYN_REPORT, 0);
++    const auto bytes = events_.size() * sizeof(input_event);
++    const auto n = ::write(fd_, events_.data(), bytes);
++    if (n != static_cast<ssize_t>(bytes)) {
++        error = "Virtual gamepad write failed: " + std::string(n < 0 ? std::strerror(errno) : "short write");
++        return false;
++    }
++    state_ = state;
++    return true;
++}
++
++void VirtualGamepad::close()
++{
++    if (fd_ < 0) return;
++    std::string ignored;
++    apply({}, ignored);
++    ::ioctl(fd_, UI_DEV_DESTROY);
++    ::close(fd_);
++    fd_ = -1;
++    state_ = {};
++}
++} // namespace mistercast
+diff --git a/src/input/VirtualGamepad.h b/src/input/VirtualGamepad.h
+new file mode 100644
+index 0000000..5dac033
+--- /dev/null
++++ b/src/input/VirtualGamepad.h
+@@ -0,0 +1,58 @@
++#pragma once
++#include "input/ControllerInput.h"
++#include <linux/input.h>
++#include <array>
++#include <cstdint>
++#include <string>
++#include <vector>
++
++namespace mistercast {
++// One Groovy controller slot, as reported in a single input snapshot.
++struct GamepadState {
++    std::uint16_t buttons{};            // GM_JOY_* bitmask
++    std::array<std::int8_t, 4> axes{};  // LX, LY, RX, RY; 0 is centred
++    bool operator==(const GamepadState&) const = default;
++};
++GamepadState gamepadState(const ControllerPacket& packet, unsigned controller);
++
++// Appends the evdev events that move a pad from `from` to `to`, without SYN_REPORT.
++// Layout follows RetroArch's mister_joypad convention by position: Button 1 is the
++// bottom face button, 2 right, 3 left, 4 top, 5/6 Select/Start, 7/8 L/R, 9/10 L2/R2.
++void appendGamepadEvents(const GamepadState& from, const GamepadState& to,
++                         std::vector<input_event>& events);
++
++// Accepts only newer snapshots (the same frame/order rule as ControllerInput).
++// After a quiet gap any snapshot is accepted, so an event-order wrap or a MiSTer
++// counter reset cannot freeze the pad.
++class ControllerSequence {
++public:
++    using Clock = ControllerInput::Clock;
++    static constexpr auto Rebaseline = std::chrono::seconds(1);
++    bool accept(const ControllerPacket& packet, Clock::time_point now);
++private:
++    ControllerPacket last_{};
++    Clock::time_point lastAccepted_{};
++    bool have_{};
++};
++
++// A uinput device with the kernel xpad driver's Xbox 360 identity and layout, so
++// SDL, Wine/Proton and Steam apply their built-in mappings without configuration.
++class VirtualGamepad {
++public:
++    static constexpr std::uint16_t Vendor = 0x045e, Product = 0x028e, Version = 0x0114;
++    VirtualGamepad() = default;
++    VirtualGamepad(const VirtualGamepad&) = delete;
++    VirtualGamepad& operator=(const VirtualGamepad&) = delete;
++    ~VirtualGamepad();
++    bool open(unsigned index, std::string& error, const std::string& path = "/dev/uinput");
++    // One write() per change: all events of a snapshot plus SYN_REPORT.
++    bool apply(const GamepadState& state, std::string& error);
++    bool isOpen() const { return fd_ >= 0; }
++    // Releases everything, then removes the device.
++    void close();
++private:
++    int fd_{-1};
++    GamepadState state_{};
++    std::vector<input_event> events_;
++};
++} // namespace mistercast
+diff --git a/src/stream/StreamConfig.h b/src/stream/StreamConfig.h
+index 98d3010..3f521b9 100644
+--- a/src/stream/StreamConfig.h
++++ b/src/stream/StreamConfig.h
+@@ -7,12 +7,18 @@
+ 
+ namespace mistercast {
+ 
++enum class ControllerMode {
++    Off,
++    Mpv,
++    VirtualGamepad,
++};
++
+ struct StreamConfig {
+     std::string host;
+     bool audioEnabled{};
+     Modeline modeline;
+     ModeEpoch modeEpoch;
+-    bool controllerEnabled{};
++    ControllerMode controllerMode{ControllerMode::Off};
+     std::string mpvIpcPath;
+ };
+ 
+diff --git a/src/stream/StreamController.cpp b/src/stream/StreamController.cpp
+index f1ed5e2..258b84d 100644
+--- a/src/stream/StreamController.cpp
++++ b/src/stream/StreamController.cpp
+@@ -36,15 +36,22 @@ bool StreamController::start(StreamConfig config)
+ 
+     const auto generation = ++sessionGeneration_;
+ 
+-    if (config.controllerEnabled) {
++    if (config.controllerMode != ControllerMode::Off) {
+         std::string error;
+         const auto report = [this, generation](const std::string& message) {
+             QMetaObject::invokeMethod(this, [this, generation, message] {
+                 if (generation == sessionGeneration_) emit warning(QString::fromStdString(message));
+             }, Qt::QueuedConnection);
+         };
+-        if (!controllerInput_.start(config.host, config.mpvIpcPath, report, error)) {
++        const bool gamepad = config.controllerMode == ControllerMode::VirtualGamepad;
++        const bool started = gamepad
++            ? controllerInput_.startGamepad(config.host, report, error)
++            : controllerInput_.start(config.host, config.mpvIpcPath, report, error);
++        if (!started) {
+             report(error);
++        } else if (gamepad) {
++            report("MiSTer controller 1 is available as a virtual gamepad; "
++                   "controller 2 appears on its first input");
+         }
+     }
+ 
+diff --git a/src/ui/MainWindow.cpp b/src/ui/MainWindow.cpp
+index 53180f0..7a9d077 100644
+--- a/src/ui/MainWindow.cpp
++++ b/src/ui/MainWindow.cpp
+@@ -26,6 +26,7 @@
+ #include <QVBoxLayout>
+ #include <QWidget>
+ 
++#include <algorithm>
+ #include <filesystem>
+ 
+ namespace mistercast {
+@@ -52,9 +53,15 @@ MainWindow::MainWindow(QWidget* parent)
+     audioCheck_ = new QCheckBox(QStringLiteral("Capture default output audio (48 kHz stereo)"), connectionGroup);
+     audioCheck_->setChecked(settings.value(QStringLiteral("audio"), true).toBool());
+     form->addRow(QString(), audioCheck_);
+-    controllerCheck_ = new QCheckBox(QStringLiteral("Control mpv with MiSTer controllers"), connectionGroup);
+-    controllerCheck_->setChecked(settings.value(QStringLiteral("controllerEnabled"), false).toBool());
+-    form->addRow(QString(), controllerCheck_);
++    controllerMode_ = new QComboBox(connectionGroup);
++    controllerMode_->addItems({QStringLiteral("Off"), QStringLiteral("Control mpv playback"),
++                               QStringLiteral("Virtual gamepad for games (SDL, Xbox 360 layout)")});
++    // Older settings only stored the mpv checkbox.
++    const int savedControllerMode = settings.contains(QStringLiteral("controllerMode"))
++        ? settings.value(QStringLiteral("controllerMode")).toInt()
++        : (settings.value(QStringLiteral("controllerEnabled"), false).toBool() ? 1 : 0);
++    controllerMode_->setCurrentIndex(std::clamp(savedControllerMode, 0, controllerMode_->count() - 1));
++    form->addRow(QStringLiteral("MiSTer controllers"), controllerMode_);
+     mpvIpcEdit_ = new QLineEdit(connectionGroup);
+     mpvIpcEdit_->setPlaceholderText(QStringLiteral("Absolute path passed to mpv --input-ipc-server"));
+     mpvIpcEdit_->setText(settings.value(QStringLiteral("mpvIpcPath")).toString());
+@@ -144,6 +151,7 @@ MainWindow::MainWindow(QWidget* parent)
+     connect(sourceButton_, &QPushButton::clicked, this, &MainWindow::selectSource);
+     connect(startButton_, &QPushButton::clicked, this, &MainWindow::startStreaming);
+     connect(stopButton_, &QPushButton::clicked, this, &MainWindow::stopStreaming);
++    connect(controllerMode_, &QComboBox::currentIndexChanged, this, &MainWindow::updateControls);
+     connect(diagnosticsCheck_, &QCheckBox::toggled, this, [this](bool enabled) {
+         QSettings().setValue(QStringLiteral("diagnostics"), enabled);
+         updateDiagnosticsVisibility();
+@@ -317,7 +325,8 @@ void MainWindow::closeEvent(QCloseEvent* event)
+     QSettings settings;
+     settings.setValue(QStringLiteral("misterHost"), hostEdit_->text().trimmed());
+     settings.setValue(QStringLiteral("audio"), audioCheck_->isChecked());
+-    settings.setValue(QStringLiteral("controllerEnabled"), controllerCheck_->isChecked());
++    settings.setValue(QStringLiteral("controllerMode"), controllerMode_->currentIndex());
++    settings.setValue(QStringLiteral("controllerEnabled"), selectedControllerMode() == ControllerMode::Mpv);
+     settings.setValue(QStringLiteral("mpvIpcPath"), mpvIpcEdit_->text().trimmed());
+     settings.setValue(QStringLiteral("aspectCrop"), aspectCrop_->currentIndex());
+     settings.setValue(QStringLiteral("horizontalAlignment"), horizontalAlignment_->currentIndex());
+@@ -342,7 +351,7 @@ void MainWindow::startStreaming()
+ 
+     streaming_.startStreaming(
+         hostEdit_->text().trimmed().toStdString(),
+-        audioCheck_->isChecked(), controllerCheck_->isChecked(),
++        audioCheck_->isChecked(), selectedControllerMode(),
+         mpvIpcEdit_->text().trimmed().toStdString());
+ 
+     updateControls();
+@@ -376,8 +385,13 @@ void MainWindow::updateControls()
+     stopButton_->setEnabled(streaming);
+     hostEdit_->setEnabled(!streaming);
+     audioCheck_->setEnabled(!streaming);
+-    controllerCheck_->setEnabled(!streaming);
+-    mpvIpcEdit_->setEnabled(!streaming);
++    controllerMode_->setEnabled(!streaming);
++    mpvIpcEdit_->setEnabled(!streaming && selectedControllerMode() == ControllerMode::Mpv);
++}
++
++ControllerMode MainWindow::selectedControllerMode() const
++{
++    return static_cast<ControllerMode>(std::max(controllerMode_->currentIndex(), 0));
+ }
+ 
+ void MainWindow::updateDiagnosticsVisibility()
+diff --git a/src/ui/MainWindow.h b/src/ui/MainWindow.h
+index 188a5da..e8785c3 100644
+--- a/src/ui/MainWindow.h
++++ b/src/ui/MainWindow.h
+@@ -33,6 +33,7 @@ private:
+     void stopStreaming();
+     void appendStatus(const QString& message, bool error = false);
+     void updateControls();
++    [[nodiscard]] ControllerMode selectedControllerMode() const;
+     void updateFramingSettings();
+     void updateDiagnosticsVisibility();
+     void reloadModelines(bool restartStream);
+@@ -43,7 +44,7 @@ private:
+ 
+     QLineEdit* hostEdit_{};
+     QCheckBox* audioCheck_{};
+-    QCheckBox* controllerCheck_{};
++    QComboBox* controllerMode_{};
+     QLineEdit* mpvIpcEdit_{};
+     QCheckBox* diagnosticsCheck_{};
+     QComboBox* modelineSelect_{};
+diff --git a/tests/VirtualGamepadTest.cpp b/tests/VirtualGamepadTest.cpp
+new file mode 100644
+index 0000000..23d9489
+--- /dev/null
++++ b/tests/VirtualGamepadTest.cpp
+@@ -0,0 +1,337 @@
++#include "input/ControllerReceiver.h"
++#include "input/VirtualGamepad.h"
++#include <linux/uinput.h>
++#include <netinet/in.h>
++#include <poll.h>
++#include <sys/socket.h>
++#include <unistd.h>
++#include <algorithm>
++#include <array>
++#include <cerrno>
++#include <chrono>
++#include <cstdarg>
++#include <cstring>
++#include <iostream>
++#include <map>
++#include <mutex>
++#include <set>
++#include <stdexcept>
++#include <string>
++#include <thread>
++#include <vector>
++
++using namespace mistercast;
++using namespace std::chrono_literals;
++using namespace controller_button;
++using Clock = std::chrono::steady_clock;
++
++// ---- Fake uinput: UI_* ioctls and writes on registered descriptors are recorded. ----
++namespace {
++struct FakeDevice {
++    std::set<int> evbits, keys, absbits;
++    std::vector<int> keyOrder;
++    std::map<int, input_absinfo> abs;
++    std::string phys;
++    uinput_setup setup{};
++    bool created{}, destroyed{};
++    std::vector<std::vector<input_event>> writes;
++    std::vector<Clock::time_point> writeTimes;
++};
++std::mutex fakeMutex;
++std::vector<FakeDevice> devices;
++std::map<int, std::size_t> deviceForFd;
++FakeDevice& deviceFor(int fd)
++{
++    auto it = deviceForFd.find(fd);
++    if (it == deviceForFd.end() || devices[it->second].destroyed || devices[it->second].created) {
++        devices.emplace_back();
++        it = deviceForFd.insert_or_assign(fd, devices.size() - 1).first;
++    }
++    return devices[it->second];
++}
++}
++extern "C" int __real_ioctl(int fd, unsigned long request, ...);
++extern "C" int __wrap_ioctl(int fd, unsigned long request, ...)
++{
++    va_list ap;
++    va_start(ap, request);
++    void* arg = va_arg(ap, void*);
++    va_end(ap);
++    const auto value = static_cast<int>(reinterpret_cast<std::intptr_t>(arg));
++    std::lock_guard lock(fakeMutex);
++    switch (request) {
++    case UI_SET_EVBIT: deviceFor(fd).evbits.insert(value); return 0;
++    case UI_SET_KEYBIT: { auto& d = devices[deviceForFd.at(fd)]; d.keys.insert(value); d.keyOrder.push_back(value); return 0; }
++    case UI_SET_ABSBIT: devices[deviceForFd.at(fd)].absbits.insert(value); return 0;
++    case UI_ABS_SETUP: {
++        const auto* s = static_cast<const uinput_abs_setup*>(arg);
++        devices[deviceForFd.at(fd)].abs[s->code] = s->absinfo;
++        return 0;
++    }
++    case UI_SET_PHYS: devices[deviceForFd.at(fd)].phys = static_cast<const char*>(arg); return 0;
++    case UI_DEV_SETUP: devices[deviceForFd.at(fd)].setup = *static_cast<const uinput_setup*>(arg); return 0;
++    case UI_DEV_CREATE: devices[deviceForFd.at(fd)].created = true; return 0;
++    case UI_DEV_DESTROY: devices[deviceForFd.at(fd)].destroyed = true; return 0;
++    default: return __real_ioctl(fd, request, arg);
++    }
++}
++extern "C" ssize_t __real_write(int fd, const void* buffer, std::size_t size);
++extern "C" ssize_t __wrap_write(int fd, const void* buffer, std::size_t size)
++{
++    {
++        std::lock_guard lock(fakeMutex);
++        const auto it = deviceForFd.find(fd);
++        if (it != deviceForFd.end() && devices[it->second].created && !devices[it->second].destroyed) {
++            const auto* events = static_cast<const input_event*>(buffer);
++            devices[it->second].writes.emplace_back(events, events + size / sizeof(input_event));
++            devices[it->second].writeTimes.push_back(Clock::now());
++            return static_cast<ssize_t>(size);
++        }
++    }
++    return __real_write(fd, buffer, size);
++}
++
++namespace {
++void check(bool condition, const char* message)
++{
++    if (!condition) throw std::runtime_error(message);
++}
++std::vector<std::uint8_t> packet(std::uint32_t frame, std::uint8_t order, std::uint16_t first,
++                                 std::uint16_t second, const std::array<std::int8_t, 8>* analog = nullptr)
++{
++    std::vector<std::uint8_t> bytes(analog ? 17 : 9, 0);
++    for (unsigned i = 0; i < 4; ++i) bytes[i] = (frame >> (8 * i)) & 255;
++    bytes[4] = order;
++    bytes[5] = first & 255; bytes[6] = first >> 8;
++    bytes[7] = second & 255; bytes[8] = second >> 8;
++    if (analog)
++        for (unsigned i = 0; i < 8; ++i) bytes[9 + i] = static_cast<std::uint8_t>((*analog)[i]);
++    return bytes;
++}
++std::vector<input_event> events(const GamepadState& from, const GamepadState& to)
++{
++    std::vector<input_event> result;
++    appendGamepadEvents(from, to, result);
++    return result;
++}
++bool has(const std::vector<input_event>& list, int type, int code, int value)
++{
++    return std::any_of(list.begin(), list.end(), [&](const input_event& e) {
++        return e.type == type && e.code == code && e.value == value;
++    });
++}
++
++void unitTests()
++{
++    // Analog bytes are signed, in LX LY RX RY order for controller 0 then 1.
++    const std::array<std::int8_t, 8> sticks{-127, 127, 1, -1, 10, 20, 30, -40};
++    auto p = decodeControllerPacket(packet(5, 1, Button1, Button2, &sticks));
++    check(p && p->hasAnalog && p->analog == sticks, "analog decode");
++    check(gamepadState(*p, 1).axes == std::array<std::int8_t, 4>{10, 20, 30, -40}, "controller 2 sticks");
++    p = decodeControllerPacket(packet(5, 1, Button1, 0));
++    check(p && !p->hasAnalog && gamepadState(*p, 0).axes == std::array<std::int8_t, 4>{}, "digital centres sticks");
++
++    // Button layout by position (RetroArch mister_joypad convention -> xpad codes).
++    const std::array<std::pair<std::uint16_t, int>, 8> keys{{
++        {Button1, BTN_A}, {Button2, BTN_B}, {Button3, BTN_X}, {Button4, BTN_Y},
++        {Button5, BTN_SELECT}, {Button6, BTN_START}, {LeftShoulder, BTN_TL}, {RightShoulder, BTN_TR}}};
++    for (auto [mask, code] : keys) {
++        auto e = events({}, {mask, {}});
++        check(e.size() == 1 && has(e, EV_KEY, code, 1), "button press code");
++        e = events({mask, {}}, {});
++        check(e.size() == 1 && has(e, EV_KEY, code, 0), "button release code");
++    }
++    check(has(events({}, {Button9, {}}), EV_ABS, ABS_Z, 255), "L2 -> left trigger");
++    check(has(events({Button10, {}}, {}), EV_ABS, ABS_RZ, 0), "R2 release -> right trigger");
++    auto e = events({}, {std::uint16_t(Up | Left), {}});
++    check(e.size() == 2 && has(e, EV_ABS, ABS_HAT0X, -1) && has(e, EV_ABS, ABS_HAT0Y, -1), "d-pad up-left hat");
++    check(events({}, {std::uint16_t(Left | Right), {}}).empty(), "opposing d-pad cancels");
++    check(has(events({Down, {}}, {Right, {}}), EV_ABS, ABS_HAT0Y, 0), "d-pad release");
++    e = events({}, {0, {127, -128, 0, 1}});
++    check(e.size() == 3 && has(e, EV_ABS, ABS_X, 32766) && has(e, EV_ABS, ABS_Y, -32768) &&
++          has(e, EV_ABS, ABS_RY, 258), "stick scaling");
++    check(events({Button1, {1, 2, 3, 4}}, {Button1, {1, 2, 3, 4}}).empty(), "unchanged state emits nothing");
++
++    // Ordering: newer accepted, duplicate and older rejected, rollover allowed, gap re-baselines.
++    ControllerSequence seq;
++    const auto t = Clock::now();
++    auto pk = [](std::uint32_t f, std::uint8_t o) { ControllerPacket x; x.frame = f; x.order = o; return x; };
++    check(seq.accept(pk(10, 5), t), "first snapshot");
++    check(!seq.accept(pk(10, 5), t) && !seq.accept(pk(10, 4), t) && !seq.accept(pk(9, 200), t), "stale accepted");
++    check(seq.accept(pk(10, 6), t) && seq.accept(pk(11, 0), t), "newer rejected");
++    ControllerSequence wrap;
++    check(wrap.accept(pk(0xffffffffu, 1), t) && wrap.accept(pk(0, 1), t), "frame rollover rejected");
++    check(!seq.accept(pk(3, 1), t + 999ms) && seq.accept(pk(3, 1), t + 2s), "counter reset never recovers");
++}
++
++void deviceTests()
++{
++    std::string error;
++    {
++        VirtualGamepad missing;
++        check(!missing.open(0, error, "/nonexistent/uinput") && !missing.isOpen() &&
++              error.find("/nonexistent/uinput") != std::string::npos, "missing uinput error");
++    }
++    std::size_t index;
++    {
++        VirtualGamepad pad;
++        check(pad.open(0, error, "/dev/null"), "open fake uinput");
++        {
++            std::lock_guard lock(fakeMutex);
++            index = devices.size() - 1;
++            const auto& d = devices[index];
++            check(d.created && d.setup.id.bustype == BUS_USB && d.setup.id.vendor == 0x045e &&
++                  d.setup.id.product == 0x028e && d.setup.id.version == 0x0114, "xpad identity");
++            check(std::string(d.setup.name) == "MiSTerCast Controller 1" && d.phys == "mistercast/pad0", "name/phys");
++            // Same key set as xpad's Xbox 360 pad so evdev button indices match SDL's mapping.
++            check(d.keys == std::set<int>{BTN_A, BTN_B, BTN_X, BTN_Y, BTN_TL, BTN_TR, BTN_SELECT,
++                                          BTN_START, BTN_MODE, BTN_THUMBL, BTN_THUMBR}, "advertised keys");
++            check(d.absbits == std::set<int>{ABS_X, ABS_Y, ABS_Z, ABS_RX, ABS_RY, ABS_RZ, ABS_HAT0X, ABS_HAT0Y},
++                  "advertised axes");
++            check(d.abs.at(ABS_X).minimum == -32768 && d.abs.at(ABS_X).maximum == 32767 &&
++                  d.abs.at(ABS_X).fuzz == 0 && d.abs.at(ABS_RZ).maximum == 255 &&
++                  d.abs.at(ABS_HAT0Y).minimum == -1, "axis ranges");
++        }
++        check(pad.apply({std::uint16_t(Button1 | Right), {5, 0, 0, 0}}, error), "apply");
++        check(pad.apply({std::uint16_t(Button1 | Right), {5, 0, 0, 0}}, error), "apply unchanged");
++        std::lock_guard lock(fakeMutex);
++        const auto& w = devices[index].writes;
++        check(w.size() == 1 && w[0].size() == 4, "one write per snapshot, nothing for repeats");
++        check(w[0].back().type == EV_SYN && w[0].back().code == SYN_REPORT, "SYN_REPORT terminates");
++    }
++    std::lock_guard lock(fakeMutex);
++    const auto& d = devices[index];
++    check(d.destroyed && d.writes.size() == 2 && has(d.writes[1], EV_KEY, BTN_A, 0) &&
++          has(d.writes[1], EV_ABS, ABS_HAT0X, 0) && has(d.writes[1], EV_ABS, ABS_X, 0), "close releases then destroys");
++}
++
++struct UdpServer {
++    int fd{-1};
++    sockaddr_in client{};
++    std::uint16_t port{};
++    UdpServer()
++    {
++        fd = ::socket(AF_INET, SOCK_DGRAM | SOCK_CLOEXEC, 0);
++        if (fd < 0) throw std::runtime_error("Mock UDP socket: " + std::string(std::strerror(errno)));
++        sockaddr_in address{};
++        address.sin_family = AF_INET;
++        address.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
++        check(::bind(fd, reinterpret_cast<sockaddr*>(&address), sizeof(address)) == 0, "UDP bind");
++        socklen_t length = sizeof(address);
++        check(::getsockname(fd, reinterpret_cast<sockaddr*>(&address), &length) == 0, "UDP address");
++        port = ntohs(address.sin_port);
++    }
++    ~UdpServer() { ::close(fd); }
++    void registration()
++    {
++        pollfd p{fd, POLLIN, 0};
++        check(::poll(&p, 1, 1000) > 0, "registration missing");
++        std::array<char, 8> bytes;
++        socklen_t length = sizeof(client);
++        check(::recvfrom(fd, bytes.data(), bytes.size(), 0, reinterpret_cast<sockaddr*>(&client), &length) == 1,
++              "registration must be one byte");
++    }
++    void send(const std::vector<std::uint8_t>& bytes)
++    {
++        check(::sendto(fd, bytes.data(), bytes.size(), 0, reinterpret_cast<sockaddr*>(&client), sizeof(client)) ==
++                  static_cast<ssize_t>(bytes.size()), "UDP packet send");
++    }
++};
++template <typename F> bool eventually(F condition, std::chrono::milliseconds limit = 1000ms)
++{
++    const auto deadline = Clock::now() + limit;
++    while (Clock::now() < deadline) {
++        {
++            std::lock_guard lock(fakeMutex);
++            if (condition()) return true;
++        }
++        std::this_thread::sleep_for(1ms);
++    }
++    return false;
++}
++std::size_t createdCount()
++{
++    std::lock_guard lock(fakeMutex);
++    return devices.size();
++}
++
++void receiverTests()
++{
++    UdpServer mister;
++    std::mutex mutex;
++    std::vector<std::string> warnings;
++    auto warn = [&](const std::string& m) { std::lock_guard lock(mutex); warnings.push_back(m); };
++    ControllerReceiver receiver;
++    std::string error;
++    check(!receiver.startGamepad("127.0.0.1", warn, error, mister.port, "/nonexistent/uinput"),
++          "start without uinput must fail synchronously");
++    for (unsigned session = 0; session < 3; ++session) {
++        const auto first = createdCount();
++        check(receiver.startGamepad("127.0.0.1", warn, error, mister.port, "/dev/null"), "gamepad startup");
++        mister.registration();
++        check(createdCount() == first + 1, "controller 1 created before any input");
++        const auto pad1 = first;
++        mister.send(packet(1, 1, Button1, 0));
++        check(eventually([&] { return !devices[pad1].writes.empty() && has(devices[pad1].writes.back(), EV_KEY, BTN_A, 1); }),
++              "controller 1 press forwarded");
++        check(createdCount() == first + 1, "neutral controller 2 must not create a pad");
++        // Duplicate, stale and malformed packets change nothing.
++        mister.send(packet(1, 1, 0, 0));
++        mister.send(packet(0, 9, 0, 0));
++        auto bad = packet(2, 1, 0, 0);
++        bad.push_back(0);
++        mister.send(bad);
++        const std::array<std::int8_t, 8> sticks{100, -50, 0, 0, 0, 0, 0, 0};
++        mister.send(packet(2, 1, Button1, Button2, &sticks));
++        check(eventually([&] { return devices.size() == first + 2 && !devices[pad1 + 1].writes.empty(); }),
++              "controller 2 created on first input");
++        {
++            std::lock_guard lock(fakeMutex);
++            const auto& w1 = devices[pad1].writes;
++            check(w1.size() == 2, "stale/duplicate/malformed packets were forwarded");
++            check(has(w1[1], EV_ABS, ABS_X, 25800) && has(w1[1], EV_ABS, ABS_Y, -12900) &&
++                  !has(w1[1], EV_KEY, BTN_A, 0), "analog forwarded, held button kept");
++            check(std::string(devices[pad1 + 1].setup.name) == "MiSTerCast Controller 2" &&
++                  has(devices[pad1 + 1].writes[0], EV_KEY, BTN_B, 1), "controller 2 press");
++        }
++        // Loopback forwarding latency (UDP receive to uinput write), informational.
++        std::vector<double> latencies;
++        for (unsigned i = 0; i < 200; ++i) {
++            std::size_t before;
++            {
++                std::lock_guard lock(fakeMutex);
++                before = devices[pad1].writes.size();
++            }
++            const auto sent = Clock::now();
++            mister.send(packet(3 + i, 1, (i & 1) ? Button3 : Button4, Button2));
++            check(eventually([&] { return devices[pad1].writes.size() > before; }), "latency packet forwarded");
++            std::lock_guard lock(fakeMutex);
++            latencies.push_back(std::chrono::duration<double, std::micro>(devices[pad1].writeTimes.back() - sent).count());
++        }
++        std::sort(latencies.begin(), latencies.end());
++        if (session == 0)
++            std::cout << "INFO loopback UDP->uinput latency p50/p99/max "
++                      << latencies[100] << "/" << latencies[198] << "/" << latencies.back() << " us\n";
++        const auto stopping = Clock::now();
++        receiver.stop();
++        receiver.stop();
++        check(Clock::now() - stopping < 100ms, "shutdown must be immediate");
++        std::lock_guard lock(fakeMutex);
++        check(devices[pad1].destroyed && devices[pad1 + 1].destroyed, "pads removed on stop");
++    }
++    std::lock_guard lock(mutex);
++    check(warnings.empty(), "unexpected warnings");
++}
++} // namespace
++
++int main()
++{
++    try {
++        unitTests(); std::cout << "PASS decoding, button/axis mapping, ordering\n";
++        deviceTests(); std::cout << "PASS uinput identity, batching, release on close\n";
++        receiverTests(); std::cout << "PASS UDP registration, forwarding, lazy controller 2, lifecycle\n";
++    } catch (const std::exception& error) {
++        std::cerr << "FAIL " << error.what() << '\n';
++        return 1;
++    }
++}

@@ -1,0 +1,257 @@
+diff --git a/src/stream/GroovyMister.cpp b/src/stream/GroovyMister.cpp
+index 1d3d22d..a5cb98d 100644
+--- a/src/stream/GroovyMister.cpp
++++ b/src/stream/GroovyMister.cpp
+@@ -160,6 +160,7 @@ void GroovyMister::close()
+     statusGeneration_ = 0;
+     consumedStatusGeneration_ = 0;
+     lastFrameNumber_ = 0;
++    lastReserveLines_ = 0;
+     diagnostics_ = {};
+     invalidateVideoHistory();
+ }
+@@ -249,6 +250,7 @@ VideoSubmitResult GroovyMister::sendFrame(
+ 
+     lastStreamDuration_ = sendEnd - sendStart;
+     lastFrameNumber_ = frameNumber;
++    lastReserveLines_ = static_cast<std::uint16_t>(mode_.vTotal - syncLine);
+ 
+     result.status = VideoSubmitStatus::Sent;
+     result.timings.socketSubmission = lastStreamDuration_;
+@@ -640,7 +642,7 @@ bool GroovyMister::parseStatus(
+     status_ = status;
+ 
+     if (connected_) {
+-        deliveryMargin_.observe(status_);
++        deliveryMargin_.observe(status_, lastReserveLines_);
+         ++diagnostics_.fpgaStatusSamples;
+         diagnostics_.fpgaFrameskipSamples += status_.vgaFrameskip ? 1 : 0;
+         diagnostics_.fpgaUnsyncedSamples += status_.vramSynced ? 0 : 1;
+diff --git a/src/stream/GroovyMister.h b/src/stream/GroovyMister.h
+index 9b1e2d5..59c5766 100644
+--- a/src/stream/GroovyMister.h
++++ b/src/stream/GroovyMister.h
+@@ -132,6 +132,7 @@ private:
+     std::chrono::nanoseconds lastStreamDuration_{};
+     std::chrono::nanoseconds networkRoundTrip_{};
+     std::uint32_t lastFrameNumber_{};
++    std::uint16_t lastReserveLines_{};
+     std::uint64_t statusGeneration_{};
+     std::uint64_t consumedStatusGeneration_{};
+     TransportDiagnostics diagnostics_{};
+diff --git a/src/stream/StreamTimingPolicy.cpp b/src/stream/StreamTimingPolicy.cpp
+index 0309b4e..fb5fbf5 100644
+--- a/src/stream/StreamTimingPolicy.cpp
++++ b/src/stream/StreamTimingPolicy.cpp
+@@ -12,31 +12,56 @@ AdaptiveDeliveryMargin::AdaptiveDeliveryMargin(const Modeline& mode)
+ void AdaptiveDeliveryMargin::reset(const Modeline& mode)
+ {
+     conservativeLines_ = std::max<std::uint16_t>(1, mode.vTotal / 2);
+-    floorLines_ = std::max<std::uint16_t>(1, mode.vTotal * 3 / 8);
++    // The measured requirement (transfer + RTT/2 + 2.5 ms) normally sets the
++    // real reserve; this floor only bounds the adaptive part.
++    floorLines_ = std::max<std::uint16_t>(1, mode.vTotal / 16);
++    learnedFloorLines_ = floorLines_;
+     currentLines_ = conservativeLines_;
+     healthySamples_ = 0;
++    samplesSinceFailure_ = 0;
++    queueWindowSamples_ = 0;
++    queueEmptySamples_ = 0;
+ }
+ 
+-void AdaptiveDeliveryMargin::observe(const FpgaStatus& status)
++void AdaptiveDeliveryMargin::observe(const FpgaStatus& status, std::uint16_t effectiveLines)
+ {
+-    const bool healthy = status.vramSynced && !status.vgaFrameskip && status.vramQueue;
+-    if (!healthy) {
+-        currentLines_ = conservativeLines_;
++    queueEmptySamples_ += status.vramQueue ? 0 : 1;
++    const bool queuePressure = queueEmptySamples_ > kQueueEmptyPressure;
++    if (++queueWindowSamples_ >= kQueueWindowSamples || queuePressure) {
++        queueWindowSamples_ = 0;
++        queueEmptySamples_ = 0;
++    }
++
++    const auto clampLines = [this](int lines) {
++        return static_cast<std::uint16_t>(std::clamp<int>(lines, floorLines_, conservativeLines_));
++    };
++
++    if (!status.vramSynced || status.vgaFrameskip || queuePressure) {
++        // Back off from the reserve that actually failed, not from a lower
++        // adaptive value hidden underneath the measured requirement.
++        const int failed = std::max(currentLines_, effectiveLines);
++        learnedFloorLines_ = clampLines(std::max<int>(learnedFloorLines_, failed + kLinesPerStep));
++        currentLines_ = clampLines(std::max<int>(failed + kBackoffLines, learnedFloorLines_));
+         healthySamples_ = 0;
++        samplesSinceFailure_ = 0;
+         return;
+     }
+ 
+-    if (currentLines_ <= floorLines_) {
+-        return;
++    if (++samplesSinceFailure_ >= kFloorDecaySamples) {
++        samplesSinceFailure_ = 0;
++        learnedFloorLines_ = clampLines(static_cast<int>(learnedFloorLines_) - kLinesPerStep);
+     }
+ 
+     if (++healthySamples_ < kHealthySamplesPerStep) {
+         return;
+     }
+-
+-    currentLines_ = static_cast<std::uint16_t>(std::max<int>(
+-        floorLines_, static_cast<int>(currentLines_) - kLinesPerStep));
+     healthySamples_ = 0;
++
++    // Stepping far below the reserve in effect gains nothing and would make the
++    // next backoff land below where the failure happened.
++    int lower = learnedFloorLines_;
++    if (effectiveLines > kLinesPerStep) lower = std::max<int>(lower, effectiveLines - kLinesPerStep);
++    currentLines_ = clampLines(std::max<int>(lower, static_cast<int>(currentLines_) - kLinesPerStep));
+ }
+ 
+ std::uint16_t calculateDeliverySyncLine(
+diff --git a/src/stream/StreamTimingPolicy.h b/src/stream/StreamTimingPolicy.h
+index 621b6d3..0117a6a 100644
+--- a/src/stream/StreamTimingPolicy.h
++++ b/src/stream/StreamTimingPolicy.h
+@@ -9,22 +9,42 @@
+ 
+ namespace mistercast {
+ 
++// Minimum delivery reserve (lines between BLIT arrival and scan-out). Starts at
++// half a frame and steps down while the FPGA reports clean frames, until the
++// measured transfer requirement in calculateDeliverySyncLine() dominates. Every
++// reserve line is a line of display latency.
+ class AdaptiveDeliveryMargin {
+ public:
+-    static constexpr std::uint32_t kHealthySamplesPerStep = 300;
++    static constexpr std::uint32_t kHealthySamplesPerStep = 30;
+     static constexpr std::uint16_t kLinesPerStep = 4;
++    static constexpr std::uint16_t kBackoffLines = 32;
++    // A failure raises a floor just above where it happened; after this many
++    // clean samples the floor relaxes one step so a one-off stall is forgotten.
++    static constexpr std::uint32_t kFloorDecaySamples = 1800;
++    // An empty VRAM queue at ACK time is routine (observed about once per
++    // 140 frames at a half-frame reserve with no frame skips). Only a burst of
++    // them within one window is treated as pressure.
++    static constexpr std::uint32_t kQueueWindowSamples = 120;
++    static constexpr std::uint32_t kQueueEmptyPressure = 6;
+ 
+     explicit AdaptiveDeliveryMargin(const Modeline& mode = kDefaultModeline);
+ 
+     void reset(const Modeline& mode);
+-    void observe(const FpgaStatus& status);
++    // effectiveLines is the reserve the last BLIT actually used (it can exceed
++    // minimumLines() when the measured requirement is larger); 0 if unknown.
++    void observe(const FpgaStatus& status, std::uint16_t effectiveLines = 0);
+     [[nodiscard]] std::uint16_t minimumLines() const { return currentLines_; }
++    [[nodiscard]] std::uint16_t floorLines() const { return learnedFloorLines_; }
+ 
+ private:
+     std::uint16_t conservativeLines_{};
+     std::uint16_t floorLines_{};
++    std::uint16_t learnedFloorLines_{};
+     std::uint16_t currentLines_{};
+     std::uint32_t healthySamples_{};
++    std::uint32_t samplesSinceFailure_{};
++    std::uint32_t queueWindowSamples_{};
++    std::uint32_t queueEmptySamples_{};
+ };
+ 
+ [[nodiscard]] std::uint16_t calculateDeliverySyncLine(
+diff --git a/tests/FrameProcessorTest.cpp b/tests/FrameProcessorTest.cpp
+index 7b15eb3..1d7b62f 100644
+--- a/tests/FrameProcessorTest.cpp
++++ b/tests/FrameProcessorTest.cpp
+@@ -412,6 +412,7 @@ void CoreTest::pacingReleaseOffsetSchedule()
+ 
+ void CoreTest::adaptiveDeliveryMarginRecoversOnPressure()
+ {
++    using M = AdaptiveDeliveryMargin;
+     const Modeline mode{
+         "320x480i", 6.700, 320, 336, 367, 426, 480, 488, 493, 525, true};
+     AdaptiveDeliveryMargin margin(mode);
+@@ -422,14 +423,46 @@ void CoreTest::adaptiveDeliveryMarginRecoversOnPressure()
+         .vgaFrameskip = false,
+         .vramQueue = true,
+     };
+-    for (std::uint32_t i = 0; i < AdaptiveDeliveryMargin::kHealthySamplesPerStep; ++i) {
+-        margin.observe(healthy);
+-    }
++    const auto feed = [&](const FpgaStatus& status, std::uint32_t count, std::uint16_t effective = 0) {
++        for (std::uint32_t i = 0; i < count; ++i) margin.observe(status, effective);
++    };
++    feed(healthy, M::kHealthySamplesPerStep);
+     QCOMPARE(margin.minimumLines(), std::uint16_t{258});
+ 
+-    auto pressure = healthy;
+-    pressure.vramQueue = false;
+-    margin.observe(pressure);
++    // Occasional empty-queue samples are routine and must not reset the margin.
++    auto emptyQueue = healthy;
++    emptyQueue.vramQueue = false;
++    feed(emptyQueue, M::kQueueEmptyPressure);
++    QCOMPARE(margin.minimumLines(), std::uint16_t{258});
++    // A burst within one window is pressure.
++    margin.observe(emptyQueue);
++    QCOMPARE(margin.minimumLines(), std::uint16_t{262});
++
++    // Clean frames descend to the floor (vTotal / 16).
++    margin.reset(mode);
++    feed(healthy, 1800);
++    QCOMPARE(margin.minimumLines(), std::uint16_t{32});
++
++    // A frame skip backs off from the reserve actually in effect, and raises a
++    // floor just above it instead of jumping to half a frame.
++    auto skipped = healthy;
++    skipped.vgaFrameskip = true;
++    margin.observe(skipped, 60);
++    QCOMPARE(margin.minimumLines(), std::uint16_t{92});
++    QCOMPARE(margin.floorLines(), std::uint16_t{64});
++    feed(healthy, 20 * M::kHealthySamplesPerStep, 50);
++    QCOMPARE(margin.minimumLines(), std::uint16_t{64});
++
++    // After a long clean run the learned floor relaxes one step.
++    feed(healthy, M::kFloorDecaySamples - 20 * M::kHealthySamplesPerStep, 50);
++    QCOMPARE(margin.floorLines(), std::uint16_t{60});
++    feed(healthy, M::kHealthySamplesPerStep, 50);
++    QCOMPARE(margin.minimumLines(), std::uint16_t{60});
++
++    // Losing sync is pressure too; the margin never exceeds half a frame.
++    auto unsynced = healthy;
++    unsynced.vramSynced = false;
++    margin.observe(unsynced, 250);
+     QCOMPARE(margin.minimumLines(), std::uint16_t{262});
+ 
+     const auto conservative = calculateDeliverySyncLine(
+@@ -443,30 +476,6 @@ void CoreTest::adaptiveDeliveryMarginRecoversOnPressure()
+         1'472,
+         196);
+     QVERIFY(adapted > conservative);
+-
+-    margin.reset(mode);
+-    const auto steps = (std::uint16_t{262} - std::uint16_t{196} +
+-                        AdaptiveDeliveryMargin::kLinesPerStep - 1) /
+-        AdaptiveDeliveryMargin::kLinesPerStep;
+-    for (std::uint32_t i = 0;
+-         i < steps * AdaptiveDeliveryMargin::kHealthySamplesPerStep;
+-         ++i) {
+-        margin.observe(healthy);
+-    }
+-    QCOMPARE(margin.minimumLines(), std::uint16_t{196});
+-
+-    pressure = healthy;
+-    pressure.vramSynced = false;
+-    margin.observe(pressure);
+-    QCOMPARE(margin.minimumLines(), std::uint16_t{262});
+-
+-    for (std::uint32_t i = 0; i < AdaptiveDeliveryMargin::kHealthySamplesPerStep; ++i) {
+-        margin.observe(healthy);
+-    }
+-    pressure = healthy;
+-    pressure.vgaFrameskip = true;
+-    margin.observe(pressure);
+-    QCOMPARE(margin.minimumLines(), std::uint16_t{262});
+ }
+ 
+ void CoreTest::interlacedFrameSequence()

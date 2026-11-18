@@ -16,6 +16,7 @@
       doomrunner
       wheelwizard
       (userPkgs.duck-game-rebuilt)
+      shipwright
       sm64coopdx
       (pkgs.olympus.override {
         celesteWrapper = "steam-run";

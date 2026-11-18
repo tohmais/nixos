@@ -5,6 +5,7 @@
   system,
   ...
 }: {
+  imports = [inputs.helium.nixosModules.default];
   hm = {
     imports = [inputs.zen-browser.homeModules.twilight];
 
@@ -115,9 +116,9 @@
 
     xdg.mimeApps = let
       value = let
-        zen-browser = inputs.zen-browser.packages.${system}.twilight; # or twilight
+        helium = inputs.helium.packages.${system}; # or twilight
       in
-        zen-browser.meta.desktopFileName;
+        helium.meta.desktopFileName;
 
       associations = builtins.listToAttrs (map (name: {
           inherit name value;
@@ -141,6 +142,30 @@
     in {
       associations.added = associations;
       defaultApplications = associations;
+    };
+
+    xdg.configFile."net.imput.helium/WidevineCdm/latest-component-updated-widevine-cdm" = {
+      text = builtins.toJSON {
+        Path = "${pkgs.widevine-cdm}/share/google/chrome/WidevineCdm";
+      };
+    };
+  };
+
+  programs.helium = {
+    enable = true;
+    policies = {
+      "BrowserSignin" = 0;
+      "PasswordManagerEnabled" = false;
+      "SyncDisabled" = true;
+      "ExtensionInstallForcelist" = [
+        "cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin
+        "nngceckbapebfimnlniiiahkandclblb" # Bitwarden
+        "mnjggcdmjocbbbhaepdhchncahnbgone" # SponsorBlock
+        "jinjaccalgkegednnccohejagnlnfdag" # Violentmonkey
+      ];
+      "DefaultSearchProviderEnabled" = true;
+      "DefaultSearchProviderSearchURL" = "https://search.brave.com/search?q={searchTerms}";
+      "DefaultSearchProviderName" = "Brave";
     };
   };
 }

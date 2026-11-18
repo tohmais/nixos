@@ -15,22 +15,26 @@
     ];
     programs.mpv = {
       enable = true;
-      /*
-         config = {
+      config = {
         # NOTE: if you want mpv discord screensharing, you NEED pulseaudio!
         # i'd recommend making a entry in thunar to switch between the two.
-        profile = "gpu-hq";
+        profile = "high-quality";
         vo = "gpu-next";
-        hwdec = "auto-copy";
+        hwdec = "auto-safe";
         gpu-api = "vulkan";
-        video-sync = "display-resample";
-        interpolation = "yes";
+
         target-colorspace-hint = "yes";
-        hdr-reference-white = 150;
+        target-colorspace-hint-mode = "source";
+        save-position-on-quit = true;
+
+        screenshot-format = "png";
+        screenshot-dir = "~/Pictures/mpv";
+        screenshot-template = "%F-%p-%n";
+        screenshot-high-bit-depth = "no";
       };
-      */
     };
-    xdg.configFile = {
+    /*
+       xdg.configFile = {
       "mpv" = {
         source = builtins.fetchGit {
           url = "https://github.com/JySzE/SoM-MPV-Config.git";
@@ -40,10 +44,19 @@
         recursive = true;
       };
     };
+    */
   };
   fonts.packages = with pkgs; [
     corefonts
     dejavu_fonts
     noto-fonts-cjk-sans
   ];
+
+  security.wrappers.nethogs = {
+    source = "${pkgs.nethogs}/bin/nethogs";
+    capabilities = "cap_net_admin,cap_net_raw,cap_dac_read_search,cap_sys_ptrace+ep";
+    owner = "root";
+    group = "root";
+    permissions = "u+rx,g+x,o+x";
+  };
 }

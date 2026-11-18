@@ -4,6 +4,7 @@
   lib,
   config,
   pkgs,
+  system,
   ...
 }: {
   imports = [inputs.jovian-nixos.nixosModules.default];
@@ -12,7 +13,7 @@
     enable = true;
     user = mainUser;
     extraPackages = [pkgs.systemd];
-    package = pkgs.decky-loader-prerelease;
+    # package = pkgs.decky-loader-prerelease;
   };
 
   # Create Steam CEF debugging file if it doesn't exist for Decky Loader.

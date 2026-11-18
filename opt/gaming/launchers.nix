@@ -42,7 +42,7 @@
         gamescope
       ];
       protontricks.enable = true;
-      extest.enable = true;
+      # extest.enable = true;
     };
     gamescope = {
       enable = true;
@@ -72,7 +72,7 @@
       protonplus
 
       winetricks
-      lutris
+      # lutris TODO: uncomment when the gtk2 thing is fixed
 
       heroic
       prismlauncher

@@ -46,6 +46,7 @@ in {
     wayland.windowManager.hyprland = {
       enable = true;
       configType = "lua";
+      xdph.settings.screencopy.max_fps = 0;
 
       systemd = {
         enable = false;
@@ -98,7 +99,7 @@ in {
 
           misc = {
             force_default_wallpaper = 0;
-            vrr = 1;
+            vrr = 2;
           };
 
           # https://github.com/ValveSoftware/gamescope/issues/1825

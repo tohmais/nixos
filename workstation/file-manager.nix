@@ -32,6 +32,7 @@
       };
 
       services.udisks2.enable = true;
+      hm.services.udiskie.enable = true;
     }
 
     (lib.mkIf config.internal-config.thunar.enable {

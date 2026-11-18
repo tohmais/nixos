@@ -51,6 +51,11 @@
       inputs.home-manager.follows = "home-manager";
     };
 
+    helium = {
+      url = "github:oxcl/nix-flake-helium-browser";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-flatpak.url = "github:gmodena/nix-flatpak/latest";
 
     nixos-hardware = {

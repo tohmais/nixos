@@ -9,7 +9,8 @@
   boot = {
     blacklistedKernelModules = ["xpad"];
     extraModulePackages = [
-      config.boot.kernelPackages.gcadapter-oc-kmod
+      # TODO: fix when https://github.com/NixOS/nixpkgs/issues/575192 gets fixed
+      # config.boot.kernelPackages.gcadapter-oc-kmod
       # (userPkgs.xpad-noone-upstream {
       #   kernel = config.boot.kernelPackages.kernel;
       # })
@@ -26,6 +27,6 @@
     xone.enable = true;
 
     # xone enables this by default, but this conflicts with our version of xpad-noone!
-    xpad-noone.enable = true;
+    # xpad-noone.enable = true;
   };
 }

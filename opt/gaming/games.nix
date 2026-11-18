@@ -19,7 +19,7 @@
       yarg
     ];
     sessionVariables = {
-      DOTNET_SYSTEM_GLOBALIZATION_INVARIANT = 1;
+      DOTNET_SYSTEM_GLOBALIZATION_INVARIANT = 0;
     };
   };
   boot.kernelModules = ["ntsync"];

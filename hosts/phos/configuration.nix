@@ -42,6 +42,8 @@
     # "electron-38.8.4" # stoat-desktop
   ];
 
+  powerManagement.cpuFreqGovernor = "performance";
+
   # programs.zoom-us.enable = true;
   # myNixOS = {
   #   bundles.gaming.enable = true;

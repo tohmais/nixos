@@ -11,12 +11,21 @@
       enable = true;
       settings = {
         vim = {
+          spellcheck = {
+            enable = true;
+            programmingWordlist.enable = true;
+            languages = [
+              "en"
+            ];
+          };
           package = pkgs.neovim-unwrapped;
           viAlias = true;
           vimAlias = true;
+          preventJunkFiles = true;
           clipboard = {
             enable = true;
             registers = "unnamedplus";
+            providers.wl-copy.enable = true;
           };
           telescope.enable = true;
           autocomplete.nvim-cmp.enable = true;
@@ -31,6 +40,7 @@
             enableExtraDiagnostics = true;
             enableTreesitter = true;
             nix.enable = true;
+            markdown.enable = true;
           };
           luaConfigPost = ''
             vim.opt.expandtab = true

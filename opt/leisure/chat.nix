@@ -19,27 +19,9 @@
       discord = {
         equicord.enable = true;
         vencord.enable = false;
-        /*
-          settings = {
-          SKIP_HOST_UPDATE = true;
-          SKIP_MODULE_UPDATE = true;
-        };
-        */
+        openASAR.enable = true;
+        # branches = ["canary"];
       };
-      # userPlugins = {
-      #   anammox = "${equicordPlugins}/anammox";
-      #   betterQuickReact = "${equicordPlugins}/betterQuickReact";
-      #   homeTyping = "${equicordPlugins}/homeTyping";
-      #   # noNitroUpsell = "${equicordPlugins}/noNitroUpsell";
-      # };
-      # extraConfig = {
-      #   plugins = {
-      #     anammox.enable = true;
-      #     betterQuickReact.enable = true;
-      #     homeTyping.enable = true;
-      #     # noNitroUpsell.enable = true;
-      #   };
-      # };
 
       config = {
         plugins = {
@@ -48,7 +30,6 @@
             anonymiseByDefault = true;
           };
           # betterSettings.enable = true;
-          biggerStreamPreview.enable = true;
           clearUrls.enable = true;
           consoleJanitor.enable = true;
           declutter = {
@@ -57,28 +38,22 @@
             removeNameplate = false;
             removeProfileEffect = false;
             removeShopAboveDms = true;
+            removeLibraryAboveDms = true;
+            removeQuestsAboveDms = true;
+            removeUnavailableEmojiPicker = true;
           };
-          fakeNitro = {
-            enable = true;
-            enableEmojiBypass = false;
-            enableStickerBypass = false;
-            enableStreamQualityBypass = true;
-          };
+          fixDiscordCss.enable = true;
           fixYoutubeEmbeds.enable = true;
           homeTyping.enable = true;
           noNitroUpsell.enable = true;
           noReplyMention.enable = true;
-          noServerEmojis = {
-            enable = true;
-            shownEmojis = "currentServer";
-          };
+          noTrack.enable = true;
           openInApp.enable = true;
           showHiddenChannels.enable = true;
           showHiddenThings.enable = true;
 
           # i HAVE premium! i just have friends who i want to show music to.
           spotifyCrack.enable = true;
-          userMessagesPronouns.enable = true;
           voiceMessages.enable = true;
           volumeBooster = {
             enable = true;

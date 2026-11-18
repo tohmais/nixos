@@ -38,7 +38,9 @@
       ppsspp
       rpcs3
 
+      flycast
       xemu
+
       mesen
 
       ares
