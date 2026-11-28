@@ -1,49 +1,38 @@
-name: update-flake-lock
+name: update-pins
 on:
-  workflow_dispatch: # allows manual triggering
+  workflow_dispatch:
   schedule:
-    - cron: '0 0 * * 0' # runs weekly on Sunday at 00:00
+    - cron: '0 0 * * 0'
 
 permissions:
   contents: write
   pull-requests: write
 
 jobs:
-  lockfile:
+  update:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@main
-      - name: Update flake.lock
-        uses: DeterminateSystems/update-flake-lock@main
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
+
+      - name: Update pins
+        run: nix run --accept-flake-config github:manic-systems/tack -- update
+
+      - name: Evaluate hosts
+        run: |
+          for h in phos homesick raiden; do
+            echo "::group::$h"
+            nix-instantiate entry.nix -A nixosConfigurations.$h.config.system.build.toplevel
+            echo "::endgroup::"
+          done
+
+      - uses: peter-evans/create-pull-request@v7
         with:
-          pr-title: "Update flake.lock" # Title of PR to be created
-          commit-msg: "chore: flake.lock update"
-          pr-assignees: tohmais
-          pr-reviewers: tohmais
-          pr-labels: |                  # Labels to be set on the PR
+          branch: update-pins
+          title: "Update tack pins"
+          commit-message: "chore: tack pins update"
+          assignees: tohmais
+          reviewers: tohmais
+          labels: |
             dependencies
             automated
-          pr-body: |
-            Automated changes by the [update-flake-lock](https://github.com/DeterminateSystems/update-flake-lock) GitHub Action.
-
-            ### Update Info
-            ```
-            {{ env.GIT_COMMIT_MESSAGE }}
-            ```
-
-            ### Running GitHub Actions on this PR
-
-            GitHub Actions will not run workflows on pull requests which are opened by a GitHub Action.
-
-            To run GitHub Actions workflows on this PR, run:
-
-            ```sh
-            git branch -D update_flake_lock_action
-            git fetch origin
-            git checkout update_flake_lock_action
-            git commit --amend --no-edit
-            git push origin update_flake_lock_action --force
-            ```

@@ -16,4 +16,7 @@
   };
 
   nixpkgs.config.allowUnfree = true;
+  hm.xdg.configFile."nixpkgs/config.nix".text = ''
+    { allowUnfree = true; }
+  '';
 }

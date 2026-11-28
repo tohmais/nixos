@@ -1,0 +1,75 @@
+[shorturls]
+gh = "github:{path}"
+
+[inputs.nixpkgs]
+url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz"
+
+[inputs.home-manager]
+url = "gh:nix-community/home-manager"
+
+[inputs.nix-gaming]
+url = "gh:fufexan/nix-gaming"
+
+[inputs.stylix]
+url = "gh:nix-community/stylix"
+
+[inputs.spicetify-nix]
+url = "gh:Gerg-L/spicetify-nix"
+
+[inputs.nix-index-database]
+url = "gh:nix-community/nix-index-database"
+
+[inputs.firefox-addons]
+url = "gitlab:rycee/nur-expressions"
+dir = "pkgs/firefox-addons"
+
+[inputs.zen-browser]
+url = "gh:0xc000022070/zen-browser-flake"
+
+[inputs.helium]
+url = "gh:oxcl/nix-flake-helium-browser"
+
+[inputs.nix-flatpak]
+url = "gh:gmodena/nix-flatpak/latest"
+
+[inputs.nixos-hardware]
+url = "gh:NixOS/nixos-hardware/master"
+
+[inputs.nvf]
+url = "gh:notashelf/nvf"
+
+[inputs.nixcord]
+url = "gh:FlameFlag/nixcord"
+
+[inputs.nixarr]
+url = "gh:rasmus-kirk/nixarr"
+
+[inputs.nix-cachyos-kernel]
+url = "gh:xddxdd/nix-cachyos-kernel/release"
+exclude_follow = ["nixpkgs"]   # keep its own nixpkgs so the lantian cache hits
+
+[inputs.watt]
+url = "gh:notashelf/watt"
+
+[inputs.jovian-nixos]
+url = "gh:Jovian-Experiments/Jovian-NixOS"
+
+[inputs.bedrock-on-linux]
+url = "gh:Wyze3306/BedrockOnLinux"
+
+[inputs.amethyst]
+url = "gh:ChrisDKN/Amethyst-Mod-Manager"
+
+[inputs.tack]
+url = "gh:manic-systems/tack"
+exclude_follow = ["nixpkgs"]   # keep its own nixpkgs so cache.manic.systems hits
+
+[all_follow]
+nixpkgs      = ["nixpkgs-lib"]   
+home-manager = "home-manager"
+flake-parts  = "flake-parts"
+systems      = "systems"
+treefmt-nix  = "treefmt-nix"
+
+[omit_inputs]
+names = ["flake-compat"]

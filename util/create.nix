@@ -1,7 +1,7 @@
 # Copied from https://git.atagen.co/atagen/nix/src/commit/353499a037fd01ebfa373ba3047e92083eb4bdb8/util/create.nix
 # The original licence is included in the file LICENCE at the root of this project.
 let
-  inputs = import ./inputs.nix;
+  inputs = import ../.tack;
   inherit (inputs) nixpkgs;
   inherit (nixpkgs) lib;
   recursivelyImport = import ./recursively-import.nix {inherit lib;};
@@ -13,10 +13,8 @@ in {
           specialArgs = {
             inherit (info) system;
             inherit inputs;
-            userPkgs = lib.packagesFromDirectoryRecursive {
-              inherit (inputs.nixpkgs.legacyPackages.${info.system}) callPackage;
-              directory = ../pkgs;
-            };
+
+            userPkgs = (import ../default.nix {inherit (info) system;}).packages;
             mainUser = info.user;
           };
           modules =

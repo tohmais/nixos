@@ -29,7 +29,11 @@
     ];
     home.packages = with pkgs; [
       dolphin-emu
+
       ryubing
+      eden
+
+      redumper
 
       gopher64
       parallel-launcher

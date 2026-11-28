@@ -1,9 +1,15 @@
-# Copyright (c) 2023 Yurii M
-# Modified by Callum Wishart
-{pkgs ? import ./nixpkgs.nix {}}: {
-  default = pkgs.mkShell {
-    NIX_CONFIG = "experimental-features = nix-command flakes";
-
-    nativeBuildInputs = with pkgs; [nix nh home-manager git neovim];
-  };
-}
+let
+  inputs = import ./.tack;
+in
+  {pkgs ? inputs.nixpkgs.legacyPackages.${builtins.currentSystem}}: {
+    default = pkgs.mkShell {
+      nativeBuildInputs = with pkgs; [
+        nix
+        nh
+        home-manager
+        git
+        neovim
+        inputs.tack.packages.${pkgs.stdenv.hostPlatform.system}.default
+      ];
+    };
+  }

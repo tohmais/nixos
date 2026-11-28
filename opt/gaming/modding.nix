@@ -8,9 +8,10 @@
   hm = {
     home.packages = with pkgs; [
       gale
-      # limo
-      inputs.amethyst.packages.${system}.default
-      # TODO: add fluorine and amethyst when they become available in nixpkgs
+      limo
+      amethyst-mod-manager-unfree
+
+      # TODO: add fluorine when available in nixpkgs
       hedgemodmanager
       lumafly
       doomrunner

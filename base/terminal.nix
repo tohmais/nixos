@@ -7,7 +7,7 @@
     enable = true;
     useBabelfish = true;
     shellAliases = {
-      "ls" = "eza --icons";
+      "ls" = "eza --icons=auto";
     };
   };
 

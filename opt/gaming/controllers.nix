@@ -9,8 +9,7 @@
   boot = {
     blacklistedKernelModules = ["xpad"];
     extraModulePackages = [
-      # TODO: fix when https://github.com/NixOS/nixpkgs/issues/575192 gets fixed
-      # config.boot.kernelPackages.gcadapter-oc-kmod
+      config.boot.kernelPackages.gcadapter-oc-kmod
       # (userPkgs.xpad-noone-upstream {
       #   kernel = config.boot.kernelPackages.kernel;
       # })
